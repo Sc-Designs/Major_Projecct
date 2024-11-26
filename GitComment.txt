@@ -13,7 +13,9 @@ git add .
 git commit -m "(Checkpoint massages or name)"
 git push -u origin (your Branch name)
 
-ai step ta ami joto khon na bolbo keo korbe na 
+ai step ta ami joto khon na bolbo keo korbe na
+git switch main
+git fetch
 git pull
 
 
@@ -33,7 +35,9 @@ git add .
 git commit -m "(Checkpoint massages or name)"
 git push -u origin (your Branch name)
 
-ai step ta ami joto khon na bolbo keo korbe na 
+ai step ta ami joto khon na bolbo keo korbe na
+git switch main
+git fetch 
 git pull
 
 
@@ -53,5 +57,7 @@ git add .
 git commit -m "(Checkpoint massages or name)"
 git push -u origin (your Branch name)
 
-ai step ta ami joto khon na bolbo keo korbe na 
+ai step ta ami joto khon na bolbo keo korbe na
+git switch main
+git fetch
 git pull
