@@ -105,6 +105,5 @@ Register a new user in the system.
   - Alphabetic characters only
 
 - **lastName**:
-  - Required
   - 2-50 characters long
   - Alphabetic characters only
