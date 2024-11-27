@@ -28,25 +28,26 @@ const http = require("http");
 var bodyParser = require("body-parser");
 
 // require the dotenv module and config it
-require("dotenv").config();
+const dotenv = require("dotenv");
+dotenv.config();
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+// Import APIS
+let adminRouter = require("./routes/adminRouter.js");
+let bloodRouter = require("./routes/bloodRouter.js");
+let donarRouter = require("./routes/donarRouter.js");
+let indexRouter = require("./routes/indexRouter.js");
+let usersRouter = require("./routes/usersRouter.js");
+
+// Call the Connection_retry function
+const connectWithRetry = require("./config/mongoose-connection");
+
+connectWithRetry();
 
 var app = express();
 
 // Create a server
 const Server = http.createServer(app);
 
-// Include the MongoDB connection
-require("./config/mongoose-connection.js");
-
-// Import APIS
-var adminRouter = require("./routes/adminRouter.js");
-var bloodRouter = require("./routes/bloodRouter.js");
-var donarRouter = require("./routes/donarRouter.js");
-var indexRouter = require("./routes/indexRouter.js");
-var usersRouter = require("./routes/userRouter.js");
 
 
 // Middleware setup
@@ -60,7 +61,7 @@ app.use(
   session({
     resave: false,
     saveUninitialized: false,
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || "secret",
   })
 );
 
@@ -81,7 +82,7 @@ app.set("view engine", "ejs");
 
 // API Calling Setup
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use("/user", usersRouter);
 app.use("/reciver", bloodRouter);
 app.use("/donar", donarRouter);
 app.use("/admin", adminRouter);
@@ -102,6 +103,9 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
+const PORT = process.env.PORT || 3000;
+
+console.log('Port from environment:', process.env.PORT);
 // Server Listener
 Server.listen(PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
