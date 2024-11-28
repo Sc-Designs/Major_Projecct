@@ -2,9 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/blood', function(req, res) {
   try{
-    res.render('index', { title: 'Express' });
+    res.send('Blood');
   }
   catch(error){
     console.error(error);
