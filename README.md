@@ -2,40 +2,32 @@
 
 ## User Registration Endpoint
 
-### POST /user/register
+### POST `/user/register`
 
 Register a new user in the system.
 
 #### Request Body
 
-```json
-{
-    "username": "string",     // Required: Username between 3-30 characters
-    "email": "string",       // Required: Valid email address
-    "password": "string",    // Required: Password (minimum 8 characters)
-    "firstName": "string",   // Required: User's first name
-    "lastName": "string"     // Required: User's last name
-}
-```
+`Required Feild`
+    email is a string,       // Required: Valid email address
+    password is a string,    // Required: Password (minimum 8 characters)
+    firstName is a Object,   // Required: User's first name
+    phone is a number        //Required: valid Phone Numbe
+
+
 
 #### Response
 
 ##### Success Response (200 OK)
 
-```json
-{
-    "status": "success",
-    "message": "User registered successfully",
+`MONGOOSE SAVE DATA`
     "data": {
-        "userId": "string",
-        "username": "string",
+        "userId": "Id",
         "email": "string",
-        "firstName": "string",
-        "lastName": "string",
+        "fullname": "Object",
         "createdAt": "timestamp"
     }
-}
-```
+
 
 ##### Error Responses
 
@@ -61,12 +53,10 @@ Register a new user in the system.
 ###### 409 Conflict
 - When email is already registered
 
-```json
-{
+`If Email Already exist`
     "status": "error",
     "message": "Email already exists"
-}
-```
+
 
 ###### 500 Internal Server Error
 - When server encounters an unexpected condition
@@ -80,11 +70,12 @@ Register a new user in the system.
 
 #### Validation Rules
 
-- **username**: 
+- **fullname**: 
   - Required
   - 3-30 characters long
   - Alphanumeric characters and underscores only
   - Must be unique
+  - this is a Object which is the collection of firstname and lastname
 
 - **email**:
   - Required
@@ -105,6 +96,5 @@ Register a new user in the system.
   - Alphabetic characters only
 
 - **lastName**:
-  - Required
   - 2-50 characters long
   - Alphabetic characters only
