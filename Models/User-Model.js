@@ -43,7 +43,8 @@ const userSchema = new mongoose.Schema({
         default: null
     },
     profilepic: {
-        type: Buffer,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "photo",
         default: null
     },
     varified: {
@@ -102,6 +103,21 @@ const userSchema = new mongoose.Schema({
         selected: false,
         minlength: [12, "Addhar number is not valid!"],
         maxlength: [12, "Addhar number is not valid!"]
+    },
+    cardType: {
+        type: mongoose.Schema.Types.ObjectId,
+        refPath: "card"
+    },
+    card: {
+        type: String,
+        enum: ["recivent", "Donar"],
+        required: true,
+        validate: {
+            validator: function (value) {
+                return ["recivent", "Donar"].includes(value);
+            },
+            message: '{VALUE} is not supported'
+        }
     }
 });
 
