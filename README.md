@@ -1,41 +1,43 @@
-# API Documentation
+# Major Project API Documentaion
+## API's
 
-## User Registration Endpoint
+### User Registration Endpoint
 
-### POST `/user/register`
+#### POST `/user/register`
 
 Register a new user in the system.
 
 #### Request Body
 
 `Required Feild`
-    email is a string,       // Required: Valid email address
-    password is a string,    // Required: Password (minimum 8 characters)
-    firstName is a Object,   // Required: User's first name
-    phone is a number        //Required: valid Phone Numbe
+   - email is a string, &nbsp; // Required: Valid email address
+   - password is a string, &nbsp; // Required: Password (minimum 8 characters)
+   - firstName is a Object, &nbsp; // Required: User's first name
+   - phone is a number &nbsp; //Required: valid Phone Numbe
 
 
 
-#### Response
+#### Response Code
 
-##### Success Response (200 OK)
+#### Success Response ( 200 OK )
 
-`MONGOOSE SAVE DATA`
-    "data": {
-        "userId": "Id",
-        "email": "string",
-        "fullname": "Object",
-        "createdAt": "timestamp"
+###  **MONGOOSE SAVED DATA**
+    data: {
+        - userId : Id,
+        - email : string,
+        - fullname : Object,
+        - password: string (hash),
+        - phone : number,
+        - createdAt : timestamp
     }
 
 
-##### Error Responses
+## **Error Responses**
 
-###### 400 Bad Request
+#### 400 Bad Request Status Code
 - When required fields are missing
 - When email format is invalid
 - When password doesn't meet minimum requirements
-- When username is already taken
 
 ```json
 {
@@ -50,16 +52,16 @@ Register a new user in the system.
 }
 ```
 
-###### 409 Conflict
-- When email is already registered
+## **When email is already registered**
+#### 409 Conflict status code
 
-`If Email Already exist`
-    "status": "error",
-    "message": "Email already exists"
+- `If Email Already exist`
+    - status error,
+    - message Email already exists
 
 
-###### 500 Internal Server Error
-- When server encounters an unexpected condition
+## **When server encounters an unexpected condition**
+#### 500 Internal Server Error status code
 
 ```json
 {
@@ -68,7 +70,7 @@ Register a new user in the system.
 }
 ```
 
-#### Validation Rules
+## **Validation Rules**
 
 - **fullname**: 
   - Required
