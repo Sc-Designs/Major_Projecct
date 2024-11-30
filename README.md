@@ -1,7 +1,7 @@
 # Major Project API Documentaion
-## API's
+### API's
 
-### User Registration Endpoint
+## User Registration Endpoint
 
 #### POST `/user/register`
 
@@ -22,53 +22,12 @@ Register a new user in the system.
 #### Success Response ( 200 OK )
 
 ###  **MONGOOSE SAVED DATA**
-    data: {
-        - userId : Id,
-        - email : string,
-        - fullname : Object,
-        - password: string (hash),
-        - phone : number,
-        - createdAt : timestamp
-    }
-
-
-## **Error Responses**
-
-#### 400 Bad Request Status Code
-- When required fields are missing
-- When email format is invalid
-- When password doesn't meet minimum requirements
-
-```json
-{
-    "status": "error",
-    "message": "Validation error message",
-    "errors": [
-        {
-            "field": "field_name",
-            "message": "Error description"
-        }
-    ]
-}
-```
-
-## **When email is already registered**
-#### 409 Conflict status code
-
-- `If Email Already exist`
-    - status error,
-    - message Email already exists
-
-
-## **When server encounters an unexpected condition**
-#### 500 Internal Server Error status code
-
-```json
-{
-    "status": "error",
-    "message": "Internal server error"
-}
-```
+  - **`Data`**
+    - userId : Id,
+    - email : string &nbsp; // Required: Valid email address,
+    - fullname : Object,
+    - password: string (hash),
+    - phone : number &nbsp; // Optional,
 
 ## **Validation Rules**
 
@@ -100,3 +59,15 @@ Register a new user in the system.
 - **lastName**:
   - 2-50 characters long
   - Alphabetic characters only
+
+## User Login Endpoint
+
+#### POST `/user/login`
+
+Login the user in the system.
+
+- **Request body**:
+  - email : string
+  - password : string
+- Response:
+  - **token** : string

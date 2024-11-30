@@ -43,8 +43,8 @@ const adminSchema = new mongoose.Schema({
     phone: {
         type: Number,
         unique: true,
-        minlength: [10, "Phone number is not valid!"],
-        maxlength: [10, "Phone number is not valid!"]
+        min: [1000000000, "Phone number is not valid!"],
+        max: [9999999999, "Phone number is not valid!"]
     },
     gender: {
         type: String,

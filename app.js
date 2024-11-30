@@ -32,11 +32,11 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 // Import APIS
-let adminRouter = require("./routes/adminRouter.js");
-let bloodRouter = require("./routes/bloodRouter.js");
-let donarRouter = require("./routes/donarRouter.js");
-let indexRouter = require("./routes/indexRouter.js");
-let usersRouter = require("./routes/usersRouter.js");
+let adminRouter = require("./routes/admin.router");
+let bloodRouter = require("./routes/blood.router");
+let donarRouter = require("./routes/donar.router");
+let indexRouter = require("./routes/index.router");
+let usersRouter = require("./routes/users.router");
 
 // Call the Connection_retry function
 const connectWithRetry = require("./config/mongoose-connection");
