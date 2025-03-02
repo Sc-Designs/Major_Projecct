@@ -10,7 +10,7 @@ const config = require("config");
 const link = `${config.get("MONGODB_URI")}/BloodHeroes_Hub`;
 
 // Import The Debug Module and set it for only development Environment
-const dbgr = require("debug")("development:mongoose");
+const dbgr = require("debug")("development:dev");
 
 // Mongoose Connection_Retry
 const connectWithRetry = () => {

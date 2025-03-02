@@ -1,74 +1,40 @@
-///////////////////////////////////THIS IS MAIN FILE IT RUN THE FULL WEBSITE///////////////////////////
-
-// Import the HTTP ERROR
-var createError = require("http-errors");
-
-// Import the Express
-var express = require("express");
-
-// Import the Path
-var path = require("path");
-
-// Import the Cookie_Parser
-var cookieParser = require("cookie-parser");
-
-// Import the Morgan Module
-var logger = require("morgan");
-
-// Import the Express_Session
-var session = require("express-session");
-
-// Import the flash module
+// Import Modules
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const session = require("express-session");
+const passport = require("passport");
 const flash = require("connect-flash");
-
-// Import the HTTP module
-const http = require("http");
-
-// Import the Body_Parser module
-var bodyParser = require("body-parser");
-
-// require the dotenv module and config it
-const dotenv = require("dotenv");
-dotenv.config();
-
-// Import APIS
-let adminRouter = require("./routes/admin.router");
-let bloodRouter = require("./routes/blood.router");
-let donarRouter = require("./routes/donar.router");
-let indexRouter = require("./routes/index.router");
-let usersRouter = require("./routes/users.router");
-
-// Call the Connection_retry function
-const connectWithRetry = require("./config/mongoose-connection");
-
-connectWithRetry();
-
-var app = express();
-
-// Create a server
-const Server = http.createServer(app);
+const bodyParser = require("body-parser");
+const app = express();
+const cors = require("cors");
 
 
-
-// Middleware setup
+// Middleware Setup
 app.use(logger("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cors());
+
+// Session Setup
 app.use(
   session({
+    secret: process.env.SESSION_SECRET || "secret",
     resave: false,
     saveUninitialized: false,
-    secret: process.env.SESSION_SECRET || "secret",
   })
 );
 
-// Public files Setup
-app.use(express.static(path.join(__dirname, "public")));
+// Passport Setup
+app.use(passport.initialize());
+app.use(passport.session());
 
-// Flash Setup
+// Flash Messages Setup
 app.use(flash());
 app.use((req, res, next) => {
   res.locals.error = req.flash("error");
@@ -76,40 +42,48 @@ app.use((req, res, next) => {
   next();
 });
 
-// view engine setup
+// Public Files Setup
+app.use(express.static(path.join(__dirname, "public")));
+
+// Import Routes
+const adminRouter = require("./routes/admin.router");
+const bloodRouter = require("./routes/blood.router");
+const donarRouter = require("./routes/donar.router");
+const indexRouter = require("./routes/index.router");
+const usersRouter = require("./routes/users.router");
+const googleAuthenticatorRouter = require("./routes/googleAuthenticator.router");
+
+// Import Database Connection
+const connectWithRetry = require("./config/mongoose-connection");
+connectWithRetry();
+
+
+// View Engine Setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-// API Calling Setup
-app.use("/", indexRouter);
-app.use("/user", usersRouter);
-app.use("/reciver", bloodRouter);
-app.use("/donar", donarRouter);
-app.use("/admin", adminRouter);
+// API Routes
+app.use(process.env.INDEX || "/", indexRouter);
+app.use(process.env.USER || "/users", usersRouter);
+app.use(process.env.RECIVER || "/reciver", bloodRouter);
+app.use(process.env.DONAR || "/donar", donarRouter);
+app.use(process.env.ADMIN || "/admin", adminRouter);
+app.use(process.env.GOOGLE_AUTHENTICATOR || "/google-oth", googleAuthenticatorRouter);
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
+// 404 Handler
+app.use((req, res, next) => {
   next(createError(404));
 });
 
-// Error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
+// Error Handler
+app.use((err, req, res, next) => {
+  if (req.originalUrl.startsWith("/api/")) {
+    return res.status(err.status || 500).json({ error: err.message });
+  }
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
-
-  // Render the error page
   res.status(err.status || 500);
   res.render("error");
 });
 
-const PORT = process.env.PORT || 3000;
-
-console.log('Port from environment:', process.env.PORT);
-// Server Listener
-Server.listen(PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
-});
-
-// Export the App file to the Node.JS
 module.exports = app;

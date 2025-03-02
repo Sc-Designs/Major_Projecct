@@ -9,8 +9,14 @@ const adminSchema = new mongoose.Schema({
             required: true,
             minlength: [3, "Name must be at least 3 characters long"],
         },
+        middlename: {
+            type: String,
+            default: null,
+            minlength: [3, "Name must be at least 3 characters long"],
+        },
         lastname: {
             type: String,
+            required: true,
             minlength: [3, "Name must be at least 3 characters long"],
         }
     },
@@ -43,6 +49,7 @@ const adminSchema = new mongoose.Schema({
     phone: {
         type: Number,
         unique: true,
+        default:null,
         min: [1000000000, "Phone number is not valid!"],
         max: [9999999999, "Phone number is not valid!"]
     },
@@ -71,7 +78,7 @@ const adminSchema = new mongoose.Schema({
 });
 
 adminSchema.methods.GenerateToken = function () {
-    const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ email: this.email }, process.env.JWT_KEY,{ expiresIn: '24h' });
     return token;
 };
 

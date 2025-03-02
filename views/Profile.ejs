@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Google Login</title>
+</head>
+<body>
+    <h1>Welcome to My Website</h1>
+    <% if (!user) { %>``
+        <a href="/google-oth/auth/google">
+            <button>Sign in with Google</button>
+        </a>
+    <% } else { %>
+        <p>Welcome, <%= user.name %>!</p>
+        <a href="/dashboard">Go to Dashboard</a>
+        <a href="/users/logout">Logout</a>
+    <% } %>
+</body>
+</html>

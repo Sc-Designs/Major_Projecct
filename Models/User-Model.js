@@ -3,20 +3,13 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
-    fullname: {
-        firstname: {
-            type: String,
-            required: true,
-            minlength: [3, "Name must be at least 3 characters long"],
-        },
-        lastname: {
-            type: String,
-            minlength: [3, "Name must be at least 3 characters long"],
-        },
+    name: {
+        type: String,
+        required: true,
+        minlength: [3, "Name must be at least 3 characters long"],
     },
     password: {
         type: String,
-        required: true,
         minlength: [5, "Password must be at least 5 characters long"],
         select: false,
     },
@@ -28,10 +21,14 @@ const userSchema = new mongoose.Schema({
         minlength: [5, "Email must be at least 5 characters long"],
     },
     phone: {
-        type: Number,
+        type: String,
         unique: true,
-        min: [1000000000, "Phone number is not valid!"],
-        max: [9999999999, "Phone number is not valid!"],
+        validate: {
+            validator: function (v) {
+                return /^\d{10}$/.test(v); // Only 10-digit numbers allowed
+            },
+            message: "Phone number is not valid!",
+        },
     },
     address: {
         type: String,
@@ -47,7 +44,7 @@ const userSchema = new mongoose.Schema({
         ref: "photo",
         default: null,
     },
-    varified: {
+    verified: {
         type: Boolean,
         default: false,
     },
@@ -56,16 +53,16 @@ const userSchema = new mongoose.Schema({
         default: null,
     },
     emergencycontact: {
-        name: {
+        number: {
             type: String,
             default: null,
-            minlength: [3, "Name must be at least 3 characters long"],
-        },
-        number: {
-            type: Number,
-            default: null,
-            min: [1000000000, "Phone number is not valid!"],
-            max: [9999999999, "Phone number is not valid!"],
+            validate: {
+                validator: function (v) {
+                    return !v || /^[0-9]{10}$/.test(v); // ✅ Allows empty values or valid 10-digit numbers
+                },
+                message: "Phone number is not valid!",
+            },
+            required: false, // ✅ Make it optional
         },
     },
     bloodgroup: {
@@ -105,24 +102,44 @@ const userSchema = new mongoose.Schema({
     },
     card: {
         type: String,
-        enum: ["recipient", "donar"],
+        enum: ["recipient", "donor"],
         validate: {
             validator: function (value) {
-                return ["recipient", "donar"].includes(value);
+                return ["recipient", "donor"].includes(value);
             },
             message: "{VALUE} is not supported",
         },
     },
+    googleId: {
+        type: String,
+        unique: true,
+        sparse: true // Allows normal users without Google authentication
+    }
+},{ timestamps: true });
+
+// Hash password before saving
+userSchema.pre("save", async function (next) {
+    if (!this.isModified("password")) return next();
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
 });
 
+// Generate JWT Token with expiration
 userSchema.methods.GenerateToken = function () {
-    return jwt.sign({ _id: this._id }, process.env.JWT_KEY);
+    return jwt.sign(
+        { email: this.email },
+        process.env.JWT_KEY,
+        { expiresIn: "7d" }
+    );
 };
 
+// Compare Password Safely
 userSchema.methods.ComparePassword = async function (password) {
+    if (!this.password) return false;
     return await bcrypt.compare(password, this.password);
 };
 
+// Static Method to Hash Password
 userSchema.statics.hashPassword = async function (password) {
     return await bcrypt.hash(password, 10);
 };
