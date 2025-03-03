@@ -3,7 +3,7 @@
 ## API Endpoints 🏗️
 <br>
 
-## 1. **_REGISTER A NEW USER IN OUR SYSTEM WITH THIS API_**
+## 1. **_REGISTER A NEW USER IN OUR SYSTEM WITH THIS API_** 🪧
 #### 📫POST 🙎🏽‍♀️ `/user/register` 🙎🏽‍♂️
 
 **Request Body:**
@@ -36,8 +36,8 @@
 
 ## Response Code
 ```diff
-+ Response Code Success Response (201)
-- Response Code Error Response (500)
++ Response Code Success Response (201) ✅
+- Response Code Error Response (500) ❌
 ```
 <br><br>
 
@@ -49,7 +49,7 @@ After Otp Varifiction the data will be save in the Database.
 
 <br><br>
 
-#  MONGOOSE SAVED DATA 🧾
+#  MONGOOSE SAVED DATA 📑
 
 ```js
     userId: mongoose.Schema.Types.ObjectId,  // mongoose object id
@@ -92,7 +92,7 @@ After Otp Varifiction the data will be save in the Database.
 ---
 <br><br>
 
-## 2. **_LOGIN THE USER IN OUR SYSTEM WITH THIS API_**
+## 2. **_LOGIN THE USER IN OUR SYSTEM WITH THIS API_** 🪧
 <br>
 
 #### 📫POST 🙎🏽‍♀️ `/user/login` 🙎🏽‍♂️
@@ -107,8 +107,8 @@ After Otp Varifiction the data will be save in the Database.
 ## Response Code
 
 ```diff
-+ if Succesfull then status code (200)
-- if Not Succesfull then status code (406)
++ if Succesfull then status code (200) ✅
+- if Not Succesfull then status code (406) ❌
 ```
 
 ## Sending Things in Frontent 
@@ -119,7 +119,7 @@ After Otp Varifiction the data will be save in the Database.
 <br>
 <br>
 
-## 3. **_USER PROFILE_**
+## 3. **_USER PROFILE_** 🪧
 
 #### 📫 GET `/user/profile`
 
@@ -134,13 +134,13 @@ After Otp Varifiction the data will be save in the Database.
   - User Redirected to the login Page !
 ## Response Code
 ```diff
-+if the User profile found (302)
--if the User profile Not found (404)
++if the User profile found (302) ✅
+-if the User profile Not found (404) ❌
 ```
 
 <br>
 
-## 4. **_REGISTER A NEW ADMIN IN OUR SYSTEM WITH THIS API_**
+## 4. **_REGISTER A NEW ADMIN IN OUR SYSTEM WITH THIS API_** 🪧
 
 <br>
 
@@ -160,12 +160,12 @@ After Otp Varifiction the data will be save in the Database.
 
 ## Response Code
 ```diff
-+if Admin register Succesfuly (201)
--if Admin register Not Succesfuly (500)
++if Admin register Succesfuly (201) ✅
+-if Admin register Not Succesfuly (500) ❌
 ```
 <br><br>
 
-## 5. **_LOGIN THE ADMIN IN OUR SYSTEM WITH THIS API_**
+## 5. **_LOGIN THE ADMIN IN OUR SYSTEM WITH THIS API_** 🪧
 
 #### 📫POST 👦🏽 `/admin/login` 👦🏽
 
@@ -180,12 +180,12 @@ After Otp Varifiction the data will be save in the Database.
 
 ## Response Code
 ```diff
-+if Admin Succesfuly Login(200)
--if Admin Not Succesfuly Login (406)
++if Admin Succesfuly Login(200) ✅
+-if Admin Not Succesfuly Login (406) ❌
 ```
 <br>
 
-## 6. **_ADMIN PROFILE_**
+## 6. **_ADMIN PROFILE_** 🪧
 
 #### 📫 GET `/admin/admin-profile`
 
@@ -201,7 +201,39 @@ After Otp Varifiction the data will be save in the Database.
 
 ## Response Code
 ```diff
-+if the Admin profile found (302)
--if the Admin profile Not found (404)
++if the Admin profile found (302) ✅
+-if the Admin profile Not found (404) ❌
 ```
 <br>
+<br>
+
+## 7.*_GOOGLE AUTHENTICATION ROUTE_* 🪧
+
+### Authentication Route
+
+#### 📫 GET `/google-oth/auth/google`
+
+---
+
+### This is CallBack URL for Google
+
+#### 📫 GET `/google-oth/auth/google/callback`
+
+```javascript
+  {
+    Scope: ["Profile", "Email"]
+  }
+```
+### Success Route And Failure Route
+
+```diff
++/users/profile ✅
+-/users/login ❌
+```
+---
+<br>
+
+> # 🛑 Important Notice :
+
+### If User do <i><b><u>"Signin with Google"</u></b></i> they will not requirement the password section, it will be redirect by Google ID.
+
