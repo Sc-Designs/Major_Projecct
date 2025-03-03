@@ -120,17 +120,19 @@ const userSchema = new mongoose.Schema({
 // Hash password before saving
 userSchema.pre("save", async function (next) {
     if (!this.isModified("password")) return next();
-    this.password = await bcrypt.hash(this.password, 10);
+    this.password = await bcrypt.hash(this.password, Number(process.env.SALT_NUMBER));
     next();
 });
 
 // Generate JWT Token with expiration
 userSchema.methods.GenerateToken = function () {
     return jwt.sign(
-        { email: this.email },
-        process.env.JWT_KEY,
-        { expiresIn: "7d" }
-    );
+        { 
+            email: this.email 
+        }, 
+        process.env.JWT_KEY, {
+            expiresIn: process.env.EXPIRE_DATE,
+        });
 };
 
 // Compare Password Safely
@@ -141,7 +143,7 @@ userSchema.methods.ComparePassword = async function (password) {
 
 // Static Method to Hash Password
 userSchema.statics.hashPassword = async function (password) {
-    return await bcrypt.hash(password, 10);
+    return await bcrypt.hash(password, Number(process.env.SALT_NUMBER));
 };
 
 const userModel = mongoose.model("user", userSchema);

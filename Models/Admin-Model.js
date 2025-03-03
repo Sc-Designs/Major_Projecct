@@ -78,7 +78,13 @@ const adminSchema = new mongoose.Schema({
 });
 
 adminSchema.methods.GenerateToken = function () {
-    const token = jwt.sign({ email: this.email }, process.env.JWT_KEY,{ expiresIn: '24h' });
+    const token = jwt.sign(
+        { 
+            email: this.email 
+        },
+        process.env.JWT_KEY, {
+            expiresIn: process.env.ADMIN_TOKEN_EXPIRE,
+        });
     return token;
 };
 
@@ -87,7 +93,7 @@ adminSchema.methods.ComparePassword = async function (password) {
 };
 
 adminSchema.statics.hashPassword = async function (password) {
-    return await bcrypt.hash(password, 10);
+    return await bcrypt.hash(password, Number(process.env.SALT_NUMBER));
 };
 
 const adminModel = mongoose.model("admin", adminSchema);
