@@ -1,8 +1,542 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+@font-face {
+  font-family: "Satoshi";
+  src: url("/Fonts/66aa728085dec3390cb7f058_Satoshi-Variable.ttf");
+}
+@font-face {
+  font-family: "Helvetica";
+  src: url("/Fonts/HelveticaNowDisplay-Black_20bf03d0.ttf");
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-a {
-  color: #00B7FF;
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body::-webkit-scrollbar {
+  width: 5px;
+  background-color: #EEFFFE;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #494949;
+  border-radius: 10px;
+}
+
+main {
+  background-color: rgb(238, 255, 254);
+  width: 100%;
+}
+main nav {
+  width: 100%;
+  padding: 5%;
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: end;
+  z-index: 999;
+  backdrop-filter: blur(50px);
+}
+main nav .menu {
+  font-size: 5em;
+}
+main nav .menus {
+  display: none;
+}
+main #landing-page {
+  width: 100%;
+  padding: 30% 0% 15% 5%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+main #landing-page #left_part {
+  display: flex;
+  flex-direction: column;
+  gap: 7em;
+  align-items: start;
+  position: relative;
+  z-index: 2;
+}
+main #landing-page #left_part h1 {
+  font-size: 8em;
+  font-family: "Helvetica";
+  line-height: 1.2;
+}
+main #landing-page #left_part button {
+  padding: 2em 0em;
+  border: 4px solid skyblue;
+  border-radius: 10px;
+  cursor: pointer;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+}
+main #landing-page #left_part button a {
+  padding: 2em;
+  font-family: "Satoshi";
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 3em;
+  color: rgb(0, 0, 0);
+  position: relative;
+  z-index: 2;
+}
+main #landing-page #left_part button::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: skyblue;
+  top: 100%;
+  left: 0;
+  border-radius: 50%;
+  transition: all 0.5s ease;
+}
+main #landing-page #left_part button:hover::after {
+  top: 0;
+  border-radius: 0%;
+}
+main #landing-page #right_part {
+  display: none;
+}
+main #view_1 {
+  padding: 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 4em;
+}
+main #view_1 #top {
+  display: flex;
+  flex-direction: column;
+  gap: 3em;
+}
+main #view_1 #top h1 {
+  font-size: 4em;
+  font-family: "Helvetica";
+  line-height: 1.2;
+}
+main #view_1 #top p {
+  font-family: "Satoshi";
+  font-size: 1.6em;
+}
+main #view_1 #bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+main #view_1 #bottom #up h6, main #view_1 #bottom #down h6 {
+  font-family: "Satoshi";
+  font-size: 1.7em;
+  font-weight: 600;
+}
+main #view_1 #bottom #up p, main #view_1 #bottom #down p {
+  font-family: "Satoshi";
+  font-size: 1.4em;
+  padding: 1% 5%;
+}
+main #view_2 {
+  padding: 7% 5%;
+}
+main #view_2 h4 {
+  font-size: 5em;
+  font-family: "Helvetica";
+  line-height: 1.2;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.5);
+  font-style: italic;
+}
+main #view_3 {
+  padding: 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 5em;
+}
+main #view_3 #left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+main #view_3 #left h3 {
+  font-size: 4em;
+  font-family: "Helvetica";
+  line-height: 1.2;
+}
+main #view_3 #left p {
+  font-family: "Satoshi";
+  font-size: 1.6em;
+}
+main #view_3 #right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+main #view_3 #right h3 {
+  font-size: 4em;
+  font-family: "Helvetica";
+  line-height: 1.2;
+}
+main #view_3 #right p {
+  font-family: "Satoshi";
+  font-size: 1.6em;
+}
+main #view_4 {
+  padding: 10% 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 5em;
+  align-items: start;
+}
+main #view_4 h1 {
+  font-size: 5em;
+  font-family: "Helvetica";
+  line-height: 1.2;
+}
+main #view_4 button {
+  border: 4px solid skyblue;
+  border-radius: 10px;
+  cursor: pointer;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+  padding: 2em 0em;
+}
+main #view_4 button a {
+  padding: 2em;
+  font-family: "Satoshi";
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 3em;
+  color: rgb(0, 0, 0);
+  position: relative;
+  z-index: 2;
+}
+main #view_4 button::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: skyblue;
+  top: 100%;
+  left: 0;
+  border-radius: 50%;
+  transition: all 0.5s ease;
+}
+main #view_4 button:hover::after {
+  top: 0;
+  border-radius: 0%;
+}
+main #view_5 {
+  display: flex;
+  flex-direction: column;
+  padding: 5%;
+  gap: 2em;
+  margin-bottom: 4em;
+}
+main #view_5 h3 {
+  font-size: 4em;
+  font-family: "Helvetica";
+  line-height: 1.2;
+  text-align: center;
+}
+main #view_5 #all_btn {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+main #view_5 #all_btn #top {
+  display: flex;
+  gap: 2em;
+}
+main #view_5 #all_btn #top button {
+  padding: 2em 0em;
+  width: 100%;
+  border: 4px solid skyblue;
+  border-radius: 10px;
+  cursor: pointer;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+}
+main #view_5 #all_btn #top button a {
+  padding: 2em;
+  width: 100%;
+  font-family: "Satoshi";
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 3em;
+  color: rgb(0, 0, 0);
+  position: relative;
+  z-index: 2;
+  text-decoration: none;
+}
+main #view_5 #all_btn #top button::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: skyblue;
+  top: 100%;
+  left: 0;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+main #view_5 #all_btn #top button:hover::after {
+  top: 0;
+  border-radius: 0%;
+}
+main #view_5 #all_btn #bottom {
+  display: flex;
+  gap: 2em;
+}
+main #view_5 #all_btn #bottom button {
+  width: 100%;
+  padding: 2em 0em;
+  border: 4px solid skyblue;
+  border-radius: 10px;
+  cursor: pointer;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+}
+main #view_5 #all_btn #bottom button a {
+  padding: 2em;
+  width: 100%;
+  text-decoration: none;
+  font-family: "Satoshi";
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 3em;
+  color: rgb(0, 0, 0);
+  position: relative;
+  z-index: 2;
+}
+main #view_5 #all_btn #bottom button::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: skyblue;
+  top: 100%;
+  left: 0;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+main #view_5 #all_btn #bottom button:hover::after {
+  top: 0;
+  border-radius: 0%;
+}
+main footer {
+  display: flex;
+  flex-direction: column;
+  gap: 4em;
+  padding: 5%;
+  background-color: #000000;
+}
+main footer #top {
+  display: flex;
+  flex-direction: column;
+  gap: 4em;
+}
+main footer #top section {
+  display: flex;
+  flex-direction: column;
+  gap: 3em;
+}
+main footer #top section h2 {
+  text-transform: uppercase;
+  font-size: 4em;
+  font-family: "Helvetica";
+  color: #fff;
+  letter-spacing: 0.2em;
+}
+main footer #top section ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+main footer #top section ul li {
+  list-style-type: none;
+  padding-left: 1.5em;
+}
+main footer #top section ul li a {
+  text-decoration: none;
+  color: #6d6d6d;
+  font-size: 3em;
+  font-family: "Satoshi";
+  line-height: 1;
+  letter-spacing: 0.1em;
+  transition: all 0.5s ease;
+}
+main footer #top section ul li a:hover {
+  color: #fff;
+}
+main footer #bottom section p {
+  padding-top: 1em;
+  font-size: 3.5em;
+  color: #fff;
+  font-family: "Satoshi";
+  line-height: 1.5;
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  main {
+    width: 100%;
+    min-height: 100vh;
+  }
+  main nav {
+    width: 100%;
+    padding: 2% 5% 2% 2%;
+    display: flex;
+    justify-content: end;
+  }
+  main nav .menu {
+    display: none;
+  }
+  main nav .menus {
+    display: flex;
+    gap: 2em;
+    justify-content: flex-end;
+  }
+  main nav .menus li {
+    list-style-type: none;
+    position: relative;
+    cursor: pointer;
+  }
+  main nav .menus li a {
+    text-decoration: none;
+    text-transform: capitalize;
+    color: black;
+    font-family: "Satoshi";
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    position: relative;
+    z-index: 2;
+  }
+  main nav .menus li::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 0%;
+    background-color: black;
+    top: 100%;
+    left: 0;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+  main nav .menus li:hover::after {
+    width: 100%;
+  }
+  main #landing-page {
+    width: 100%;
+    padding: 5% 5% 0% 5%;
+    height: 100vh;
+  }
+  main #landing-page #left_part {
+    gap: 7em;
+  }
+  main #landing-page #left_part h1 {
+    font-size: 5em;
+  }
+  main #landing-page #left_part button {
+    padding: 1em 0em;
+    border: 2px solid skyblue;
+  }
+  main #landing-page #left_part button a {
+    padding: 1em 2em;
+    font-size: 1.5em;
+  }
+  main #landing-page #right_part {
+    display: block;
+    position: relative;
+    z-index: 2;
+  }
+  main #view_1 {
+    margin-top: -5%;
+    gap: 2.5em;
+  }
+  main #view_2 {
+    padding: 1% 5%;
+  }
+  main #view_2 h4 {
+    font-size: 5em;
+    user-select: none;
+  }
+  main #view_3 {
+    flex-direction: row;
+    align-items: center;
+    gap: 15em;
+  }
+  main #view_3 #left h3, main #view_3 #right h3 {
+    font-size: 3em;
+    font-family: "Helvetica";
+    line-height: 1.2;
+  }
+  main #view_3 #left p, main #view_3 #right p {
+    letter-spacing: -0.03em;
+  }
+  main #view_4 {
+    padding: 5% 5%;
+    gap: 4em;
+  }
+  main #view_4 h1 {
+    font-size: 4em;
+  }
+  main #view_4 button {
+    border: 2px solid skyblue;
+    padding: 1em 0em;
+  }
+  main #view_4 button a {
+    padding: 1em 3.5em;
+    font-size: 1.5em;
+  }
+  main #view_5 {
+    gap: 4em;
+  }
+  main #view_5 #all_btn {
+    flex-direction: row;
+    justify-content: center;
+    gap: 4em;
+  }
+  main #view_5 #all_btn #top, main #view_5 #all_btn #bottom {
+    gap: 4em;
+  }
+  main #view_5 #all_btn #top button, main #view_5 #all_btn #bottom button {
+    border: 2px solid skyblue;
+    padding: 1em 0em;
+  }
+  main #view_5 #all_btn #top button a, main #view_5 #all_btn #bottom button a {
+    padding: 1em 3.5em;
+    font-size: 1.5em;
+  }
+  main footer {
+    padding: 3% 5% 1% 5%;
+  }
+  main footer #top {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  main footer #top section {
+    gap: 1em;
+  }
+  main footer #top section h2 {
+    font-size: 2em;
+  }
+  main footer #top section ul li {
+    padding-left: 1em;
+  }
+  main footer #top section ul li a {
+    font-size: 1.5em;
+  }
+  main footer #bottom section p {
+    font-size: 1.2em;
+    text-align: center;
+  }
 }

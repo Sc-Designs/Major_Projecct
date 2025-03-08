@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registation</title>
+    <link rel="shortcut icon" href="/images/favicon.webp" type="image/x-icon">
+    <link rel="stylesheet" href="/stylesheets/register.css">
+</head>
+<body>
+    <main>
+        <section>
+            <img src="/images/favicon.webp" alt="Logo">
+            <h1>Register</h1>
+            <form action="">
+                <label for="name">🫡 Name: *</label>
+                <p id="alertname"></p>
+                <input type="text" name="name" placeholder="Name" id="name" required>
+                
+                <label for="email">📧 Email: *</label>
+                <p id="alertemail"></p>
+                <input type="email" name="email" placeholder="Email" id="email" required>
+                
+                <label for="age">🦴 Age:</label>
+                <p id="alertage"></p>
+                <input type="number" name="age" placeholder="Age+" id="age">
+
+                    <label for="blood-group">🩸Blood Group:</label>
+                    <select name="blood-group" id="blood-group">
+                        <option value="">Select Blood Group</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                    </select>
+
+                    <label for="emargencycontact">🦺 Emargency Contact:</label>
+                    <input type="number" name="emargencycontact" placeholder="Emargency Contact" id="emargencycontact" required>
+                    
+                <label for="dob">📅 Date of Birth:</label>
+                <input type="date" name="dob" id="dob" required>
+                
+                <label for="pass">😌 Password: *</label>
+                <input type="password" name="" placeholder="Password" id="pass" required>
+                
+                <label for="pass">😌 Confirm Password: *</label>
+                <p id="alertpss"></p>
+                <input type="password" name="password" placeholder="Confirm Password" id="conpass" required>
+                
+                <button type="submit">Register</button>
+                <div class="lowar_part">
+                    <p>Already have an account?</p>
+                    <a href="/users/login">Login</a>
+                </div>
+                <h3>Or</h3>
+                <div class="social">
+                    <img src="/images/google.webp" alt="">
+                    <img src="/images/google.webp" alt="">
+                    <a href="/google-oth/auth/google">SignUp with Google</a>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+<script src="/javascripts/register.js"></script>
+</html>

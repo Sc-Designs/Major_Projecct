@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
   host: process.env.HOSTER_CLR,
-  port: process.env.PORT_CLR,
+  port: +process.env.PORT_CLR,
   secure: true,
   auth: {
     user: process.env.GMAIL_USERNAME,
@@ -11,6 +11,8 @@ const transporter = nodemailer.createTransport({
   greetingTimeout: 10000, // 10 seconds
   socketTimeout: 10000, // 10 seconds
 });
+
+
 module.exports.sendEmail = async ({ email, sub, mess }) => {
     try {
       return await transporter.sendMail({
@@ -20,7 +22,6 @@ module.exports.sendEmail = async ({ email, sub, mess }) => {
         html: mess,
       });
     } catch (error) {
-      req.flash("error", "Error sending email: ", error.message);
       console.error("Error sending email: ", error.message);
     }
 };

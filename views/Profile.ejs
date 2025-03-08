@@ -1,18 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Google Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="shortcut icon" href="/images/favicon.webp" type="image/x-icon">
+    <link rel="stylesheet" href="/stylesheets/profile.css">
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
 </head>
 <body>
-    <h1>Welcome to My Website</h1>
-    <% if (!user) { %>``
-        <a href="/google-oth/auth/google">
-            <button>Sign in with Google</button>
-        </a>
-    <% } else { %>
-        <p>Welcome, <%= user.name %>!</p>
-        <a href="/dashboard">Go to Dashboard</a>
-        <a href="/users/logout">Logout</a>
-    <% } %>
+    <main>
+        <nav>
+        <i class="ri-menu-3-fill menu"></i>
+        <ul class="menus">
+            <li><a href="/">Home</a></li>
+            <li><a href="">Chat</a></li>
+            <li><a href="">About</a></li>
+            <li><a href="">FeedBack</a></li>
+            <li><a href="">Contact</a></li>
+            <a href="/users/logout">Logout</a>
+        </ul>
+        </nav>
+        <section class="profile-info">
+            <div id="top">
+            <div class="img">
+                <% if(profilepic) { %>
+                    <img class="prifile_pic" src="data:image/png;base64,<%= user.profilepic %>" alt="" />
+                <% } else { %>
+                <img class="prifile_pic" src="https://plus.unsplash.com/premium_photo-1676637656198-e2bbf752103a?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Profile Picture">
+                <% } %>
+                    <img class="change_photo" src="/images/photos.webp" alt="">
+            </div>
+            <div class="name-info">
+                <h1 id="name"><%= user.name %></h1>
+                <h2><%= user.email %></h2>
+            </div>
+            </div>
+            <div class="wellcome-massage">
+                <h5>Welcome Message to <br> [ <span id="wellName"></span> ]</h5>
+                <hr>
+                <p>Welcome to LifeSaver! ❤️<br> Thank you for joining us in saving lives. Whether you're donating or searching for a donor, your support matters. Together, we will make a better India. Enjoy your day, Thank You! 🤗</p>
+            </div>
+        </section>
+        <section class="strick_rate">
+            <h1>Your Streaks Info</h1>
+            <div class="info">
+                <div class="donation">
+                    <h3>Donate</h3>
+                    <hr>
+                    <p>0<span> Time</span></p>
+                </div>
+                <div class="donation">
+                    <h3>Blood Requests</h3>
+                    <hr>
+                    <p>0<span> Time</span></p>
+                </div>
+                <div class="verified">
+                    <h3>Verified</h3>
+                    <hr>
+                    <section>
+                        <% if (user.verified){ %>
+                        <img src="/images/check.webp" alt="">
+                        <p>Yes</p>
+                        <% } else {%>
+                        <img src="/images/remove.webp" alt="">
+                        <p>No</p>
+                        <% } %>
+                    </section>
+                </div>
+                <div class="blood_group">
+                    <h3>Blood Group</h3>
+                    <hr>
+                    <% if(user.bloodgroup) { %>
+                    <p><%= user.bloodgroup  %></p>
+                    <% } else { %>
+                    <p>Not Know</p>
+                    <% } %>
+                </div>
+            </div>
+        </section>
+        <div class="profile-img">
+        <form action="/users/picture-upload" method="post" enctype="multipart/form-data">
+            <input type="email" name="email" id="" value="<%= user.email %>" />
+            <input type="file" accept="image/*" name="profilepic" id="profilepic" required />
+            <input type="submit" value="Upload" id="upload" />
+        </form>
+        </div>
+    </main>
 </body>
+<script src="/javascripts/profile.js"></script>
 </html>

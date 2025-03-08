@@ -1,0 +1,174 @@
+@font-face {
+    font-family: "Satoshi";
+    src: url("/Fonts/66aa728085dec3390cb7f058_Satoshi-Variable.ttf");
+}
+@font-face {
+    font-family: "Helvetica";
+    src: url("/Fonts/HelveticaNowDisplay-Black_20bf03d0.ttf");
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html,body{
+    height: 100%;
+    width: 100%;
+}
+body{
+    background-color: #EEFFFE;
+}
+main{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5%;
+    section{
+        width: 100%;
+        border: 2px solid skyblue;
+        padding: 5%;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1em;
+        img{
+            width: 7em;
+            aspect-ratio: 1/1;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        h1{
+            font-family: "Helvetica";
+            font-size: 2em;
+            text-align: center;
+        }
+        form{
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            gap: 1em;
+            label{
+                font-family: "Satoshi";
+                font-size: 1.2em;
+                font-weight: 500;
+                margin-bottom: -0.5em;
+            }
+            input[type="email"],input[type="password"]{
+                font-family: "Satoshi";
+                font-size: 1em;
+                padding: 0.5em;
+                border-radius: 5px;
+                border: 2px solid skyblue;
+                outline: none;
+                background: transparent;
+            }
+            input[type="email"]::placeholder, input[type="password"]::placeholder{
+                font-family: "Satoshi";
+                font-weight: 500;
+            }
+            input[type="submit"]{
+                font-family: "Satoshi";
+                font-size: 1.5em;
+                padding: 0.3em 0em;
+                background-color:rgb(95, 210, 255);
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                outline: none;
+                margin-top: 1em;
+            }
+        }
+        .signup{
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            padding: 0% 5%;
+            p{
+                font-family: "Satoshi";
+                font-size: 1.2em;
+                text-align: center;
+            }
+            a{
+                text-decoration: none;
+                font-family: "Satoshi";
+                font-size: 1.2em;
+                color: skyblue;
+                cursor: pointer;
+                font-weight: 600;
+            }
+        }
+        &>p{
+            font-family: "Helvetica";
+            font-size: 1.2em;
+            text-align: center;
+        }
+        &>a{
+            text-decoration: none;
+            width: 90%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            text-decoration: none;
+            p{
+                text-align: center;
+                font-family: "Satoshi";
+                white-space: nowrap;
+                font-size: 1.2em;
+                padding: 0.5em 0.5em;
+                background-color: rgb(95, 210, 255);
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                width: 100%;
+            }
+            #left{
+                top: 50%;
+                transform: translate(-50%, -50%);
+                position: absolute;
+                width: 2em;
+                aspect-ratio: 1/1;
+                left: 10%;
+            }
+            #right{
+                top: 50%;
+                transform: translate(-50%, -50%);
+                position: absolute;
+                width: 2em;
+                aspect-ratio: 1/1;
+                right: 0%;
+            }
+        }
+    }
+}
+
+@media (min-width: 1024px) {
+    main{
+        section{
+            width: 50%;
+            padding: 3%;
+            form{
+                input[type="submit"]{
+                    font-size: 1.5em;
+                }
+            }
+            a{
+                p{
+                    font-weight: 600;
+                    font-size: 1.3em;
+                }
+                #right{
+                    right: 3%;
+                }
+            }
+        }
+    }
+}

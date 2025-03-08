@@ -1,0 +1,191 @@
+@font-face {
+  font-family: "Satoshi";
+  src: url("/Fonts/66aa728085dec3390cb7f058_Satoshi-Variable.ttf");
+}
+@font-face {
+  font-family: "Helvetica";
+  src: url("/Fonts/HelveticaNowDisplay-Black_20bf03d0.ttf");
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: #EEFFFE;
+}
+
+body::-webkit-scrollbar {
+  width: 5px;
+  background-color: #EEFFFE;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #494949;
+  border-radius: 10px;
+}
+
+main {
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  justify-content: center;
+  width: 100%;
+  padding: 5%;
+}
+main section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  border: 2px solid skyblue;
+  border-radius: 10px;
+  padding: 5%;
+  gap: 0.5em;
+}
+main section img {
+  width: 7em;
+  aspect-ratio: 1/1;
+}
+main section h1 {
+  font-family: "Helvetica";
+  font-size: 2em;
+}
+main section form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  width: 90%;
+}
+main section form label {
+  font-family: "Satoshi";
+  font-size: 1.2em;
+  font-weight: 500;
+}
+main section form input {
+  width: 100%;
+  text-align: center;
+  height: 40px;
+  background: transparent;
+  border: 2px solid skyblue;
+  border-radius: 5px;
+  font-family: "Satoshi";
+  font-size: 1em;
+  outline: none;
+}
+main section form input[type=number]::-webkit-inner-spin-button,
+main section form input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+main section form #alertpss, main section form #alertname, main section form #alertemail, main section form #alertage {
+  font-family: "Satoshi";
+  font-size: 1.1em;
+  color: red;
+  font-weight: 500;
+}
+main section form select {
+  width: 100%;
+  height: 40px;
+  background: transparent;
+  border: 2px solid skyblue;
+  border-radius: 5px;
+  font-family: "Satoshi";
+  font-size: 1em;
+  outline: none;
+}
+main section form select option {
+  font-weight: 500;
+  font-family: "Satoshi";
+  text-transform: uppercase;
+  background: skyblue;
+}
+main section form button {
+  margin-top: 1.5em;
+  height: 50px;
+  background: rgb(95, 210, 255);
+  outline: none;
+  border: none;
+  font-family: "Helvetica";
+  text-transform: uppercase;
+  font-size: 1.1em;
+  cursor: pointer;
+  color: #fff;
+  letter-spacing: 0.09em;
+}
+main section form .lowar_part {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1em;
+}
+main section form .lowar_part p {
+  font-family: "Satoshi";
+  font-size: 1.2em;
+  color: gray;
+  margin-left: 0.5em;
+  font-weight: 500;
+}
+main section form .lowar_part a {
+  font-family: "Satoshi";
+  font-size: 1.2em;
+  text-decoration: none;
+  color: skyblue;
+  font-weight: 900;
+}
+main section form h3 {
+  font-family: "Helvetica";
+  font-size: 1.2em;
+  text-align: center;
+}
+main section form .social {
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+main section form .social img:nth-child(1) {
+  position: absolute;
+  width: 2em;
+  aspect-ratio: 1/1;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 2%;
+  pointer-events: none;
+}
+main section form .social img:nth-child(2) {
+  position: absolute;
+  width: 2em;
+  aspect-ratio: 1/1;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 2%;
+  pointer-events: none;
+}
+main section form .social a {
+  font-family: "Satoshi";
+  width: 100%;
+  font-size: 1.2em;
+  text-decoration: none;
+  background: rgb(95, 210, 255);
+  font-weight: 900;
+  color: #fff;
+  padding: 2% 0%;
+  text-align: center;
+  border-radius: 5px;
+}
+
+@media (min-width: 1024px) {
+  main {
+    padding: 2%;
+  }
+  main section {
+    width: 50%;
+  }
+}
