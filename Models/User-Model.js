@@ -40,8 +40,7 @@ const userSchema = new mongoose.Schema({
         default: null,
     },
     profilepic: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "photo",
+        type:Buffer,
         default: null,
     },
     verified: {
@@ -119,9 +118,14 @@ const userSchema = new mongoose.Schema({
 
 // Hash password before saving
 userSchema.pre("save", async function (next) {
-    if (!this.isModified("password")) return next();
-    this.password = await bcrypt.hash(this.password, Number(process.env.SALT_NUMBER));
+  if (!this.isModified("password")) return next();
+  try {
+    this.password = bcrypt.hash(this.password, +process.env.SALT_NUMBER);
     next();
+  } catch (error) {
+    console.error("Error hashing password:", error);
+    next(error);
+  }
 });
 
 // Generate JWT Token with expiration
@@ -137,13 +141,14 @@ userSchema.methods.GenerateToken = function () {
 
 // Compare Password Safely
 userSchema.methods.ComparePassword = async function (password) {
-    if (!this.password) return false;
+    if(!this.password) return false;
     return await bcrypt.compare(password, this.password);
 };
 
 // Static Method to Hash Password
 userSchema.statics.hashPassword = async function (password) {
-    return await bcrypt.hash(password, Number(process.env.SALT_NUMBER));
+    console.log(password);
+    return await bcrypt.hash(password, +process.env.SALT_NUMBER);
 };
 
 const userModel = mongoose.model("user", userSchema);

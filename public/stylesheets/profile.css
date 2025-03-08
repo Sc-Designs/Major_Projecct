@@ -1,0 +1,335 @@
+@font-face {
+  font-family: "Satoshi";
+  src: url("/Fonts/66aa728085dec3390cb7f058_Satoshi-Variable.ttf");
+}
+@font-face {
+  font-family: "Helvetica";
+  src: url("/Fonts/HelveticaNowDisplay-Black_20bf03d0.ttf");
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: #EEFFFE;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+main {
+  padding: 20% 0% 2% 0%;
+}
+main nav {
+  width: 100%;
+  padding: 2% 10% 2% 0%;
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: end;
+  z-index: 999;
+  backdrop-filter: blur(50px);
+}
+main nav .menu {
+  font-size: 3em;
+}
+main nav .menus {
+  display: none;
+}
+main .profile-info {
+  padding: 5% 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 2em;
+}
+main .profile-info #top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+}
+main .profile-info #top .img {
+  width: fit-content;
+  position: relative;
+}
+main .profile-info #top .img .prifile_pic {
+  aspect-ratio: 1/1;
+  width: 12em;
+  border-radius: 50%;
+  object-fit: cover;
+}
+main .profile-info #top .img .change_photo {
+  position: absolute;
+  width: 3em;
+  aspect-ratio: 1/1;
+  bottom: 0;
+  right: 10%;
+}
+main .profile-info #top .name-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+main .profile-info #top .name-info h1 {
+  font-family: "Satoshi";
+  font-size: 1.8em;
+  text-align: center;
+  margin-bottom: 1em;
+  font-weight: 300;
+  line-height: 1;
+}
+main .profile-info #top .name-info h2 {
+  margin-top: -1em;
+  font-family: "Helvetica";
+  font-size: 1.2em;
+  text-align: center;
+  margin-bottom: 1em;
+  line-height: 1;
+  color: rgb(105, 105, 105);
+  user-select: none;
+}
+main .profile-info .wellcome-massage {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+  border: 2px solid skyblue;
+  padding: 5%;
+  border-radius: 10px;
+}
+main .profile-info .wellcome-massage h5 {
+  font-size: 1.5em;
+  line-height: 1.2;
+  font-family: "Helvetica";
+}
+main .profile-info .wellcome-massage p {
+  padding-top: 0.5em;
+  font-size: 1.2em;
+  line-height: 1.2;
+  font-family: "Satoshi";
+  font-weight: 500;
+}
+main .strick_rate {
+  margin: 0% 5%;
+  border: 2px solid skyblue;
+  padding: 5%;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+main .strick_rate h1 {
+  font-size: 1.8em;
+  line-height: 1.2;
+  font-family: "Helvetica";
+}
+main .strick_rate .info {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+main .strick_rate .info .donation h3 {
+  font-size: 1.5em;
+  line-height: 1.2;
+  font-family: "Helvetica";
+}
+main .strick_rate .info .donation hr {
+  display: none;
+}
+main .strick_rate .info .donation p {
+  font-size: 2.3em;
+  line-height: 1.2;
+  font-family: "Satoshi";
+  font-weight: 700;
+  color: rgb(134, 134, 134);
+}
+main .strick_rate .info .donation p span {
+  font-size: 0.5em;
+  font-weight: 500;
+  color: rgb(134, 134, 134);
+}
+main .strick_rate .info .verified {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+main .strick_rate .info .verified h3 {
+  font-size: 1.5em;
+  line-height: 1.2;
+  font-family: "Helvetica";
+}
+main .strick_rate .info .verified hr {
+  display: none;
+}
+main .strick_rate .info .verified section {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+}
+main .strick_rate .info .verified section img {
+  width: 2em;
+  aspect-ratio: 1/1;
+}
+main .strick_rate .info .verified section p {
+  font-size: 1.2em;
+  line-height: 1.2;
+  font-family: "Satoshi";
+  font-weight: 700;
+  color: rgb(134, 134, 134);
+}
+main .strick_rate .info .blood_group h3 {
+  font-size: 1.5em;
+  line-height: 1.2;
+  font-family: "Helvetica";
+}
+main .strick_rate .info .blood_group hr {
+  display: none;
+}
+main .strick_rate .info .blood_group p {
+  font-size: 2.3em;
+  line-height: 1.2;
+  font-family: "Satoshi";
+  font-weight: 700;
+  color: rgb(55, 55, 55);
+}
+main .profile-img {
+  position: fixed;
+  top: -100%;
+  left: 10%;
+  pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+  main {
+    padding: 4% 5% 2% 5%;
+  }
+  main nav {
+    width: 100%;
+    padding: 1% 10% 1% 2%;
+    position: fixed;
+    top: 0;
+    display: flex;
+    justify-content: end;
+  }
+  main nav .menu {
+    display: none;
+  }
+  main nav .menus {
+    display: flex;
+    gap: 2em;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  main nav .menus > a {
+    font-weight: 500;
+    color: white;
+    font-family: "Satoshi";
+    text-decoration: none;
+    background-color: rgb(255, 38, 0);
+    padding: 1.5% 5%;
+    border-radius: 10px;
+    letter-spacing: -0.05em;
+    transition: all 0.5s ease;
+  }
+  main nav .menus > a:active {
+    background-color: rgb(239, 0, 0);
+    scale: 0.9;
+  }
+  main nav .menus li {
+    list-style-type: none;
+    position: relative;
+    cursor: pointer;
+  }
+  main nav .menus li a {
+    text-decoration: none;
+    text-transform: capitalize;
+    color: black;
+    font-family: "Satoshi";
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    position: relative;
+    z-index: 2;
+  }
+  main nav .menus li::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 0%;
+    background-color: black;
+    top: 100%;
+    left: 0;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+  main nav .menus li:hover::after {
+    width: 100%;
+  }
+  main .profile-info {
+    flex-direction: row;
+    justify-content: center;
+    gap: 10em;
+    margin-bottom: 4em;
+  }
+  main .profile-info #top {
+    flex-direction: row;
+    gap: 1em;
+    align-items: center;
+  }
+  main .profile-info #top .name-info {
+    align-items: start;
+    gap: 0.1em;
+  }
+  main .profile-info #top .name-info h1 {
+    font-size: 2.2em;
+    font-weight: 400;
+  }
+  main .profile-info .wellcome-massage {
+    width: 40%;
+    padding: 2%;
+  }
+  main .profile-info .wellcome-massage h5 br {
+    display: none;
+  }
+  main .strick_rate {
+    margin-top: -6em;
+  }
+  main .strick_rate .info {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  main .strick_rate .info .donation h3 {
+    font-size: 1.5em;
+    line-height: 1.2;
+    font-family: "Helvetica";
+  }
+  main .strick_rate .info .donation hr {
+    display: block;
+  }
+  main .strick_rate .info .donation p {
+    font-size: 5em;
+    line-height: 1.2;
+    font-family: "Satoshi";
+    font-weight: 700;
+    color: rgb(134, 134, 134);
+  }
+  main .strick_rate .info .donation p span {
+    font-size: 0.3em;
+    font-weight: 500;
+    color: rgb(134, 134, 134);
+  }
+  main .strick_rate .info .verified hr {
+    display: block;
+  }
+  main .strick_rate .info .blood_group hr {
+    display: block;
+  }
+}

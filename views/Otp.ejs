@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otp Verification</title>
+    <link rel="shortcut icon" href="/images/favicon.webp" type="image/x-icon">
+    <link rel="stylesheet" href="/stylesheets/otp.css">
+</head>
+<body>
+    <main>
+        <section>
+            <img src="/images/favicon.webp" alt="">
+            <h3>Verify Your Account</h3>
+            <form action="" method="post" id="otp-form">
+                <div class="otps">
+                  <input type="text" maxlength="1" pattern="\d*" placeholder="0" id="first" autocomplete="off">
+                  <input type="text" maxlength="1" pattern="\d*" placeholder="0" id="second" autocomplete="off">
+                  <input type="text" maxlength="1" pattern="\d*" placeholder="0" id="third" autocomplete="off">
+                  <input type="text" maxlength="1" pattern="\d*" placeholder="0" id="fourth" autocomplete="off">
+                </div>
+                <input type="hidden" name="otp" id="otp-hidden" value="">
+                <div class="bottom">
+                    <input type="submit" value="Validate">
+                    <p id="timer">00:60</p>
+                </div>
+                <div class="reSend_button">
+                    <a href="">Re-Send OTP</a>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+<script>
+    function OTPInput() {
+  const inputs = document.querySelectorAll(".otps > input");
+
+  for (let i = 0; i < inputs.length; i++) {
+    inputs[i].addEventListener("input", function () {
+      // Allow only numbers
+      this.value = this.value.replace(/[^0-9]/g, "");
+
+      // Move to the next input if a digit is entered
+      if (this.value !== "" && i !== inputs.length - 1) {
+        inputs[i + 1].focus();
+      }
+    });
+
+    inputs[i].addEventListener("keydown", function (event) {
+      // Handle Backspace key to move focus back
+      if (event.key === "Backspace") {
+        this.value = "";
+        if (i !== 0) inputs[i - 1].focus();
+      }
+    });
+  }
+}
+
+OTPInput();
+
+    document.getElementById("otp-form").addEventListener("submit", function (e) {
+    const otpValue = Array.from(document.querySelectorAll(".otps > *[id]"))
+      .map((input) => input.value)
+      .join("");
+    document.getElementById("otp-hidden").value = otpValue;
+  });
+
+  
+  let countdown = 60;
+  let timer = document.getElementById("timer");
+  let reSend = document.querySelector(".reSend_button > a");
+  let Resend = document.querySelector(".reSend_button");
+  let interval = setInterval(function () {
+    Resend.style.pointerEvents = "none";
+    reSend.style.pointerEvents = "none";
+    countdown--;
+    timer.textContent = `0${Math.floor(countdown / 60)}:${
+      countdown % 60 < 10 ? "0" : ""
+    }${countdown % 60}`;
+    if (countdown <= 0) {
+        Resend.style.pointerEvents = "auto";
+      reSend.style.pointerEvents = "auto";
+      clearInterval(interval);
+    }
+  }, 1000);
+</script>
+</html>

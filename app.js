@@ -10,6 +10,7 @@ const flash = require("connect-flash");
 const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
+require("dotenv").config();
 
 
 // Middleware Setup

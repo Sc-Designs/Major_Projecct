@@ -1,5 +1,4 @@
 const app = require("./app");
-require("dotenv").config();
 const { Server } = require("socket.io");
 const http = require("http");
 const jwt = require("jsonwebtoken");
@@ -24,14 +23,15 @@ passport.use(
       },
       async (accessToken, refreshToken, profile, done) => {
         try{
-        let user = await userModel.findOne({ googleId: profile.id });
-  
+          let user = await userModel.findOne({ googleId: profile.id });
           if (!user) {
+          const hashedPassword = await userModel.hashPassword("Suv@m4523");
             user = new userModel({
               googleId: profile.id,
               name: profile.displayName,
               email: profile.emails[0].value,
               verified: true,
+              password: hashedPassword,
             });
   
             await user.save();

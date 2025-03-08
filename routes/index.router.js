@@ -11,4 +11,7 @@ let router = express.Router();
    }
  });
 
+router.get("/:anithing",(req,res)=>{
+  res.render('error');
+})
 module.exports = router;

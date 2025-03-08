@@ -1,0 +1,161 @@
+@font-face {
+    font-family: "Satoshi";
+    src: url("/Fonts/66aa728085dec3390cb7f058_Satoshi-Variable.ttf");
+}
+@font-face {
+    font-family: "Helvetica";
+    src: url("/Fonts/HelveticaNowDisplay-Black_20bf03d0.ttf");
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body {
+    height: 100%;
+    width: 100%;
+}
+body {
+    background-color: #EEFFFE;
+}
+main{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5%;
+
+    section{
+        border: 2px solid skyblue;
+        width: 100%;
+        padding: 5% 5% 20% 5%;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2em;
+        img{
+            width: 5em;
+            aspect-ratio: 1/1;
+        }
+        h3{
+            font-family: "Helvetica";
+            color: #333;
+            font-size: 1.5em;
+        }
+        form{
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            margin: 1em 0em 1em 0em;
+            gap: 1em;
+            .otps{
+                display: flex;
+                justify-content: center;
+                gap: 0.5em;
+                margin-bottom: 1em;
+                input[type="text"]{
+                    width: 40px;
+                    height: 40px;
+                    text-align: center;
+                    outline: none;
+                    border: 2px solid skyblue;
+                    border-radius: 5px;
+                    font-size: 1.2em;
+                    font-family: "Satoshi";
+                    background: transparent;
+                }
+                input[type="text"]::placeholder{
+                    opacity: 0.5;
+                }
+            }
+            .bottom{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 4em;
+                input[type="submit"]{
+                    width: 100%;
+                    height: 50px;
+                    background-color: skyblue;
+                    color: white;
+                    font-size: 1.2em;
+                    font-family: "Satoshi";
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-weight: 500;
+                    text-transform: uppercase;
+                    letter-spacing: 0.05em;
+                    &:hover{
+                        background: rgb(82, 191, 234);
+                    }
+                }
+                p{
+                    color: #000;
+                    font-size: 1em;
+                    font-family: "Satoshi";
+                }
+            }
+            .reSend_button{
+                position: relative;
+                height: fit-content;
+                width: 100%;
+                display: flex;
+                overflow: hidden;
+
+                &::after{
+                    content: "";
+                    position: absolute;
+                    top: 100%;
+                    left: 0%;
+                    width: 100%;
+                    height: 100%;
+                    background-color:rgb(82, 191, 234);
+                    border-radius: 5px;
+                    z-index: 1;
+                    transition: all 0.5s ease;
+                    border-radius: 50%;
+                }
+                
+                &:hover::after{
+                    border-radius: 0%;
+                    top: 0%;
+                }
+                &:hover a{
+                    color: white;
+                }
+                a{
+                    width: 100%;
+                    color: skyblue;
+                    text-decoration: none;
+                    font-size: 1.2em;
+                    font-family: "Satoshi";
+                    border: 2px solid skyblue;
+                    text-align: center;
+                    padding: 3% 0% 3% 0%;
+                    position: relative;
+                    top: 0%;
+                    left: 0%;
+                    z-index: 2;
+                    transform: all 0.5s ease;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 1024px) {
+    main{
+        section{
+            width: 50%;
+            gap: 1.5em;
+            padding: 5% 5% 7% 5%;
+            h3{
+                font-size: 2em;
+            }
+        }
+    }
+}
