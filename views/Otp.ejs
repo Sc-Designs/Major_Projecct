@@ -12,7 +12,7 @@
         <section>
             <img src="/images/favicon.webp" alt="">
             <h3>Verify Your Account</h3>
-            <form action="" method="post" id="otp-form">
+            <form action="/users/otp-valid/<%= user._id %>" method="post" id="otp-form">
                 <div class="otps">
                   <input type="text" maxlength="1" pattern="\d*" placeholder="0" id="first" autocomplete="off">
                   <input type="text" maxlength="1" pattern="\d*" placeholder="0" id="second" autocomplete="off">

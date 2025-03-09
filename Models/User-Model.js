@@ -39,6 +39,10 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: null,
     },
+    otpExpiry:{
+        type: Date,
+        default: null,
+    },
     profilepic: {
         type:Buffer,
         default: null,

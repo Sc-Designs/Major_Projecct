@@ -1,3 +1,5 @@
-module.exports.OtpGenerator = ()=>{
-    return Math.trunc(Math.random() * Number(process.env.Multiplier) + Number(process.env.Adder));
+module.exports.OtpGenerator = () => {
+  return Math.trunc(
+    Math.random() * +process.env.Multiplier + +process.env.Adder
+  );
 };

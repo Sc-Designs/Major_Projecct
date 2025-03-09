@@ -1,8 +1,8 @@
 const userModel = require("../Models/User-Model");
 const {validationResult} = require("express-validator");
 const userService = require("../Services/user.service");
-const {OtpGenerator} = require("../utlis/OtpFunction");
-const EmaliSender = require("../utlis/EmailSender");
+const Otp = require("../utlis/OtpFunction");
+const EmailSender = require("../utlis/EmailSender"); // Corrected import statement
 const emailTemplate = require("../Email_Template/Emails");
 
 module.exports.registerUser = async (req, res)=>{
@@ -10,18 +10,20 @@ module.exports.registerUser = async (req, res)=>{
     if(!errors.isEmpty()){
         return res.status(400).json({errors: errors.array()});
     }
-    const {email, password, fullname, phone, address, gender} = req.body;
+    const {email, password, name, dob} = req.body;
+    const userExists = await userModel.findOne({email: email});
+    if(userExists){
+        return res.status(400).redirect("/users/login");
+    }
     const hashedPassword = await userModel.hashPassword(password);
     const user = await userService.createUser({
-        email,
-        password: hashedPassword,
-        fullname,
-        phone,
-        address,
-        gender
+      name,
+      email,
+      dob,
+      password: hashedPassword,
     });
     const token = user.GenerateToken();
-    return res.status(201).json({message: "User created successfully", token , user});
+    return res.status(201).redirect(`/users/otp-varification/${user._id}`);
 }
 
 module.exports.loginUser = async (req, res) => {
@@ -30,13 +32,14 @@ module.exports.loginUser = async (req, res) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+    const { email , password } = req.body;
 
-    const user = await userModel.findOne({email : req.body.email }).select("+password");
+    const user = await userModel.findOne({email : email }).select("+password");
     if (!user) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    const isMatch = await user.ComparePassword(req.body.password);
+    const isMatch = await user.ComparePassword(password);
 
     if (!isMatch) {
       return res.status(401).json({ message: "not match!" });
@@ -45,39 +48,32 @@ module.exports.loginUser = async (req, res) => {
     let userToken = user.GenerateToken();
     res.cookie("UserToken", userToken);
 
-    const otp = OtpGenerator();
-    EmaliSender.sendEmail({
-      email: user.email,
-      sub: "OTP Verification",
-      mess: emailTemplate.loginEmail(otp),
-    });
-
-    if (user.googleId) {
-        delete user._doc.password;
-        delete user._doc.__v;
-        Object.freeze(user);
-        return res.redirect(`/users/otp-varification/${user._id}`); // Ensure return here
-    }
+    let otp = Otp.OtpGenerator();
+    console.log(Otp.OtpGenerator());
+    
     delete user._doc.password;
     delete user._doc.__v;
-    Object.freeze(user);
-    return res.redirect(`/users/otp-varification/${user._id}`); // Ensure return here
+    
+    if (user.googleId) {
+      await EmailSender.sendEmail({ // Corrected EmailSender
+        email: user.email,
+        sub: "OTP Verification",
+        mess: emailTemplate.loginEmail(otp),
+      });
+      return res.redirect(`/users/otp-varification/${user._id}`);
+    } else {
+      await EmailSender.sendEmail({ // Corrected EmailSender
+        email: user.email,
+        sub: "OTP Verification",
+        mess: emailTemplate.loginEmail(otp),
+      });
+      return res.redirect(`/users/otp-varification/${user._id}`);
+    }
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
-
-module.exports.ResendOtp = (req, res)=>{
-    try{
-        const otp = OtpGenerator();
-
-
-    }catch(err){
-        console.error(err);
-        return res.status(500).json({message: "Something went wrong"});
-    }
-}
 
 module.exports.uploadProfilePic = async (req, res) => {
   try{
@@ -91,5 +87,59 @@ module.exports.uploadProfilePic = async (req, res) => {
   }catch(err){
     console.error(err);
     return res.status(500).json({message: "Something went wrong"});
+  }
+};
+
+module.exports.otpVerification = async (req, res) => {
+  try{
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+      return res.status(400).json({errors: errors.array()});
+    }
+    const {otp} = req.body;
+    const user = await userModel.findOne({_id: req.params.id});
+    if(!user) return res.status(404).json({message: "User not found"});
+    if(user.otp != otp) return res.status(401).json({message: "Invalid OTP"});
+    if(user.otpExpiry < Date.now()) return res.status(401).json({message: "OTP Expired"});
+    user.otp = null;
+    user.otpExpiry = null;
+    user.isVerified = true;
+    await user.save();
+    await EmailSender.sendEmail({
+      email: user.email,
+      sub: "OTP Verification",
+      mess: emailTemplate.welcomeEmail(),
+    });
+    return res.status(200).redirect("/users/profile");
+  }catch(err){
+    console.error(err);
+    return res.status(500).json({message: "Something went wrong"});
+  }
+};
+
+module.exports.ResendOtp = (req, res) => {
+  try {
+    const Newotp = OtpGenerator();
+    const { id } = req.params;
+    userModel
+      .findOne({ _id: id })
+      .then(async (user) => {
+        await EmailSender.sendEmail({
+          email: user.email,
+          sub: "Re-send OTP Verification",
+          mess: emailTemplate.ReSendOtp(Newotp),
+        });
+        user.otp = Newotp;
+        user.otpExpiry = Date.now() + 60 * 1000;
+        await user.save();
+        return res.status(200).redirect(`/users/otp-varification/${user._id}`);
+      })
+      .catch((err) => {
+        console.error(err);
+        return res.status(500).json({ message: "Something went wrong" });
+      });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Something went wrong" });
   }
 };
