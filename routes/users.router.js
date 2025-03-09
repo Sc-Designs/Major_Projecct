@@ -6,7 +6,7 @@ const isLoggedInMiddleware = require("../Middleware/isLoggedInMiddleware")
 const upload = require("../config/multer-config");
 const userModel = require("../Models/User-Model"); 
 
-/* User Registration */
+// User Registration GET methods 
 router.get("/register",(req, res) => {
   try{
     res.render("Register");
@@ -14,18 +14,16 @@ router.get("/register",(req, res) => {
     res.redirect("/:anithing");
   }
 });
-
+// User Registration POST methods 
 router.post('/register',[
+  body('name').isLength({min: 5}).withMessage('Name must be at least 5 characters long'),
   body('email').isEmail(),
+  body('dob').isDate().withMessage('Date is not valid!'),
   body('password').isLength({min: 6}).withMessage('Password must be at least 6 characters long'),
-  body('fullname.firstname').isLength({min: 5}).withMessage('Name must be at least 5 characters long'),
-  body('phone').isNumeric().withMessage('Phone number is not valid!'),
-  body('address').isLength({min: 5}).withMessage('Address must be at least 5 characters long'),
-  body('gender').isLength({min: 4}).withMessage('Gender must be at least 4 characters long'),
 ],
 UserAuthController.registerUser
 );
-
+// User Login GET methods
 router.get('/login',(req, res)=>{
   try {
     res.render("Login");
@@ -34,13 +32,21 @@ router.get('/login',(req, res)=>{
   }
 })
 
-/* User Login */
+// User Login POST methods 
 router.post('/login', [
-  body('email').isEmail(),
+  body('email').isEmail().withMessage('Email does not Valid!'),
 ], 
 UserAuthController.loginUser
 );
 
+//  User Profile Picture POST methods
+router.post(
+  "/picture-upload",
+  upload.single("profilepic"),
+  UserAuthController.uploadProfilePic
+);
+
+// User Profile GET methods
 router.get('/profile',isLoggedInMiddleware, async (req, res) => {
   try{
     if(!req.user || !req.user.email) return res.status(401).send("Unauthorized access");
@@ -53,7 +59,28 @@ router.get('/profile',isLoggedInMiddleware, async (req, res) => {
   }
   });
 
-// Logout Route
+// User OTP Verification GET methods
+router.get("/otp-varification/:id", async (req, res) => {
+  try{
+    const user = await userModel.findOne({_id: req.params.id});
+    if(!user) return res.status(404).json({message: "User not found"});
+    res.render("Otp", {user: user});
+  }catch(err){
+    res.redirect("/:anithing");
+  }
+});
+
+router.post("/otp-valid/:id",
+  [
+    body("otp").isLength({ min: 4 }).withMessage("OTP must be 4 characters long"),
+  ],
+  UserAuthController.otpVerification
+)
+
+// User Re-Send OTP Verification POST methods
+router.post("/resend-otp", UserAuthController.ResendOtp);
+
+// Logout Route GET methods
 router.get('/logout', (req, res) => {
   req.logout((err) => {
       if (err) {
@@ -61,26 +88,9 @@ router.get('/logout', (req, res) => {
           return res.redirect("/users/profile");
       }
       req.session.destroy();
-      res.clearCookie("connect.sid");
       res.clearCookie("userToken");
       res.redirect('/users/login');
   });
 });
-
-router.get("/otp-varification/:id", (req, res) => {
-  try{
-    res.render("Otp");
-  }catch(err){
-    res.redirect("/:anithing");
-  }
-});
-
-router.get("/resend-otp", UserAuthController.ResendOtp);
-
-router.post(
-  "/picture-upload",
-  upload.single("profilepic"),
-  UserAuthController.uploadProfilePic
-);
 
 module.exports = router;

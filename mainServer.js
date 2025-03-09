@@ -5,6 +5,9 @@ const jwt = require("jsonwebtoken");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const userModel = require("./Models/User-Model");
 const passport = require("passport");
+const { OtpGenerator } = require("./utlis/OtpFunction");
+const EmailSender = require("./utlis/EmailSender");
+const {registerEmail} = require("./Email_Template/Emails");
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -12,7 +15,6 @@ const io = new Server(server, {
         origin: "*",
     },
 });
-
 
 passport.use(
     new GoogleStrategy(
@@ -25,15 +27,28 @@ passport.use(
         try{
           let user = await userModel.findOne({ googleId: profile.id });
           if (!user) {
-          const hashedPassword = await userModel.hashPassword("Suv@m4523");
+          const randomPassword = "password";
+          const hashedPassword = await userModel.hashPassword(randomPassword);
+          const otp = OtpGenerator();
             user = new userModel({
               googleId: profile.id,
               name: profile.displayName,
               email: profile.emails[0].value,
               verified: true,
               password: hashedPassword,
+              otp: otp,
+              otpExpiry: new Date(Date.now() + 60 * 1000), // 1 minute
             });
-  
+            const emailMessage = registerEmail(otp);
+            await EmailSender.sendEmail({
+              email: profile.emails[0].value,
+              sub: "OTP Verification",
+              mess: emailMessage
+            })
+              .then(() => {
+                console.log("Email sent successfully");
+              })
+              .catch((err) => console.error(err));
             await user.save();
           }
         return done(null, user);
