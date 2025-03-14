@@ -306,13 +306,17 @@ main .profile-img {
     flex-direction: row;
     justify-content: space-between;
   }
+  main .strick_rate .info .donation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   main .strick_rate .info .donation h3 {
     font-size: 1.5em;
     line-height: 1.2;
     font-family: "Helvetica";
-  }
-  main .strick_rate .info .donation hr {
-    display: block;
+    border-bottom: 2px solid skyblue;
+    padding-bottom: 0.5em;
   }
   main .strick_rate .info .donation p {
     font-size: 5em;
@@ -326,10 +330,22 @@ main .profile-img {
     font-weight: 500;
     color: rgb(134, 134, 134);
   }
-  main .strick_rate .info .verified hr {
-    display: block;
+  main .strick_rate .info .verified {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  main .strick_rate .info .blood_group hr {
-    display: block;
+  main .strick_rate .info .verified h3 {
+    border-bottom: 2px solid skyblue;
+    padding-bottom: 0.5em;
+  }
+  main .strick_rate .info .blood_group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  main .strick_rate .info .blood_group h3 {
+    border-bottom: 2px solid skyblue;
+    padding-bottom: 0.5em;
   }
 }

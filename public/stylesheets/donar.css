@@ -1,0 +1,225 @@
+@font-face {
+  font-family: "Satoshi";
+  src: url("/Fonts/66aa728085dec3390cb7f058_Satoshi-Variable.ttf");
+}
+@font-face {
+  font-family: "Helvetica";
+  src: url("/Fonts/HelveticaNowDisplay-Black_20bf03d0.ttf");
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body::-webkit-scrollbar {
+  width: 5px;
+  background: #191919;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #B94A4A;
+  border-radius: 10px;
+}
+
+main {
+  width: 100%;
+  background: #191919;
+  position: relative;
+  min-height: 100vh;
+}
+main .gola1 {
+  position: fixed;
+  width: 70vw;
+  top: -10%;
+  left: -10%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  filter: blur(100px);
+}
+main .gola2 {
+  position: fixed;
+  width: 50vw;
+  top: 80%;
+  left: 40%;
+  aspect-ratio: 1/1;
+  filter: blur(100px);
+  border-radius: 50%;
+}
+main nav {
+  width: 100%;
+  padding: 5%;
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: end;
+  z-index: 999;
+  backdrop-filter: blur(50px);
+  color: white;
+}
+main nav .menu {
+  font-size: 3em;
+}
+main nav .menus {
+  display: none;
+}
+main #donar-section {
+  padding: 30% 5% 2% 5%;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+main #donar-section .card {
+  width: 100%;
+  padding: 5%;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  background: rgba(3, 0, 6, 0.3176470588);
+  backdrop-filter: blur(20px);
+  box-shadow: inset -1px -1px 10px 2px rgb(173, 173, 173);
+  transition: transform 0.2s ease;
+}
+main #donar-section .card:hover {
+  transform: translateY(-10px);
+}
+main #donar-section .card .img {
+  width: 5em;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  border-radius: 50%;
+}
+main #donar-section .card .img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+main #donar-section .card .requester {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+main #donar-section .card .requester h2, main #donar-section .card .requester p, main #donar-section .card .requester h1 {
+  color: #fff;
+}
+main #donar-section .card .requester h1 {
+  font-size: 1.5em;
+  letter-spacing: 0.08rem;
+  font-family: "Helvetica";
+}
+main #donar-section .card .requester h2 {
+  font-size: 1.5em;
+  letter-spacing: 0.05em;
+  font-family: "Satoshi";
+}
+main #donar-section .card .requester p {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 1.3em;
+  letter-spacing: 0.05em;
+  font-family: "Satoshi";
+}
+main #donar-section .card .requester p span {
+  font-size: 2em;
+  color: #B94A4A;
+  font-family: "Helvetica";
+}
+main #donar-section .card .donate-button {
+  padding: 2% 0%;
+  background: #B94A4A;
+  font-family: "Helvetica";
+  font-size: 1.5em;
+  border: none;
+  color: white;
+  outline: none;
+  border-radius: 5px;
+}
+
+@media (min-width: 800px) {
+  main {
+    width: 100%;
+    min-height: 100vh;
+  }
+  main .gola1 {
+    width: 50vw;
+    top: -40%;
+    left: -20%;
+  }
+  main .gola2 {
+    width: 50vw;
+    top: 50%;
+    left: 60%;
+  }
+  main nav {
+    width: 100%;
+    padding: 2% 5% 2% 2%;
+    display: flex;
+    justify-content: end;
+  }
+  main nav .menu {
+    display: none;
+  }
+  main nav .menus {
+    display: flex;
+    gap: 2em;
+    justify-content: flex-end;
+  }
+  main nav .menus li {
+    list-style-type: none;
+    position: relative;
+    cursor: pointer;
+  }
+  main nav .menus li a {
+    text-decoration: none;
+    text-transform: capitalize;
+    color: white;
+    font-family: "Satoshi";
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    position: relative;
+    z-index: 2;
+  }
+  main nav .menus li::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 0%;
+    background: white;
+    top: 100%;
+    left: 0;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+  main nav .menus li:hover::after {
+    width: 100%;
+  }
+  main #donar-section {
+    padding: 7% 2% 1% 2%;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  main #donar-section .card {
+    padding: 2%;
+    width: 48%;
+    margin-bottom: 2em;
+    background: rgba(3, 0, 6, 0.6862745098);
+  }
+  main #donar-section .card .requester h1 {
+    font-size: 2em;
+  }
+  main #donar-section .card .donate-button {
+    width: fit-content;
+    padding: 2% 10%;
+  }
+}

@@ -311,13 +311,15 @@ main{
                 flex-direction: row;
                 justify-content: space-between;
                 .donation{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
                 h3{
                     font-size: 1.5em;
                     line-height: 1.2;
                     font-family: "Helvetica";
-                }
-                hr{
-                    display: block;
+                    border-bottom: 2px solid skyblue;
+                    padding-bottom: 0.5em;
                 }
                 p{
                     font-size: 5em;
@@ -331,15 +333,23 @@ main{
                         color: rgb(134, 134, 134);
                     }
                 }
+            }
+            .verified{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                h3{
+                    border-bottom: 2px solid skyblue;
+                    padding-bottom: 0.5em;
                 }
-                .verified{
-                    hr{
-                        display: block;
-                    }
                 }
                 .blood_group{
-                    hr{
-                        display: block;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    h3{
+                        border-bottom: 2px solid skyblue;
+                        padding-bottom: 0.5em;
                     }
                 }
             }
