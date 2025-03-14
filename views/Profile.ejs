@@ -42,7 +42,7 @@
             <div class="wellcome-massage">
                 <h5>Welcome Message to <br> [ <span id="wellName"></span> ]</h5>
                 <hr>
-                <p>Welcome to LifeSaver! ❤️<br> Thank you for joining us in saving lives. Whether you're donating or searching for a donor, your support matters. Together, we will make a better India. Enjoy your day, Thank You! 🤗</p>
+                <p>Welcome to <b><i>Blood_Hub</i></b> ! ❤️<br> Thank you for joining us in saving lives. Whether you're donating or searching for a donor, your support matters. Together, we will make a better India. Enjoy your day, Thank You! 🤗</p>
             </div>
         </section>
         <section class="strick_rate">
@@ -50,17 +50,14 @@
             <div class="info">
                 <div class="donation">
                     <h3>Donate</h3>
-                    <hr>
                     <p>0<span> Time</span></p>
                 </div>
                 <div class="donation">
                     <h3>Blood Requests</h3>
-                    <hr>
                     <p>0<span> Time</span></p>
                 </div>
                 <div class="verified">
                     <h3>Verified</h3>
-                    <hr>
                     <section>
                         <% if (user.verified){ %>
                         <img src="/images/check.webp" alt="">
@@ -73,7 +70,6 @@
                 </div>
                 <div class="blood_group">
                     <h3>Blood Group</h3>
-                    <hr>
                     <% if(user.bloodgroup) { %>
                     <p><%= user.bloodgroup  %></p>
                     <% } else { %>

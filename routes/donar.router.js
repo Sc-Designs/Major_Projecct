@@ -2,13 +2,13 @@ let express = require('express');
 let router = express.Router();
 
 /* GET home page. */
-router.get('/donar', function(req, res) {
+router.get('/request-list', function(req, res) {
   try{
-    res.send('Donar');
+    res.status(200).render('Donar');
   }
   catch(error){
     console.error(error);
-    res.status(500).send('Server error');
+    res.status(500).redirect("/anithing");
   }
 });
 

@@ -7,94 +7,109 @@ const userModel = require("./Models/User-Model");
 const passport = require("passport");
 const { OtpGenerator } = require("./utlis/OtpFunction");
 const EmailSender = require("./utlis/EmailSender");
-const {registerEmail} = require("./Email_Template/Emails");
+const { registerEmail } = require("./Email_Template/Emails");
 
 const server = http.createServer(app);
 const io = new Server(server, {
-    cors: {
-        origin: "*",
-    },
+  cors: {
+    origin: "http://localhost:4000",
+    methods: ["GET", "POST"],
+  },
 });
 
 passport.use(
-    new GoogleStrategy(
-      {
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: process.env.GOOGLE_CALLBACK_URL,
-      },
-      async (accessToken, refreshToken, profile, done) => {
-        try{
-          let user = await userModel.findOne({ googleId: profile.id });
-          if (!user) {
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: process.env.GOOGLE_CALLBACK_URL,
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        let user = await userModel.findOne({ googleId: profile.id });
+        if (!user) {
           const randomPassword = "password";
           const hashedPassword = await userModel.hashPassword(randomPassword);
           const otp = OtpGenerator();
-            user = new userModel({
-              googleId: profile.id,
-              name: profile.displayName,
-              email: profile.emails[0].value,
-              verified: true,
-              password: hashedPassword,
-              otp: otp,
-              otpExpiry: new Date(Date.now() + 60 * 1000), // 1 minute
-            });
-            const emailMessage = registerEmail(otp);
-            await EmailSender.sendEmail({
-              email: profile.emails[0].value,
-              sub: "OTP Verification",
-              mess: emailMessage
+          user = new userModel({
+            googleId: profile.id,
+            name: profile.displayName,
+            email: profile.emails[0].value,
+            verified: true,
+            password: hashedPassword,
+            otp: otp,
+            otpExpiry: new Date(Date.now() + 60 * 1000),
+          });
+          const emailMessage = registerEmail(otp);
+          await EmailSender.sendEmail({
+            email: profile.emails[0].value,
+            sub: "OTP Verification",
+            mess: emailMessage,
+          })
+            .then(() => {
+              console.log("Email sent successfully");
             })
-              .then(() => {
-                console.log("Email sent successfully");
-              })
-              .catch((err) => console.error(err));
-            await user.save();
-          }
+            .catch((err) => console.error(err));
+          await user.save();
+        }
         return done(null, user);
-      }
-      catch (error) {
+      } catch (error) {
         return done(error, null);
       }
-      }
-    )
+    }
+  )
+);
+
+// Serialize user
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((obj, done) => {
+  done(null, obj);
+});
+function extractTokenFromCookies(cookieString) {
+  if (!cookieString) return null;
+
+  const cookies = Object.fromEntries(
+    cookieString.split("; ").map((c) => c.split("="))
   );
-  
-  // Serialize user
-  passport.serializeUser((user, done) => {
-    done(null, user);
-  });
-  
-  passport.deserializeUser((obj, done) => {
-    done(null, obj);
-  });
+
+  return cookies.userToken || null;
+}
 
 io.use((socket, next) => {
-    try{
-        const  token = socket.handshake.auth?.userToken || socket.handshake.headers?.authorization?.split(" ")[1];
+  try {
+    const token =
+      socket.handshake.auth?.userToken ||
+      socket.handshake.headers?.authorization?.split(" ")[1] ||
+      extractTokenFromCookies(socket.handshake.headers?.cookie);
+    if (!token) return next(new Error("Authentication error"));
+    const decoded = jwt.verify(token, process.env.JWT_KEY);
+    if (!decoded) return next(new Error("Authentication error"));
 
-        if(!token) return next(new Error("Authentication error"));
-        const decoded = jwt.verify(token, process.env.JWT_KEY);
-        if(!decoded) return next(new Error("Authentication error"));
+    socket.user = decoded;
 
-        socket.user = decoded;
-
-        next();
-    }catch(error){
-        console.error(error);
-        return next(new Error("Authentication error"));
-    }
-  });
+    next();
+  } catch (error) {
+    console.error(error);
+    return next(new Error("Authentication error"));
+  }
+});
 
 const port = process.env.PORT || 4000;
 
-io.on("connection", (socket)=>{
-    console.log("a user connected");
-    socket.on("disconnect", ()=>{
-        console.log("user disconnected");
-    });
+io.on("connection", (socket) => {
+  
+  socket.on("user-location", (data) => {
+    io.emit("recive-location", { id: socket.id, ...data });
+  });
+
+  socket.on("disconnect", () => {
+    io.emit("user-disconnected", socket.id);
+  });
 });
 
-server.listen(port, ()=>{
-    console.log(`Server is running on port ${port}`);
+server.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });

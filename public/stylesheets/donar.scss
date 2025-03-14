@@ -1,0 +1,228 @@
+@font-face {
+  font-family: "Satoshi";
+  src: url("/Fonts/66aa728085dec3390cb7f058_Satoshi-Variable.ttf");
+}
+@font-face {
+  font-family: "Helvetica";
+  src: url("/Fonts/HelveticaNowDisplay-Black_20bf03d0.ttf");
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body{
+    width: 100%;
+    height: 100%;
+}
+body::-webkit-scrollbar{
+    width: 5px;
+    background:#191919;
+}
+
+body::-webkit-scrollbar-thumb{
+    background: #B94A4A;
+    border-radius: 10px;
+}
+main{
+    width: 100%;
+    background: #191919;
+    position: relative;
+    min-height: 100vh;
+
+    .gola1{
+        position: fixed;
+        width: 70vw;
+        top: -10%;
+        left: -10%;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        filter: blur(100px);
+    }
+    .gola2{
+        position: fixed;
+        width: 50vw;
+        top: 80%;
+        left: 40%;
+        aspect-ratio: 1/1;
+        filter: blur(100px);
+        border-radius: 50%;
+    }
+    nav{
+        width: 100%;
+        padding: 5%;
+        position: fixed;
+        top: 0;
+        display: flex;
+        justify-content: end;
+        z-index: 999;
+        backdrop-filter: blur(50px);
+        color: white;
+        .menu{
+            font-size: 3em;
+        }
+        .menus{
+            display: none;
+        }
+    }
+    #donar-section{
+        padding: 30% 5% 2% 5%;
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+
+        .card{
+        width: 100%;
+        padding: 5%;
+        border: 2px solid #fff;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        background: #03000651;
+        backdrop-filter: blur(20px);
+        box-shadow: inset -1px -1px 10px 2px rgb(173, 173, 173);
+        transition: transform 0.2s ease;
+
+        &:hover{
+            transform: translateY(-10px);
+        }
+
+            .img{
+                width: min(5em, 7em);
+                aspect-ratio: 1/1;
+                overflow: hidden;
+                border-radius: 50%;
+                img{
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+            .requester{
+                display: flex;
+                flex-direction: column;
+                gap: 0.5em;
+                h2,p,h1{
+                    color: #fff;
+                }
+                h1{
+                    font-size: 1.5em;
+                    letter-spacing: 0.08rem;
+                    font-family: "Helvetica";
+                }
+                h2{
+                    font-size: 1.5em;
+                    letter-spacing: 0.05em;
+                    font-family: "Satoshi";
+                }
+                p{
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5em;
+                    font-size: 1.3em;
+                    letter-spacing: 0.05em;
+                    font-family: "Satoshi";
+                    span{
+                        font-size: 2em;
+                        color: #B94A4A;
+                        font-family: "Helvetica";
+                    }
+                }
+            }
+            .donate-button{
+                padding: 2% 0%;
+                background: #B94A4A;
+                font-family: "Helvetica";
+                font-size: 1.5em;
+                border: none;
+                color: white;
+                outline: none;
+                border-radius: 5px;
+            }
+        }
+    }
+}
+@media (min-width: 800px) {
+    main{
+        width: 100%;
+        min-height: 100vh;
+        .gola1{
+        width: 50vw;
+            top: -40%;
+            left: -20%;
+        }
+        .gola2{
+            width: 50vw;
+            top: 50%;
+            left: 60%;
+        }
+        nav{
+            width: 100%;
+            padding: 2% 5% 2% 2%;
+            display: flex;
+            justify-content: end;
+            .menu{
+                display: none;
+            }
+            .menus{
+                display: flex;
+                gap: 2em;
+                justify-content: flex-end;
+                li{
+                    list-style-type: none;
+                    position: relative;
+                    cursor: pointer;
+                    a{
+                        text-decoration: none;
+                        text-transform: capitalize;
+                        color: white;
+                        font-family: "Satoshi";
+                        font-weight: 500;
+                        letter-spacing: 0.1em;
+                        position: relative;
+                        z-index: 2;
+
+                    }
+                    &::after{
+                        content: '';
+                        position: absolute;
+                        height: 2px;
+                        width: 0%;
+                        background: white;
+                        top: 100%;
+                        left:0;
+                        border-radius: 10px;
+                        transition: all 0.3s ease;
+                    }
+                    &:hover::after{
+                        width: 100%;
+                    }
+                }
+            }
+        }
+        #donar-section{
+            padding: 7% 2% 1% 2%;
+            flex-direction: row;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            .card{
+                padding: 2%;
+                width: 48%;
+                margin-bottom: 2em;
+                background: #030006af;
+                .requester{
+                    h1{
+                        font-size: 2em;
+                    }
+                }
+                .donate-button{
+                    width: fit-content;
+                    padding: 2% 10%;
+                }
+            }
+        }
+    }
+}

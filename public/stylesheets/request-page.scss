@@ -1,0 +1,263 @@
+@font-face {
+  font-family: "Satoshi";
+  src: url("/Fonts/66aa728085dec3390cb7f058_Satoshi-Variable.ttf");
+}
+@font-face {
+  font-family: "Helvetica";
+  src: url("/Fonts/HelveticaNowDisplay-Black_20bf03d0.ttf");
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body{
+    width: 100%;
+    height: 100%;
+}
+body::-webkit-scrollbar{
+    width: 5px;
+    background-color:#191919;
+}
+
+body::-webkit-scrollbar-thumb{
+    background-color: #B94A4A;
+    border-radius: 10px;
+}
+main{
+    width: 100%;
+    background: #191919;
+    position: relative;
+    .gola1{
+        position: fixed;
+        width: 70vw;
+        top: -5%;
+        left: -5%;
+        aspect-ratio: 1/1;
+        background: radial-gradient(#B94A4A,#532121);
+        filter: blur(100px);
+    }
+    .gola2{
+        position: fixed;
+        width: 70vw;
+        top: 80%;
+        left: 60%;
+        aspect-ratio: 1/1;
+        background: radial-gradient(#B96D4A,#532121);
+        filter: blur(100px);
+    }
+    nav{
+        width: 100%;
+        padding: 5%;
+        position: fixed;
+        top: 0;
+        display: flex;
+        justify-content: end;
+        z-index: 999;
+        backdrop-filter: blur(50px);
+        color: white;
+        .menu{
+            font-size: 3em;
+        }
+        .menus{
+            display: none;
+        }
+    }
+    .request-section{
+        padding: 25% 2% 2% 2%;
+        position: relative;
+        width: 100%;
+        gap: 1em;
+        display: flex;
+        flex-direction: column;
+    .card{
+        background-color: white;
+        position: relative;
+        z-index: 2;
+        padding: 5%;
+        border-radius: 10px;
+        box-shadow: inset 10px 10px 10px rgba(0,0,0,0.5);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease;
+        gap: 0.7em;
+        &:hover{
+            transform: scale(1.02);
+        }
+        .top{
+            display: flex;
+            gap: 1em;
+            width: 100%;
+        .img{
+            width: min(4em, 6em);
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            overflow: hidden;
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        .info{
+            display: flex;
+            flex-direction: column;
+            h1{
+                font-family: "Helvetica";
+                letter-spacing: 0.05em;
+                font-size: 1.2em;
+                white-space: nowrap;
+            }
+            h2{
+                font-family: "Satoshi";
+                font-size: 1em;
+                letter-spacing: 0.1em;
+                color: #7c7c7c;
+            }
+        }
+    }
+    .requerment{
+        display: flex;
+        gap: 1em;
+        width: 100%;
+        align-items: center;
+        h1{
+            font-family: "Helvetica";
+            letter-spacing: 0.05em;
+            font-size: 1.2em;
+            white-space: nowrap;
+        }
+        p{
+            font-family: "Satoshi";
+            font-size: 1.5em;
+            letter-spacing: 0.1em;
+            color: #B94A4A;
+            font-weight: 900;
+        }
+    }
+    .btn{
+        width: 100%;
+        display: flex;
+        gap: 1em;
+        a:nth-child(1){
+            text-decoration: none;
+            text-transform: uppercase;
+            font-family: "Satoshi";
+            font-weight: 500;
+            font-size: 1.2em;
+            letter-spacing: 0.1em;
+            background-color: #4ab94e;
+            color: white;
+            padding: 1em 2em;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            &:hover{
+                background-color: #368838;
+            }
+        }
+        a:nth-child(2){
+            text-decoration: none;
+            text-transform: uppercase;
+            font-family: "Satoshi";
+            font-weight: 500;
+            font-size: 1.2em;
+            letter-spacing: 0.1em;
+            background-color: #B94A4A;
+            color: white;
+            padding: 1em 2em;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            &:hover{
+                background-color: #942828;
+            }
+        }
+    }
+    .date{
+        h1{
+            font-family: "Helvetica";
+            letter-spacing: 0.05em;
+            font-size: 1.2em;
+            white-space: nowrap;
+        }
+    }
+    }
+    }
+}
+@media (min-width: 800px) {
+    main{
+        width: 100%;
+        min-height: 100vh;
+        nav{
+            width: 100%;
+            padding: 2% 5% 2% 2%;
+            display: flex;
+            justify-content: end;
+            .menu{
+                display: none;
+            }
+            .menus{
+                display: flex;
+                gap: 2em;
+                justify-content: flex-end;
+                li{
+                    list-style-type: none;
+                    position: relative;
+                    cursor: pointer;
+                    a{
+                        text-decoration: none;
+                        text-transform: capitalize;
+                        color: white;
+                        font-family: "Satoshi";
+                        font-weight: 500;
+                        letter-spacing: 0.1em;
+                        position: relative;
+                        z-index: 2;
+
+                    }
+                    &::after{
+                        content: '';
+                        position: absolute;
+                        height: 2px;
+                        width: 0%;
+                        background: white;
+                        top: 100%;
+                        left:0;
+                        border-radius: 10px;
+                        transition: all 0.3s ease;
+                    }
+                    &:hover::after{
+                        width: 100%;
+                    }
+                }
+            }
+        }
+        .request-section{
+            padding: 7% 2% 2% 5%;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            .card{
+                width: 50%;
+                margin-bottom: 1em;
+                margin-left: -2em;
+                align-items: start;
+                .btn{
+                    a:nth-child(1){
+                        &:hover{
+                            background-color: #368639;
+                        }
+                    }
+                }
+                .date{
+                    h1{
+                        text-align: left;
+                    }
+                }
+            }
+        }
+    }
+}

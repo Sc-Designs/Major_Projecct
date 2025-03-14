@@ -11,6 +11,15 @@ let router = express.Router();
    }
  });
 
+ router.get("/maps", (req, res)=>{
+  try{
+     res.status(200).render('Map');
+  } catch(error){
+     console.error(error);
+    res.status(500).redirect("/anithing");
+  }
+ })
+
 router.get("/:anithing",(req,res)=>{
   res.render('error');
 })
