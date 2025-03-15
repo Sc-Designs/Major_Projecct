@@ -100,7 +100,9 @@ io.use((socket, next) => {
 const port = process.env.PORT || 4000;
 
 io.on("connection", (socket) => {
-  
+  socket.on("connection", (socket) => {
+    console.log(`User connected: ${socket.id}`);
+  })
   socket.on("user-location", (data) => {
     io.emit("recive-location", { id: socket.id, ...data });
   });

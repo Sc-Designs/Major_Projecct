@@ -67,6 +67,60 @@ main nav .menu {
 main nav .menus {
   display: none;
 }
+main nav .sidemenus {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: -100%;
+  top: 0;
+  background-color: rgb(164, 29, 24);
+  height: 100vh;
+  width: 100%;
+  transition: all 0.5s ease;
+}
+main nav .sidemenus .close {
+  font-size: 3em;
+  color: white;
+  cursor: pointer;
+  position: absolute;
+  top: 2%;
+  right: 4%;
+}
+main nav .sidemenus li {
+  list-style: none;
+  width: 90%;
+  text-align: center;
+}
+main nav .sidemenus li a {
+  font-family: "Satoshi";
+  font-size: 2em;
+  color: white;
+  text-decoration: none;
+  width: 100%;
+  display: block;
+  padding: 4% 0%;
+  letter-spacing: 0.08em;
+}
+main nav .sidemenus li a:hover {
+  background: rgb(86, 5, 5);
+}
+main nav .sidemenus a {
+  letter-spacing: 0.08em;
+  font-family: "Satoshi";
+  font-size: 2em;
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 4% 0%;
+  width: 90%;
+  text-align: center;
+}
+main nav .sidemenus a:hover {
+  background: skyblue;
+}
 main .request-section {
   padding: 25% 2% 2% 2%;
   position: relative;
