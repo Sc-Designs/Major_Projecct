@@ -18,17 +18,17 @@ html, body {
 }
 
 body::-webkit-scrollbar {
-  width: 5px;
-  background-color: #EEFFFE;
+  width: 6px;
+  background-color: #c9f9f5;
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: #494949;
+  background-color: rgb(101, 194, 230);
   border-radius: 10px;
 }
 
 main {
-  background-color: rgb(238, 255, 254);
+  background-color: #c9f9f5;
   width: 100%;
 }
 main nav {

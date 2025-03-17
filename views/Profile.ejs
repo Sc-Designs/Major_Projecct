@@ -18,16 +18,16 @@
         <ul class="sidemenus">
             <i class="ri-close-large-fill close"></i>
             <li><a href="/">Home</a></li>
-            <li><a href="">Chat</a></li>
-            <li><a href="">About</a></li>
+            <li><a href="/donar/request-list">Donate</a></li>
+            <li><a href="/reciver/blood">Blood</a></li>
             <li><a href="">FeedBack</a></li>
             <li><a href="">Contact</a></li>
             <a href="/users/logout">Logout</a>
         </ul>
         <ul class="menus">
             <li><a href="/">Home</a></li>
-            <li><a href="">Chat</a></li>
-            <li><a href="">About</a></li>
+            <li><a href="/donar/request-list">Doante</a></li>
+            <li><a href="/reciver/blood">Blood</a></li>
             <li><a href="">FeedBack</a></li>
             <li><a href="">Contact</a></li>
             <a href="/users/logout">Logout</a>
@@ -63,7 +63,7 @@
                 </div>
                 <div class="donation">
                     <h3>Blood Requests</h3>
-                    <p>0<span> Time</span></p>
+                    <p><%= user.bloodRequest.length %><span> Time</span></p>
                 </div>
                 <div class="verified">
                     <h3>Verified</h3>
@@ -89,9 +89,10 @@
         </section>
         <section class="blood_request">
             <h1>Blood Request From</h1>
-            <form action="">
+            <form action="/reciver/blood-request" method="post">
                 <label for="blood_group">Blood Group:</label>
                 <select name="blood_group" id="blood_group">
+                    <option value="nothing">Select The Blood Type</option>
                     <option value="A+">A+</option>
                     <option value="A-">A-</option>
                     <option value="B+">B+</option>

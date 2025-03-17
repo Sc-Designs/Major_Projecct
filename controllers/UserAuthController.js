@@ -5,7 +5,6 @@ const Otp = require("../utlis/OtpFunction");
 const EmailSender = require("../utlis/EmailSender");
 const emailTemplate = require("../Email_Template/Emails");
 const {userFinder} = require("../utlis/UserFinder");
-const mongoose = require("mongoose");
 
 module.exports.registerUser = async (req, res)=>{
     const errors = validationResult(req);
@@ -83,7 +82,7 @@ module.exports.uploadProfilePic = async (req, res) => {
   try{
       if(!req.file) return res.status(400).json({message: "Please upload a file"});
       const { email } = req.body;
-      const user = await userFinder({ key: "email", Query: email });
+      const user = await userFinder({ key: "email", query: email });
       delete user._doc.password;
       if(!user) return res.status(404).json({message: "User not found"});
         user.profilepic = req.file.buffer.toString("base64");
@@ -119,7 +118,7 @@ module.exports.otpVerification = async (req, res) => {
     await user.save();
     await EmailSender.sendEmail({
       email: user.email,
-      sub: "OTP Verification",
+      sub: "WellCome Note!",
       mess: emailTemplate.welcomeEmail(),
     });
     return res.status(200).redirect("/users/profile");
@@ -132,7 +131,7 @@ module.exports.otpVerification = async (req, res) => {
 module.exports.ResendOtp = async (req, res) => {
   try {
     const Newotp = OtpGenerator();
-    const user = await userFinder({ key: "_id", Query: req.params.id })
+    const user = await userFinder({ key: "_id", query: req.params.id })
     delete user._doc.password;
       await EmailSender.sendEmail({
         email: user.email,

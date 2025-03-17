@@ -8,6 +8,7 @@ const passport = require("passport");
 const { OtpGenerator } = require("./utlis/OtpFunction");
 const EmailSender = require("./utlis/EmailSender");
 const { registerEmail } = require("./Email_Template/Emails");
+const {createUser} = require("./Services/user.service")
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -26,12 +27,14 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        let user = await userModel.findOne({ googleId: profile.id });
+        let user = await userModel.findOne({
+          $or: [{ googleId: profile.id }, { email: profile.emails[0].value }],
+        });
         if (!user) {
           const randomPassword = "password";
           const hashedPassword = await userModel.hashPassword(randomPassword);
           const otp = OtpGenerator();
-          user = new userModel({
+          user = await createUser({
             googleId: profile.id,
             name: profile.displayName,
             email: profile.emails[0].value,
@@ -50,10 +53,10 @@ passport.use(
               console.log("Email sent successfully");
             })
             .catch((err) => console.error(err));
-          await user.save();
         }
         return done(null, user);
       } catch (error) {
+        console.error(error);
         return done(error, null);
       }
     }

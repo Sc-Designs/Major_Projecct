@@ -18,37 +18,22 @@ html, body {
 }
 
 body::-webkit-scrollbar {
-  width: 5px;
-  background-color: #191919;
+  width: 6px;
+  background-color: #FFFFFF;
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: #B94A4A;
+  background-color: rgb(101, 194, 230);
   border-radius: 10px;
+}
+
+body {
+  background: #c9f9f5;
 }
 
 main {
   width: 100%;
-  background: #191919;
   position: relative;
-}
-main .gola1 {
-  position: fixed;
-  width: 70vw;
-  top: -5%;
-  left: -5%;
-  aspect-ratio: 1/1;
-  background: radial-gradient(#B94A4A, #532121);
-  filter: blur(100px);
-}
-main .gola2 {
-  position: fixed;
-  width: 70vw;
-  top: 80%;
-  left: 60%;
-  aspect-ratio: 1/1;
-  background: radial-gradient(#B96D4A, #532121);
-  filter: blur(100px);
 }
 main nav {
   width: 100%;
@@ -59,10 +44,10 @@ main nav {
   justify-content: end;
   z-index: 999;
   backdrop-filter: blur(50px);
-  color: white;
 }
 main nav .menu {
   font-size: 3em;
+  color: #000;
 }
 main nav .menus {
   display: none;
@@ -76,7 +61,7 @@ main nav .sidemenus {
   position: absolute;
   right: -100%;
   top: 0;
-  background-color: rgb(164, 29, 24);
+  background-color: rgb(101, 194, 230);
   height: 100vh;
   width: 100%;
   transition: all 0.5s ease;
@@ -105,7 +90,7 @@ main nav .sidemenus li a {
   letter-spacing: 0.08em;
 }
 main nav .sidemenus li a:hover {
-  background: rgb(86, 5, 5);
+  background: skyblue;
 }
 main nav .sidemenus a {
   letter-spacing: 0.08em;
@@ -130,12 +115,13 @@ main .request-section {
   flex-direction: column;
 }
 main .request-section .card {
-  background-color: white;
+  background: rgb(155, 207, 227);
   position: relative;
+  border: 2px solid skyblue;
   z-index: 2;
   padding: 5%;
   border-radius: 10px;
-  box-shadow: inset 10px 10px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -197,50 +183,22 @@ main .request-section .card .requerment p {
   color: #B94A4A;
   font-weight: 900;
 }
-main .request-section .card .btn {
-  width: 100%;
-  display: flex;
-  gap: 1em;
-}
-main .request-section .card .btn a:nth-child(1) {
-  text-decoration: none;
-  text-transform: uppercase;
-  font-family: "Satoshi";
-  font-weight: 500;
-  font-size: 1.2em;
-  letter-spacing: 0.1em;
-  background-color: #4ab94e;
-  color: white;
-  padding: 1em 2em;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-  text-align: center;
-}
-main .request-section .card .btn a:nth-child(1):hover {
-  background-color: #368838;
-}
-main .request-section .card .btn a:nth-child(2) {
-  text-decoration: none;
-  text-transform: uppercase;
-  font-family: "Satoshi";
-  font-weight: 500;
-  font-size: 1.2em;
-  letter-spacing: 0.1em;
-  background-color: #B94A4A;
-  color: white;
-  padding: 1em 2em;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-  text-align: center;
-}
-main .request-section .card .btn a:nth-child(2):hover {
-  background-color: #942828;
-}
 main .request-section .card .date h1 {
   font-family: "Helvetica";
   letter-spacing: 0.05em;
   font-size: 1.2em;
   white-space: nowrap;
+}
+main .request-section .card .status {
+  width: 100%;
+  text-transform: uppercase;
+  font-family: "Helvetica";
+  color: #FFF;
+  font-size: 1.2em;
+  text-align: center;
+  background: #00775d;
+  border-radius: 5px;
+  padding: 4% 0%;
 }
 
 @media (min-width: 800px) {
@@ -270,7 +228,7 @@ main .request-section .card .date h1 {
   main nav .menus li a {
     text-decoration: none;
     text-transform: capitalize;
-    color: white;
+    color: black;
     font-family: "Satoshi";
     font-weight: 500;
     letter-spacing: 0.1em;
@@ -282,7 +240,7 @@ main .request-section .card .date h1 {
     position: absolute;
     height: 2px;
     width: 0%;
-    background: white;
+    background: black;
     top: 100%;
     left: 0;
     border-radius: 10px;
@@ -298,13 +256,12 @@ main .request-section .card .date h1 {
     justify-content: space-between;
   }
   main .request-section .card {
+    padding: 2% 5%;
     width: 50%;
     margin-bottom: 1em;
     margin-left: -2em;
     align-items: start;
-  }
-  main .request-section .card .btn a:nth-child(1):hover {
-    background-color: #368639;
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5), 4px 4px 10px rgba(0, 0, 0, 0.5);
   }
   main .request-section .card .date h1 {
     text-align: left;

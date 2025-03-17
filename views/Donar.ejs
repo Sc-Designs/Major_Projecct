@@ -13,116 +13,47 @@
 </head>
 <body>
     <main>
-        <div class="gola1 golas"></div>
-        <div class="gola2 golas"></div>
         <nav>
         <i class="ri-menu-3-fill menu"></i>
         <ul class="sidemenus">
             <i class="ri-close-large-fill close"></i>
+            <li><a href="/users/profile">Profile</a></li>
             <li><a href="/">Home</a></li>
-            <li><a href="">Chat</a></li>
-            <li><a href="">About</a></li>
+            <li><a href="/reciver/blood">Blood</a></li>
             <li><a href="">FeedBack</a></li>
             <li><a href="">Contact</a></li>
             <a href="/users/logout">Logout</a>
         </ul>
         <ul class="menus">
+            <li><a href="/users/profile">Profile</a></li>
           <li><a href="/">Home</a></li>
-          <li><a href="">Chat</a></li>
-          <li><a href="">About</a></li>
+          <li><a href="/reciver/blood">Blood</a></li>
           <li><a href="">FeedBack</a></li>
           <li><a href="">Contact</a></li>
         </ul>
     </nav>
     <section id="donar-section">
+        <% if(posts.length > 0) { %>
+        <% posts.forEach((elem)=>{ %>
         <div class="card">
             <div class="img">
-                <img src="https://images.unsplash.com/photo-1741531472824-b3fc55e2ff9c?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Donar Image">
+                <% if( elem.userId.profilepic ){ %>
+                    <img src="data:image/jpeg;base64,<%= elem.userId.profilepic %>" alt="Profile Picture">
+                <% } else { %>
+                    <img src="https://images.unsplash.com/photo-1738044380727-086b16113ab5?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">                
+                <% }%>
             </div>
             <div class="requester">
                 <h2>Requester Name :</h2> 
-                <h1>Suvam Chakraborti</h1>
-                <p>Requested Blood : <span>AB+</span></p>
+                <h1><%= elem.userId.name %></h1>
+                <p>Requested Blood : <span><%= elem.bloodType %></span></p>
             </div>
             <button class="donate-button">Donate Now</button>
         </div>
-        <div class="card">
-            <div class="img">
-                <img src="https://images.unsplash.com/photo-1741531472824-b3fc55e2ff9c?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Donar Image">
-            </div>
-            <div class="requester">
-                <h2>Requester Name :</h2> 
-                <h1>Suvam Chakraborti</h1>
-                <p>Requested Blood : <span>AB+</span></p>
-            </div>
-            <button class="donate-button">Donate Now</button>
-        </div>
-        <div class="card">
-            <div class="img">
-                <img src="https://images.unsplash.com/photo-1741531472824-b3fc55e2ff9c?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Donar Image">
-            </div>
-            <div class="requester">
-                <h2>Requester Name :</h2> 
-                <h1>Suvam Chakraborti</h1>
-                <p>Requested Blood : <span>AB+</span></p>
-            </div>
-            <button class="donate-button">Donate Now</button>
-        </div>
-        <div class="card">
-            <div class="img">
-                <img src="https://images.unsplash.com/photo-1741531472824-b3fc55e2ff9c?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Donar Image">
-            </div>
-            <div class="requester">
-                <h2>Requester Name :</h2> 
-                <h1>Suvam Chakraborti</h1>
-                <p>Requested Blood : <span>AB+</span></p>
-            </div>
-            <button class="donate-button">Donate Now</button>
-        </div>
-        <div class="card">
-            <div class="img">
-                <img src="https://images.unsplash.com/photo-1741531472824-b3fc55e2ff9c?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Donar Image">
-            </div>
-            <div class="requester">
-                <h2>Requester Name :</h2> 
-                <h1>Suvam Chakraborti</h1>
-                <p>Requested Blood : <span>AB+</span></p>
-            </div>
-            <button class="donate-button">Donate Now</button>
-        </div>
-        <div class="card">
-            <div class="img">
-                <img src="https://images.unsplash.com/photo-1741531472824-b3fc55e2ff9c?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Donar Image">
-            </div>
-            <div class="requester">
-                <h2>Requester Name :</h2> 
-                <h1>Suvam Chakraborti</h1>
-                <p>Requested Blood : <span>AB+</span></p>
-            </div>
-            <button class="donate-button">Donate Now</button>
-        </div>
-        <div class="card">
-            <div class="img">
-                <img src="https://images.unsplash.com/photo-1741531472824-b3fc55e2ff9c?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Donar Image">
-            </div>
-            <div class="requester">
-                <h2>Requester Name :</h2> 
-                <h1>Suvam Chakraborti</h1>
-                <p>Requested Blood : <span>AB+</span></p>
-            </div>
-            <button class="donate-button">Donate Now</button>
-        </div>
-        <div class="card">
-            <div class="img">
-                <img src="https://images.unsplash.com/photo-1741531472824-b3fc55e2ff9c?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Donar Image">
-            </div>
-            <div class="requester">
-                <h2>Requester Name :</h2> 
-                <h1>Suvam Chakraborti</h1>
-                <p>Requested Blood : <span>AB+</span></p>
-            </div>
-            <button class="donate-button">Donate Now</button>
-        </div>
+        <% }) %>
+        <% } else { %>
+        <h2>No donar requests available.</h2>
+        <% } %>
     </section>
     </main>
 </body>
