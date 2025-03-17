@@ -16,36 +16,20 @@ html, body{
     height: 100%;
 }
 body::-webkit-scrollbar{
-    width: 5px;
-    background-color:#191919;
+    width: 6px;
+    background-color:#FFFFFF;
 }
 
 body::-webkit-scrollbar-thumb{
-    background-color: #B94A4A;
+    background-color: rgb(101, 194, 230);
     border-radius: 10px;
+}
+body{
+    background: #c9f9f5;
 }
 main{
     width: 100%;
-    background: #191919;
     position: relative;
-    .gola1{
-        position: fixed;
-        width: 70vw;
-        top: -5%;
-        left: -5%;
-        aspect-ratio: 1/1;
-        background: radial-gradient(#B94A4A,#532121);
-        filter: blur(100px);
-    }
-    .gola2{
-        position: fixed;
-        width: 70vw;
-        top: 80%;
-        left: 60%;
-        aspect-ratio: 1/1;
-        background: radial-gradient(#B96D4A,#532121);
-        filter: blur(100px);
-    }
     nav{
         width: 100%;
         padding: 5%;
@@ -55,9 +39,9 @@ main{
         justify-content: end;
         z-index: 999;
         backdrop-filter: blur(50px);
-        color: white;
         .menu{
             font-size: 3em;
+            color: #000;
         }
         .menus{
             display: none;
@@ -71,7 +55,7 @@ main{
             position: absolute;
             right: -100%;
             top: 0;
-            background-color: rgb(164, 29, 24);
+            background-color:rgb(101, 194, 230);
             height: 100vh;
             width: 100%;
             transition: all 0.5s ease;
@@ -97,7 +81,7 @@ main{
                     padding: 4% 0%;
                     letter-spacing: 0.08em;
                     &:hover{
-                        background: rgb(86, 5, 5);
+                        background: skyblue;
                     }
                 }
             }
@@ -125,12 +109,13 @@ main{
         display: flex;
         flex-direction: column;
     .card{
-        background-color: white;
+        background: rgb(155, 207, 227);
         position: relative;
+        border: 2px solid skyblue;
         z-index: 2;
         padding: 5%;
         border-radius: 10px;
-        box-shadow: inset 10px 10px 10px rgba(0,0,0,0.5);
+        box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -191,45 +176,6 @@ main{
             font-weight: 900;
         }
     }
-    .btn{
-        width: 100%;
-        display: flex;
-        gap: 1em;
-        a:nth-child(1){
-            text-decoration: none;
-            text-transform: uppercase;
-            font-family: "Satoshi";
-            font-weight: 500;
-            font-size: 1.2em;
-            letter-spacing: 0.1em;
-            background-color: #4ab94e;
-            color: white;
-            padding: 1em 2em;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-            text-align: center;
-            &:hover{
-                background-color: #368838;
-            }
-        }
-        a:nth-child(2){
-            text-decoration: none;
-            text-transform: uppercase;
-            font-family: "Satoshi";
-            font-weight: 500;
-            font-size: 1.2em;
-            letter-spacing: 0.1em;
-            background-color: #B94A4A;
-            color: white;
-            padding: 1em 2em;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-            text-align: center;
-            &:hover{
-                background-color: #942828;
-            }
-        }
-    }
     .date{
         h1{
             font-family: "Helvetica";
@@ -237,6 +183,17 @@ main{
             font-size: 1.2em;
             white-space: nowrap;
         }
+    }
+    .status{
+        width: 100%;
+        text-transform: uppercase;
+        font-family: "Helvetica";
+        color: #FFF;
+        font-size: 1.2em;
+        text-align: center;
+        background: #00775d;
+        border-radius: 5px;
+        padding: 4% 0%;
     }
     }
     }
@@ -264,7 +221,7 @@ main{
                     a{
                         text-decoration: none;
                         text-transform: capitalize;
-                        color: white;
+                        color: black;
                         font-family: "Satoshi";
                         font-weight: 500;
                         letter-spacing: 0.1em;
@@ -277,7 +234,7 @@ main{
                         position: absolute;
                         height: 2px;
                         width: 0%;
-                        background: white;
+                        background: black;
                         top: 100%;
                         left:0;
                         border-radius: 10px;
@@ -295,17 +252,13 @@ main{
             flex-wrap: wrap;
             justify-content: space-between;
             .card{
+                padding: 2% 5%;
                 width: 50%;
                 margin-bottom: 1em;
                 margin-left: -2em;
                 align-items: start;
-                .btn{
-                    a:nth-child(1){
-                        &:hover{
-                            background-color: #368639;
-                        }
-                    }
-                }
+                box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5),
+                4px 4px 10px rgba(0, 0, 0, 0.5);
                 .date{
                     h1{
                         text-align: left;

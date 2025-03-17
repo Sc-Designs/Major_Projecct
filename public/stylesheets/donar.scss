@@ -16,38 +16,19 @@ html, body{
     height: 100%;
 }
 body::-webkit-scrollbar{
-    width: 5px;
-    background:#191919;
+    width: 6px;
+    background-color:#c9f9f5;
 }
 
 body::-webkit-scrollbar-thumb{
-    background: #B94A4A;
+    background-color: rgb(101, 194, 230);
     border-radius: 10px;
 }
 main{
     width: 100%;
-    background: #191919;
+    background: #c9f9f5;
     position: relative;
     min-height: 100vh;
-
-    .gola1{
-        position: fixed;
-        width: 70vw;
-        top: -10%;
-        left: -10%;
-        aspect-ratio: 1/1;
-        border-radius: 50%;
-        filter: blur(100px);
-    }
-    .gola2{
-        position: fixed;
-        width: 50vw;
-        top: 80%;
-        left: 40%;
-        aspect-ratio: 1/1;
-        filter: blur(100px);
-        border-radius: 50%;
-    }
     nav{
         width: 100%;
         padding: 5%;
@@ -57,8 +38,8 @@ main{
         justify-content: end;
         z-index: 999;
         backdrop-filter: blur(50px);
-        color: white;
         .menu{
+            color: black;
             font-size: 3em;
         }
         .menus{
@@ -73,7 +54,7 @@ main{
             position: absolute;
             right: -100%;
             top: 0;
-            background-color: rgb(164, 29, 24);
+            background-color: rgb(101, 194, 230);
             height: 100vh;
             width: 100%;
             transition: all 0.5s ease;
@@ -99,7 +80,7 @@ main{
                     padding: 4% 0%;
                     letter-spacing: 0.08em;
                     &:hover{
-                        background: rgb(86, 5, 5);
+                        background: skyblue;
                     }
                 }
             }
@@ -128,16 +109,16 @@ main{
         gap: 1em;
 
         .card{
+        height: fit-content;
         width: 100%;
         padding: 5%;
-        border: 2px solid #fff;
+        border: 2px solid skyblue;
         border-radius: 10px;
         display: flex;
         flex-direction: column;
         gap: 1em;
-        background: #03000651;
-        backdrop-filter: blur(20px);
-        box-shadow: inset -1px -1px 10px 2px rgb(173, 173, 173);
+        background: rgb(155, 207, 227);
+        box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5);
         transition: transform 0.2s ease;
 
         &:hover{
@@ -160,7 +141,7 @@ main{
                 flex-direction: column;
                 gap: 0.5em;
                 h2,p,h1{
-                    color: #fff;
+                    color: #000;
                 }
                 h1{
                     font-size: 1.5em;
@@ -203,16 +184,6 @@ main{
     main{
         width: 100%;
         min-height: 100vh;
-        .gola1{
-        width: 50vw;
-            top: -40%;
-            left: -20%;
-        }
-        .gola2{
-            width: 50vw;
-            top: 50%;
-            left: 60%;
-        }
         nav{
             width: 100%;
             padding: 2% 5% 2% 2%;
@@ -232,7 +203,7 @@ main{
                     a{
                         text-decoration: none;
                         text-transform: capitalize;
-                        color: white;
+                        color: black;
                         font-family: "Satoshi";
                         font-weight: 500;
                         letter-spacing: 0.1em;
@@ -245,7 +216,7 @@ main{
                         position: absolute;
                         height: 2px;
                         width: 0%;
-                        background: white;
+                        background: black;
                         top: 100%;
                         left:0;
                         border-radius: 10px;
@@ -266,7 +237,9 @@ main{
                 padding: 2%;
                 width: 48%;
                 margin-bottom: 2em;
-                background: #030006af;
+                background: rgb(155, 207, 227);
+                box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5),
+                4px 4px 10px rgba(0, 0, 0, 0.5);
                 .requester{
                     h1{
                         font-size: 2em;

@@ -1,15 +1,8 @@
 let express = require('express');
 let router = express.Router();
-
+const IsloggedIn = require("../Middleware/isLoggedInMiddleware");
+const {seeAllRequest} = require("../controllers/BloodRequestController")
 /* GET home page. */
-router.get('/request-list', function(req, res) {
-  try{
-    res.status(200).render('Donar');
-  }
-  catch(error){
-    console.error(error);
-    res.status(500).redirect("/anithing");
-  }
-});
+router.get('/request-list',IsloggedIn, seeAllRequest);
 
 module.exports = router;

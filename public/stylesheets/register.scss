@@ -16,15 +16,15 @@ html,body {
     width: 100%;
 }
 body{
-    background-color:#EEFFFE;
+    background-color:#c9f9f5;
 }
 body::-webkit-scrollbar{
     width: 5px;
-    background-color:#EEFFFE;
+    background-color:#c9f9f5;
 }
 
 body::-webkit-scrollbar-thumb{
-    background-color: #494949;
+    background-color: rgb(101, 194, 230);
     border-radius: 10px;
 }
 main{

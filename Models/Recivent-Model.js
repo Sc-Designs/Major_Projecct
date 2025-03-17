@@ -4,30 +4,22 @@ const recipientSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
-    required: true,
   },
-  proof: {
-    addhar_No: {
-      type: Number,
-      default: null,
-      select: false,
-      min: [100000000000, "Addhar number is not valid!"],
-      max: [999999999999, "Addhar number is not valid!"],
-    },
-    pan_No: {
-      type: String,
-      default: null,
-      select: false,
-      min: [10000, "Pan number is not valid!"],
-      max: [99999, "Pan number is not valid!"],
-    },
+  bloodType: {
+    type: String,
+    required: true,
+    default: null,
   },
   bloodReceived: {
     type: Number,
     default: 0,
   },
+  status: {
+    type: String,
+    default: "pending",
+  },
 });
 
-const recipientModel = mongoose.model("recipient", recipientSchema);
+const bloodRequestModel = mongoose.model("recipient", recipientSchema);
 
-module.exports = recipientModel;
+module.exports = bloodRequestModel;
