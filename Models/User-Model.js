@@ -96,7 +96,7 @@ const userSchema = new mongoose.Schema(
     googleId: {
       type: String,
       unique: true,
-      sparse: true, // Allows normal users without Google authentication
+      sparse: true,
     },
     bloodRequest: [
       {
@@ -104,6 +104,10 @@ const userSchema = new mongoose.Schema(
         ref: "recipient",
       },
     ],
+    Donate:[{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "recipient",
+  }]
   },
   { timestamps: true }
 );

@@ -59,7 +59,7 @@
             <div class="info">
                 <div class="donation">
                     <h3>Donate</h3>
-                    <p>0<span> Time</span></p>
+                    <p><%= user.Donate.length %><span> Time</span></p>
                 </div>
                 <div class="donation">
                     <h3>Blood Requests</h3>
@@ -82,17 +82,84 @@
                     <% if(user.bloodgroup) { %>
                     <p><%= user.bloodgroup  %></p>
                     <% } else { %>
-                    <p>Not Know</p>
+                    <div class="Overlay">
+                    <form action="/users/add_blood_group" method="post" class="know_blood_group">
+                    <label for="Blood_Group">Please Provide Your Blood Group</label>
+                    <select name="blood_Name" id="Blood_Group">
+                        <option value="nothing">Select Your Blood Group</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                    <input type="submit" value="Conform" />
+                    </form>
+                    </div>
                     <% } %>
                 </div>
             </div>
         </section>
         <section class="blood_request">
             <h1>Blood Request From</h1>
-            <form action="/reciver/blood-request" method="post">
+            <button class="add_request">Add Request</button>
+        </section>
+        <div class="profile-img">
+        <form action="/users/picture-upload" method="post" enctype="multipart/form-data">
+            <input type="email" name="email" id="" value="<%= user.email %>" />
+            <input type="file" accept="image/*" name="profilepic" id="profilepic" required />
+            <input type="submit" value="Upload" id="upload" />
+        </form>
+        </div>
+        <section class="requests">
+            <h1>Your Pending Request</h1>
+            <div class="allCards">
+                <% pendingPosts.forEach((elem)=>{ %>     
+            <div class="card">
+                <p>RQ : <%= elem.bloodType %></p>
+                <form action="/users/deletePost" method="post">
+                    <input type="hidden" value="<%= elem._id %>" name="id">
+                    <input type="hidden" id="postId" value="<%= elem._id %>">
+                    <% if(elem.status === "Accepted"){ %>
+                    <a href="/maps/<%= elem._id %>" id="mapBtn">MAP</a>
+                    <% } %>
+                    <button type="submit">
+                        <i class="ri-delete-bin-line delete"></i>
+                    </button>
+                </form>
+            </div>
+            <% }) %>
+            </div>
+        </section>
+        <section class="requests">
+            <h1>Your Donate Request</h1>
+            <div class="allCards">
+                <% DonatePosts.forEach((elem)=>{ %>     
+            <div class="card">
+                <p>RQ : <%= elem.bloodType %></p>
+                <form action="/users/deletePost" method="post">
+                    <input type="hidden" value="<%= elem._id %>" name="id">
+                    <input type="hidden" id="postId" value="<%= elem._id %>">
+                    <% if(elem.status === "Accepted"){ %>
+                    <a href="/maps/<%= elem._id %>" id="mapBtn">MAP</a>
+                    <% } %>
+                    <button type="submit">
+                        <i class="ri-delete-bin-line delete"></i>
+                    </button>
+                </form>
+            </div>
+            <% }) %>
+            </div>
+        </section>
+        <section class="request_Form">
+                <form action="/reciver/blood-request" method="post">
+                    <i class="ri-close-large-fill closer"></i>
                 <label for="blood_group">Blood Group:</label>
-                <select name="blood_group" id="blood_group">
-                    <option value="nothing">Select The Blood Type</option>
+                <select name="blood_group" id="blood_group" required>
+                    <option value="default" selected>Select The Blood Type</option>
                     <option value="A+">A+</option>
                     <option value="A-">A-</option>
                     <option value="B+">B+</option>
@@ -102,16 +169,16 @@
                     <option value="O+">O+</option>
                     <option value="O-">O-</option>
                 </select>
-                <input type="submit" value="Send Request" />
+                <label for="number">Number:</label>
+                <input type="number" name="number" id="number" placeholder="Enter The Number..." required>
+                <div class="checkbox">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">You Sure That Number is Right.</label>
+                </div>
+                <input type="submit" value="Send Request" class="send_req" />
+                <h4><span>Disclamer</span> : ⚠️ Please enter a valid phone number. Incorrect entries may result in delays. Please Don't miss lead to anyone. 🤗</h4>
             </form>
         </section>
-        <div class="profile-img">
-        <form action="/users/picture-upload" method="post" enctype="multipart/form-data">
-            <input type="email" name="email" id="" value="<%= user.email %>" />
-            <input type="file" accept="image/*" name="profilepic" id="profilepic" required />
-            <input type="submit" value="Upload" id="upload" />
-        </form>
-        </div>
     </main>
 </body>
 <script src="/javascripts/profile.js"></script>

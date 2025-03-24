@@ -179,6 +179,7 @@ main #donar-section .card .donate-button {
   color: white;
   outline: none;
   border-radius: 5px;
+  text-decoration: none;
 }
 
 @media (min-width: 800px) {

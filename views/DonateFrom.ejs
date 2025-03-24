@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate Form</title>
+    <link rel="shortcut icon" href="/images/favicon.webp" type="image/x-icon">
+    <link rel="stylesheet" href="/stylesheets/donarForm.css">
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
+</head>
+<body>
+    <main>
+        <form action="/donar/accept" method="post">
+            <h1>Donation Form</h1>
+            <input type="hidden" name="id" value="<%= id %>">
+            <label for="recivent">Reciver Name</label>
+            <input type="text" id="recivent" value="<%= recivent.name %>" readonly>
+            <div class="handShaks">
+            <i class="ri-shake-hands-line hands"></i>
+            </div>
+            <label for="donar">Donar Name</label>
+            <input type="text" id="donar" value="<%= user.name %>" readonly>
+            <input type="hidden" name="userId" value="<%= user._id %>">
+            <label for="number">Number</label>
+            <input type="text" name="number" id="number" placeholder="Enter Your Number..." required>
+            <input type="submit" value="Confirm">
+            <a href="/donar/request-list">Cancel</a>
+            <h4><span>Disclamer</span> : ⚠️ Please enter a valid phone number. Incorrect entries may result in delays. Please Don't miss lead to anyone. 🤗</h4>
+        </form>
+    </main>
+</body>
+</html>

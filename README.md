@@ -1,5 +1,44 @@
 # 📌 Blood_Hub API Documentation
 
+## Project Overview
+Blood_Hub is a platform that connects blood donors with recipients. This API allows users to register, login, and manage their profiles. It also includes admin functionalities and Google authentication.
+
+## Technologies Used
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT (JSON Web Token)
+- Passport.js (for Google Authentication)
+- bcrypt (for password hashing)
+
+## Setup Instructions
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/Blood_Hub.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd Blood_Hub
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Set up environment variables:
+   Create a `.env` file in the root directory and add the following variables:
+   ```env
+   PORT=3000
+   MONGODB_URI=your_mongodb_uri
+   JWT_SECRET=your_jwt_secret
+   GOOGLE_CLIENT_ID=your_google_client_id
+   GOOGLE_CLIENT_SECRET=your_google_client_secret
+   ```
+5. Start the server:
+   ```bash
+   npm start
+   ```
+
 ## API Endpoints 🏗️
 <br>
 
@@ -8,29 +47,22 @@
 
 **Request Body:**
 
-`Required Feild`
+`Required Field`
 
 | ***Field*** | 🚦***Rules*** 🚦 |
 |-------|--------|
-| **Fullname** | - Object containing FirstName and LastName<br>- Required <br>- MiddleName Optional |
+| **Name** | - Required |
 | **Email** | - Required<br>- Valid email format<br>- Must be unique |
 | **Password** | - Required<br>- Minimum 8 characters<br>- At least one uppercase letter<br>- At least one lowercase letter<br>- At least one number<br>- At least one special character |
-| **Donar/Reciver** | - Required<br>- Options
-
-
 
 <br><br>
-
 
 # LIKE This object ✅
 
 ```js
-  fullname:{
-    firstname: 'Jone',
-    lastname: 'Doe'
-  }
-    email: "user@example.com",
-    password: "StrongPass123!",
+  name: "John Doe",
+  email: "user@example.com",
+  password: "StrongPass123!"
 ```
 <br>
 
@@ -45,7 +77,7 @@
 
 `We Send OTP in Mail`
 
-After Otp Varifiction the data will be save in the Database. 
+After OTP verification, the data will be saved in the Database. 
 
 <br><br>
 
@@ -53,30 +85,17 @@ After Otp Varifiction the data will be save in the Database.
 
 ```js
     userId: mongoose.Schema.Types.ObjectId,  // mongoose object id
-    email: String,  // string containing
-    fullname: Object{},  // object containing
-    password: string (hash),  // hashed password
-````
+    email: String,  // string containing email
+    name: String,  // string containing name
+    password: String  // hashed password
+```
 <br>
 
 ## ***Validation Rules***
 - **`Fullname`**: 
   - Required
   - Alphanumeric characters and no underscores
-  - Must be unique
-  - this is a Object which is the collection of firstname and lastname
 
-    - **`FirstName`**:
-      - Required
-      - 2-15 characters long
-
-    - **`MiddleName`**:
-      - Optional
-      - 2-15 characters long
-
-    - **`LastName`**:
-      - Required
-      - 2-15 characters long
 - **`Email`**:
   - Required
   - Must be a valid email format
@@ -107,13 +126,13 @@ After Otp Varifiction the data will be save in the Database.
 ## Response Code
 
 ```diff
-+ if Succesfull then status code (200) ✅
-- if Not Succesfull then status code (406) ❌
++ if Successful then status code (200) ✅
+- if Not Successful then status code (406) ❌
 ```
 
-## Sending Things in Frontent 
+## Sending Things in Frontend 
 
-- User Token: String ( In Cookie section with hashed format ) 
+- User Token: String (In Cookie section with hashed format) 
 
 <br>
 <br>
@@ -125,17 +144,16 @@ After Otp Varifiction the data will be save in the Database.
 
 > ## _Token in Cookie Section_
 
-
-- **Avaliable**
+- **Available**
   - User Redirected to his/her profile.
-- **Not Avaliable** 
-  - User Redirected to the login Page !
+- **Not Available** 
+  - User Redirected to the login Page!
 - **If Not Match**
-  - User Redirected to the login Page !
+  - User Redirected to the login Page!
 ## Response Code
 ```diff
-+if the User profile found (302) ✅
--if the User profile Not found (404) ❌
++ if the User profile found (302) ✅
+- if the User profile Not found (404) ❌
 ```
 
 <br>
@@ -150,18 +168,18 @@ After Otp Varifiction the data will be save in the Database.
 
 **Request Body:**
 
-`Required Feild`
+`Required Field`
 
-|***Feild***|***Rules***|
+|***Field***|***Rules***|
 |-----|-----|
-|**Fullname**| - Obejct<br>- FirstName<br>- MiddleName<br>- LastName |
-|**Email**|- String<br>- Must be varified email|
-|**Password**|-String<br>- Minimum 08 and Maximum 25|
+|**Fullname**| - Object<br>- FirstName<br>- MiddleName<br>- LastName |
+|**Email**|- String<br>- Must be verified email|
+|**Password**|- String<br>- Minimum 08 and Maximum 25|
 
 ## Response Code
 ```diff
-+if Admin register Succesfuly (201) ✅
--if Admin register Not Succesfuly (500) ❌
++ if Admin register Successfully (201) ✅
+- if Admin register Not Successfully (500) ❌
 ```
 <br><br>
 
@@ -171,17 +189,17 @@ After Otp Varifiction the data will be save in the Database.
 
 **Request Body:**
 
-`Required Feild`
+`Required Field`
 
-|***Feild***|***Rules***|
+|***Field***|***Rules***|
 |-----|-----|
 |**Email**|- String("example@example.com")|
 |**Password**|- String|
 
 ## Response Code
 ```diff
-+if Admin Succesfuly Login(200) ✅
--if Admin Not Succesfuly Login (406) ❌
++ if Admin Successfully Login (200) ✅
+- if Admin Not Successfully Login (406) ❌
 ```
 <br>
 
@@ -191,33 +209,32 @@ After Otp Varifiction the data will be save in the Database.
 
 > ## _adminToken in Cookie Section_
 
-
-- **Avaliable**
+- **Available**
   - User Redirected to his/her profile.
-- **Not Avaliable** 
-  - User Redirected to the login Page !
+- **Not Available** 
+  - User Redirected to the login Page!
 - **If Not Match**
-  - User Redirected to the login Page !
+  - User Redirected to the login Page!
 
 ## Response Code
 ```diff
-+if the Admin profile found (302) ✅
--if the Admin profile Not found (404) ❌
++ if the Admin profile found (302) ✅
+- if the Admin profile Not found (404) ❌
 ```
 <br>
 <br>
 
-## 7.*_GOOGLE AUTHENTICATION ROUTE_* 🪧
+## 7. **_GOOGLE AUTHENTICATION ROUTE_** 🪧
 
 ### Authentication Route
 
-#### 📫 GET `/google-oth/auth/google`
+#### 📫 GET `/google-auth/auth/google`
 
 ---
 
-### This is CallBack URL for Google
+### This is Callback URL for Google
 
-#### 📫 GET `/google-oth/auth/google/callback`
+#### 📫 GET `/google-auth/auth/google/callback`
 
 ```javascript
   {
@@ -227,13 +244,240 @@ After Otp Varifiction the data will be save in the Database.
 ### Success Route And Failure Route
 
 ```diff
-+/users/profile ✅
--/users/login ❌
++ /users/profile ✅
+- /users/login ❌
 ```
 ---
 <br>
 
 > # 🛑 Important Notice :
 
-### If User do <i><b><u>"Signin with Google"</u></b></i> they will not requirement the password section, it will be redirect by Google ID.
+### If User does <i><b><u>"Signin with Google"</u></b></i> they will not require the password section, it will be redirected by Google ID.
+
+## 8. **_UPDATE USER PROFILE_** 🪧
+
+#### 📫 PUT `/user/update-profile`
+
+**Request Body:**
+
+| ***Field*** | ***Rules*** |
+|------|-------|
+|Name| String |
+|Email| String("example@example.com") |
+|Password| String |
+
+## Response Code
+
+```diff
++ if Successful then status code (200) ✅
+- if Not Successful then status code (400) ❌
+```
+
+## 9. **_DELETE USER ACCOUNT_** 🪧
+
+#### 📫 DELETE `/user/delete-account`
+
+**Request Body:**
+
+#### see the token and find the user in database and delete the account 
+
+## Response Code
+
+```diff
++ if Successful then status code (200) ✅
+- if Not Successful then status code (400) ❌
+```
+
+## 10. **_UPLOAD USER PROFILE PICTURE_** 🪧
+
+#### 📫 POST `/user/picture-upload`
+
+**Request Body:**
+
+| ***Field*** | ***Rules*** |
+|------|-------|
+|profilepic| File |
+
+## Response Code
+
+```diff
++ if Successful then status code (200) ✅
+- if Not Successful then status code (400) ❌
+```
+
+## 11. **_OTP VERIFICATION_** 🪧
+
+#### 📫 GET `/user/otp-verification/:id`
+
+**Request Params:**
+
+| ***Field*** | ***Rules*** |
+|------|-------|
+|id| String |
+
+## Response Code
+
+```diff
++ if Successful then status code (200) ✅
+- if Not Successful then status code (400) ❌
+```
+
+## 12. **_RESEND OTP_** 🪧
+
+#### 📫 POST `/user/resend-otp`
+
+**Request Body:**
+
+| ***Field*** | ***Rules*** |
+|------|-------|
+|email| String("example@example.com") |
+
+## Response Code
+
+```diff
++ if Successful then status code (200) ✅
+- if Not Successful then status code (400) ❌
+```
+
+## 13. **_DELETE BLOOD REQUEST_** 🪧
+
+#### 📫 POST `/user/deletePost`
+
+**Request Body:**
+
+| ***Field*** | ***Rules*** |
+|------|-------|
+|postId| String |
+
+## Response Code
+
+```diff
++ if Successful then status code (200) ✅
+- if Not Successful then status code (400) ❌
+```
+
+## 14. **_ADD BLOOD GROUP_** 🪧
+
+#### 📫 POST `/user/add_blood_group`
+
+**Request Body:**
+
+| ***Field*** | ***Rules*** |
+|------|-------|
+|bloodGroup| String |
+
+## Response Code
+
+```diff
++ if Successful then status code (200) ✅
+- if Not Successful then status code (400) ❌
+```
+
+## 15. **_HOME PAGE_** 🪧
+
+#### 📫 GET `/`
+
+## Response Code
+
+```diff
++ if Successful then status code (200) ✅
+- if Not Successful then status code (500) ❌
+```
+
+## 16. **_MAP PAGE_** 🪧
+
+#### 📫 GET `/maps`
+
+## Response Code
+
+```diff
++ if Successful then status code (200) ✅
+- if Not Successful then status code (500) ❌
+```
+
+## 17. **_ERROR PAGE_** 🪧
+
+#### 📫 GET `/:anything`
+
+## Response Code
+
+```diff
++ if Successful then status code (200) ✅
+```
+
+## 18. **_SEE ALL BLOOD REQUESTS_** 🪧
+
+#### 📫 GET `/donar/request-list`
+
+## Response Code
+
+```diff
++ if Successful then status code (200) ✅
+- if Not Successful then status code (500) ❌
+```
+
+## 19. **_DONATE FORM_** 🪧
+
+#### 📫 GET `/donar/donate_from/:id`
+
+**Request Params:**
+
+| ***Field*** | ***Rules*** |
+|------|-------|
+|id| String |
+
+## Response Code
+
+```diff
++ if Successful then status code (200) ✅
+- if Not Successful then status code (500) ❌
+```
+
+## 20. **_ACCEPT DONATION_** 🪧
+
+#### 📫 POST `/donar/accept`
+
+**Request Body:**
+
+| ***Field*** | ***Rules*** |
+|------|-------|
+|requestId| String |
+
+## Response Code
+
+```diff
++ if Successful then status code (200) ✅
+- if Not Successful then status code (500) ❌
+```
+
+## 21. **_REQUEST BLOOD_** 🪧
+
+#### 📫 POST `/blood/blood-request`
+
+**Request Body:**
+
+| ***Field*** | ***Rules*** |
+|------|-------|
+|bloodType| String |
+
+## Response Code
+
+```diff
++ if Successful then status code (200) ✅
+- if Not Successful then status code (500) ❌
+```
+
+## 22. **_ADMIN LOGIN PAGE_** 🪧
+
+#### 📫 GET `/admin/login`
+
+## Response Code
+
+```diff
++ if Successful then status code (200) ✅
+```
+
+## Contributors
+- [Your Name](https://github.com/yourusername)
+- [Contributor Name](https://github.com/contributorusername)
 

@@ -38,15 +38,15 @@
             <div class="card">
                 <div class="top">
                     <div class="img">
-                        <% if( elem.userId.profilepic ){ %>
-                            <img src="data:image/jpeg;base64,<%= elem.userId.profilepic %>" alt="Profile Picture">
+                        <% if( elem.reciventId.profilepic ){ %>
+                            <img src="data:image/jpeg;base64,<%= elem.reciventId.profilepic %>" alt="Profile Picture">
                             <% }else{ %>
                                 <img src="https://images.unsplash.com/photo-1738044380727-086b16113ab5?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
                         <% }%>
                     </div>
                     <div class="info">
-                        <h1>Name: <%= elem.userId.name %></h1>
-                        <h2>id: <%= elem.userId._id %></h2>
+                        <h1>Name: <%= elem.reciventId.name %></h1>
+                        <h2>id: <%= elem.reciventId._id %></h2>
                     </div>
                 </div>
                 <div class="requerment">
@@ -60,7 +60,7 @@
             </div>
             <% }) %>
             <% }else{ %>
-                <pre><%= JSON.stringify(posts, null, 2) %></pre>
+                <pre>No Request Submit Yet.</pre>
             <% } %>
       </section>
     </main>
