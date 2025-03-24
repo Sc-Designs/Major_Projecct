@@ -5,8 +5,10 @@ const Otp = require("../utlis/OtpFunction");
 const EmailSender = require("../utlis/EmailSender");
 const emailTemplate = require("../Email_Template/Emails");
 const {userFinder} = require("../utlis/UserFinder");
+const bloodRequestModel = require("../Models/Recivent-Model");
+const jwt = require("jsonwebtoken");
 
-module.exports.registerUser = async (req, res)=>{
+module.exports.registerUser = async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.status(400).json({errors: errors.array()});
@@ -49,10 +51,9 @@ module.exports.loginUser = async (req, res) => {
     }
 
     let userToken = user.GenerateToken();
-    res.cookie("UserToken", userToken);
+    res.cookie("userToken", userToken);
 
     let otp = Otp.OtpGenerator();
-    console.log(Otp.OtpGenerator());
     
     delete user._doc.password;
     delete user._doc.__v;
@@ -63,6 +64,9 @@ module.exports.loginUser = async (req, res) => {
         sub: "OTP Verification",
         mess: emailTemplate.loginEmail(otp),
       });
+      user.otp = otp;
+      user.otpExpiry = new Date(Date.now() + 60 * 1000);
+      await user.save();
       return res.redirect(`/users/otp-varification/${user._id}`);
     } else {
       await EmailSender.sendEmail({ // Corrected EmailSender
@@ -70,6 +74,9 @@ module.exports.loginUser = async (req, res) => {
         sub: "OTP Verification",
         mess: emailTemplate.loginEmail(otp),
       });
+      user.otp = otp;
+      user.otpExpiry = new Date(Date.now() + 60 * 1000);
+      await user.save();
       return res.redirect(`/users/otp-varification/${user._id}`);
     }
   } catch (err) {
@@ -102,7 +109,7 @@ module.exports.otpVerification = async (req, res) => {
     }
     const { otp } = req.body;
     const { id } = req.params;
-    const user = await userModel.findOne({_id: id});
+    const user = await userFinder({key: "_id", query: id});
     if (!user) return res.status(404).json({ message: "User not found" });
     delete user._doc?.password;
     if (!user.otp) return res.status(400).json({ message: "OTP not found" });
@@ -132,6 +139,7 @@ module.exports.ResendOtp = async (req, res) => {
   try {
     const Newotp = OtpGenerator();
     const user = await userFinder({ key: "_id", query: req.params.id })
+    console.log(user);
     delete user._doc.password;
       await EmailSender.sendEmail({
         email: user.email,
@@ -145,5 +153,117 @@ module.exports.ResendOtp = async (req, res) => {
       } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+module.exports.DeletePost = async ( req,res ) => {
+  try{
+    const token = req.cookies.userToken || req.headers.authorization?.split(" ")[1];
+    if(!token) return res.redirect("/users/profile");
+    const {id} = req.body;
+    await bloodRequestModel.findOneAndDelete({_id: id})
+    const decoded = jwt.verify(token, process.env.JWT_KEY);
+    const user = await userFinder({key: "email", query: decoded.email})
+    user.bloodRequest.pop(id);
+    await user.save();
+    res.status(201).redirect("/users/profile")
+  }catch(error){
+    console.error(error);
+    res.status(500).json({message: "Something went wrong"});
+  }
+};
+
+module.exports.GetProfile = async ( req,res ) => {
+  try {
+    if (!req.user || !req.user.email)
+      return res.status(401).send("Unauthorized access");
+    const user = await userModel.findOne({ email: req.user.email });
+    const posts = await userModel
+      .findOne({ email: req.user.email })
+      .populate({
+        path: "bloodRequest",
+        model: "recipient",
+        select: "-password -__v",
+      })
+      .sort({ date: -1 })
+      .lean();
+    const pendingPosts = posts.bloodRequest.filter((post) => {
+      return post.status == "pending" || post.status == "Accepted";
+    });
+    const Donates = await userModel
+      .findOne({ email: req.user.email })
+      .populate({
+        path: "Donate",
+        model: "recipient",
+        select: "-password -__v",
+      })
+      .sort({ date: -1 })
+      .lean();
+    const DonatePosts = Donates.Donate.filter((post) => {
+      return post.status == "Accepted";
+    });
+    if (!user) return res.status(404).send("User not found");
+    res.render("Profile", {
+      user,
+      profilepic: user.profilepic || null,
+      pendingPosts,
+      DonatePosts
+    });
+  } catch (err) {
+    res.redirect("/:anithing");
+  }
+};
+
+module.exports.IdWithOtpPage = async ( req,res ) => {
+  try {
+    const user = await userModel.findOne({ _id: req.params.id });
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.render("Otp", { user: user });
+  } catch (err) {
+    res.redirect("/:anithing");
+  }
+}
+
+module.exports.loginPage = (req, res) => {
+  try {
+    res.render("Login");
+  } catch (err) {
+    res.redirect("/:anithing");
+  }
+};
+
+module.exports.registerPage = (req, res) => {
+  try {
+    res.render("Register");
+  } catch (err) {
+    res.redirect("/:anithing");
+  }
+};
+
+module.exports.logOutUser = (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      console.error(err);
+      return res.redirect("/users/profile");
+    }
+    req.session.destroy();
+    res.clearCookie("userToken");
+    res.redirect("/users/login");
+  });
+};
+
+module.exports.AddBloodGroup = async ( req,res )=>{
+  try{
+    const { blood_Name } = req.body;
+    const token = req.cookies.userToken || req.headers.authorization?.split(" ")[1];
+    if(!token) return res.status(401).json({message: "Unauthorized access"});
+    const decoded = jwt.verify(token, process.env.JWT_KEY);
+    const user = await userFinder({key: "email", query: decoded.email})
+    user.bloodgroup = blood_Name;
+    await user.save();
+    res.status(200).redirect("/users/profile")
+  }catch(error){
+    console.error(error);
+    res.status(500).json({message: "Something went wrong"});
   }
 };

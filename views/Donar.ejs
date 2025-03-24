@@ -31,28 +31,28 @@
           <li><a href="">FeedBack</a></li>
           <li><a href="">Contact</a></li>
         </ul>
-    </nav>
+        </nav>
     <section id="donar-section">
         <% if(posts.length > 0) { %>
         <% posts.forEach((elem)=>{ %>
         <div class="card">
             <div class="img">
-                <% if( elem.userId.profilepic ){ %>
-                    <img src="data:image/jpeg;base64,<%= elem.userId.profilepic %>" alt="Profile Picture">
+                <% if( elem.reciventId.profilepic ){ %>
+                    <img src="data:image/jpeg;base64,<%= elem.reciventId.profilepic %>" alt="Profile Picture">
                 <% } else { %>
                     <img src="https://images.unsplash.com/photo-1738044380727-086b16113ab5?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">                
                 <% }%>
             </div>
             <div class="requester">
                 <h2>Requester Name :</h2> 
-                <h1><%= elem.userId.name %></h1>
+                <h1><%= elem.reciventId.name %></h1>
                 <p>Requested Blood : <span><%= elem.bloodType %></span></p>
             </div>
-            <button class="donate-button">Donate Now</button>
+            <a href="/donar/donate_from/<%= elem._id %>" class="donate-button">Donate Now</a>
         </div>
         <% }) %>
         <% } else { %>
-        <h2>No donar requests available.</h2>
+        <pre>No donar requests available.</pre>
         <% } %>
     </section>
     </main>

@@ -1,5 +1,4 @@
 const app = require("./app");
-const { Server } = require("socket.io");
 const http = require("http");
 const jwt = require("jsonwebtoken");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
@@ -8,16 +7,15 @@ const passport = require("passport");
 const { OtpGenerator } = require("./utlis/OtpFunction");
 const EmailSender = require("./utlis/EmailSender");
 const { registerEmail } = require("./Email_Template/Emails");
-const {createUser} = require("./Services/user.service")
-
+const {createUser} = require("./Services/user.service");
+const bloodRequestModel = require("./Models/Recivent-Model");
 const server = http.createServer(app);
-const io = new Server(server, {
+const io = require('socket.io')(server, {
   cors: {
-    origin: "http://localhost:4000",
+    origin: "http://localhost:4000", // Update with your frontend URL
     methods: ["GET", "POST"],
   },
 });
-
 passport.use(
   new GoogleStrategy(
     {
@@ -62,12 +60,10 @@ passport.use(
     }
   )
 );
-
 // Serialize user
 passport.serializeUser((user, done) => {
   done(null, user);
 });
-
 passport.deserializeUser((obj, done) => {
   done(null, obj);
 });
@@ -80,8 +76,7 @@ function extractTokenFromCookies(cookieString) {
 
   return cookies.userToken || null;
 }
-
-io.use((socket, next) => {
+io.use( async (socket, next) => {
   try {
     const token =
       socket.handshake.auth?.userToken ||
@@ -92,29 +87,41 @@ io.use((socket, next) => {
     if (!decoded) return next(new Error("Authentication error"));
 
     socket.user = decoded;
-
     next();
   } catch (error) {
     console.error(error);
     return next(new Error("Authentication error"));
   }
 });
-
-const port = process.env.PORT || 4000;
-
 io.on("connection", (socket) => {
-  socket.on("connection", (socket) => {
-    console.log(`User connected: ${socket.id}`);
+  
+  socket.on("connect",()=>{
+    console.log("User connected", socket.id);
   })
-  socket.on("user-location", (data) => {
-    io.emit("recive-location", { id: socket.id, ...data });
+  socket.on("project-id", async ({ projectId }) => {
+    let projectDets = await bloodRequestModel.findOne({ _id: projectId });
+    if (projectDets) {
+      socket.roomId = projectDets._id.toString();
+      socket.join(socket.roomId);
+
+      socket.emit("room-joined", { roomId: socket.roomId });
+
+      socket.on("user-location", (data) => {
+        if(data) socket.emit("received-location",{location: {...data},id: socket.id});
+      });
+      socket.on("disconnect", () => {
+        socket.leave(socket.roomId);
+        console.log("User disconnected", socket.id);
+        socket.emit("disconnected-user",{id: socket.id});
+      });
+
+    } else {
+      console.log("Invalid project ID");
+    }
   });
 
-  socket.on("disconnect", () => {
-    io.emit("user-disconnected", socket.id);
-  });
 });
-
+const port = process.env.PORT || 4000;
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

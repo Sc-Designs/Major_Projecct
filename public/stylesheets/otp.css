@@ -103,47 +103,49 @@ main section form .bottom p {
   font-size: 1em;
   font-family: "Satoshi";
 }
-main section form .reSend_button {
-  position: relative;
-  height: fit-content;
+main section #reSend-button {
   width: 100%;
   display: flex;
+  height: fit-content;
+}
+main section #reSend-button .btn {
+  position: relative;
+  width: 100%;
+  height: fit-content;
+  border: 2px solid skyblue;
+  border-radius: 5px;
+  cursor: pointer;
   overflow: hidden;
 }
-main section form .reSend_button::after {
+main section #reSend-button .btn::after {
   content: "";
   position: absolute;
   top: 100%;
-  left: 0%;
+  left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgb(82, 191, 234);
-  border-radius: 5px;
-  z-index: 1;
-  transition: all 0.5s ease;
-  border-radius: 50%;
+  background: #52BFEA;
+  border-radius: 100%;
+  transition: all 0.5s ease-in-out;
 }
-main section form .reSend_button:hover::after {
-  border-radius: 0%;
+main section #reSend-button .btn:hover::after {
   top: 0%;
+  border-radius: 0;
 }
-main section form .reSend_button:hover a {
-  color: white;
+main section #reSend-button .btn:hover input {
+  color: #000;
 }
-main section form .reSend_button a {
-  width: 100%;
-  color: skyblue;
-  text-decoration: none;
-  font-size: 1.2em;
-  font-family: "Satoshi";
-  border: 2px solid skyblue;
-  text-align: center;
-  padding: 3% 0% 3% 0%;
+main section #reSend-button .btn input {
+  color: #52BFEA;
   position: relative;
-  top: 0%;
-  left: 0%;
   z-index: 2;
-  transform: all 0.5s ease;
+  padding: 4% 1%;
+  width: 100%;
+  outline: none;
+  background: transparent;
+  border: none;
+  transition: all 0.5s ease-in-out;
+  font-size: 1.1em;
 }
 
 @media (min-width: 1024px) {

@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 
 const recipientSchema = new mongoose.Schema({
-  userId: {
+  reciventId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+  },
+  donarId:{
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
   },
@@ -18,6 +22,14 @@ const recipientSchema = new mongoose.Schema({
     type: String,
     default: "pending",
   },
+  reciverNumber:{
+    type: Number,
+    default: null
+  },
+  DonarNumber: {
+    type: Number,
+    default:null
+  }
 });
 
 const bloodRequestModel = mongoose.model("recipient", recipientSchema);
