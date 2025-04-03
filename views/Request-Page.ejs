@@ -20,7 +20,7 @@
             <li><a href="/users/profile">Profile</a></li>
             <li><a href="/">Home</a></li>
             <li><a href="/donar/request-list">Donate</a></li>
-            <li><a href="">FeedBack</a></li>
+            <li><a href="/about">About</a></li>
             <li><a href="">Contact</a></li>
             <a href="/users/logout">Logout</a>
         </ul>
@@ -28,24 +28,24 @@
             <li><a href="/users/profile">Profile</a></li>
           <li><a href="/">Home</a></li>
           <li><a href="/donar/request-list">Donate</a></li>
-          <li><a href="">FeedBack</a></li>
+          <li><a href="/about">About</a></li>
           <li><a href="">Contact</a></li>
         </ul>
     </nav>
     <section class="request-section">
-        <% if(posts.length > 0) { %>
-        <% posts.forEach((elem)=>{ %>
+        <% if(requests.length > 0) { %>
+        <% requests.forEach((elem)=>{ %>
             <div class="card">
                 <div class="top">
                     <div class="img">
-                        <% if( elem.reciventId.profilepic ){ %>
-                            <img src="data:image/jpeg;base64,<%= elem.reciventId.profilepic %>" alt="Profile Picture">
+                        <% if( user.profilepic ){ %>
+                            <img src="data:image/jpeg;base64,<%= user.profilepic %>" alt="Profile Picture">
                             <% }else{ %>
                                 <img src="https://images.unsplash.com/photo-1738044380727-086b16113ab5?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
                         <% }%>
                     </div>
                     <div class="info">
-                        <h1>Name: <%= elem.reciventId.name %></h1>
+                        <h1>Name: <%= user.name %></h1>  
                         <h2>id: <%= elem.reciventId._id %></h2>
                     </div>
                 </div>
@@ -54,9 +54,13 @@
                     <p><%= elem.bloodType %></p>
                 </div>
                 <div class="date">
-                    <h1>Date: 13/03/2025</h1>
+                    <h1>Date: <%= elem.date %></h1>
                 </div>
-                <p class="status"><%= elem.status %></p>
+                <% if( elem.status === "pending") {%>
+                <p class="status" style="background-color: rgb(209, 136, 0);"><i class="ri-time-line"></i> Pending</p>
+                <% }else{ %>
+                    <p class="status" style="background-color: #00775d;">✅ Accepted</p>
+                <% } %>
             </div>
             <% }) %>
             <% }else{ %>

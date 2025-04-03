@@ -1,0 +1,202 @@
+@font-face {
+  font-family: "Satoshi";
+  src: url("/Fonts/66aa728085dec3390cb7f058_Satoshi-Variable.ttf");
+}
+@font-face {
+  font-family: "Helvetica";
+  src: url("/Fonts/HelveticaNowDisplay-Black_20bf03d0.ttf");
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body::-webkit-scrollbar {
+  width: 6px;
+  background-color: #c9f9f5;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgb(101, 194, 230);
+  border-radius: 10px;
+}
+
+main {
+  width: 100%;
+  min-height: 100vh;
+  background: #c9f9f5;
+}
+main nav {
+  width: 100%;
+  padding: 5%;
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: end;
+  z-index: 999;
+  backdrop-filter: blur(50px);
+}
+main nav .menu {
+  font-size: 2em;
+}
+main nav .menus {
+  display: none;
+}
+main nav .sidemenus {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: -100%;
+  top: 0;
+  background-color: rgb(101, 194, 230);
+  height: 100vh;
+  width: 100%;
+  transition: all 0.5s ease;
+}
+main nav .sidemenus .close {
+  font-size: 2em;
+  color: white;
+  cursor: pointer;
+  position: absolute;
+  top: 2%;
+  right: 4%;
+}
+main nav .sidemenus > li {
+  list-style: none;
+  width: 90%;
+  text-align: center;
+}
+main nav .sidemenus > li a {
+  font-family: "Satoshi";
+  font-size: 2.5em;
+  color: white;
+  text-decoration: none;
+  width: 100%;
+  display: block;
+  padding: 4% 0%;
+  letter-spacing: 0.08em;
+}
+main nav .sidemenus > li a:hover {
+  background: skyblue;
+}
+main nav .sidemenus > a {
+  letter-spacing: 0.08em;
+  font-family: "Satoshi";
+  font-size: 3em;
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 4% 0%;
+  width: 90%;
+  text-align: center;
+}
+main nav .sidemenus > a:hover {
+  background: skyblue;
+}
+main h1 {
+  font-family: "Helvetica";
+  font-size: 2em;
+  text-align: center;
+  margin-bottom: 0.2em;
+  padding: 18% 5% 1% 5%;
+}
+main > ul {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  gap: 0.3em;
+  padding: 2% 5%;
+}
+main > ul > li {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  font-family: "Satoshi";
+  font-size: 1.5em;
+  border-bottom: 4px solid skyblue;
+  border-top: 4px solid skyblue;
+  padding: 0.5em 0em;
+}
+main > ul > li strong {
+  white-space: nowrap;
+  font-family: "Helvetica";
+  font-size: 1.2em;
+}
+
+@media (min-width: 1022px) {
+  main nav {
+    width: 100%;
+    padding: 1% 5% 1% 2%;
+    display: flex;
+    justify-content: end;
+  }
+  main nav .menu {
+    display: none;
+  }
+  main nav .menus {
+    display: flex;
+    gap: 2em;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  main nav .menus > li {
+    list-style-type: none;
+    position: relative;
+    cursor: pointer;
+  }
+  main nav .menus > li a {
+    text-decoration: none;
+    text-transform: capitalize;
+    color: black;
+    font-family: "Satoshi";
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    position: relative;
+    z-index: 2;
+  }
+  main nav .menus > li::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 0%;
+    background-color: black;
+    top: 100%;
+    left: 0;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+  main nav .menus > li:hover::after {
+    width: 100%;
+  }
+  main nav .menus > a {
+    font-family: "Satoshi";
+    color: white;
+    text-decoration: none;
+    background: skyblue;
+    border-radius: 5px;
+    padding: 0.5em 1.5em;
+  }
+  main h1 {
+    padding: 5% 2% 0.5% 2%;
+    margin-bottom: 0.1em;
+  }
+  main > ul {
+    padding: 0.5% 2%;
+  }
+  main > ul > li {
+    border-width: 2px;
+    font-size: 1.2em;
+  }
+  main > ul > li strong {
+    font-size: 1.3em;
+  }
+}

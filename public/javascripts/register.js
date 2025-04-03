@@ -9,6 +9,10 @@ let alertemail = document.querySelector("#alertemail");
 let age = document.querySelector("#age");
 let alertage = document.querySelector("#alertage");
 let button = document.querySelector("button");
+let eye1 = document.querySelector(".eye1");
+let eye2 = document.querySelector(".eye2");
+let flag1 = 0;
+let flag2 = 0;
 
 conpass.addEventListener("input", () => {
     if (conpass.value === "") return alertpass.innerHTML = "";
@@ -68,4 +72,31 @@ age.addEventListener("input", () => {
   }
 });
 
+eye1.addEventListener("click", () => {
+  if (flag1 === 0) {
+    password.setAttribute("type", "text");
+    eye1.classList.remove("ri-eye-close-line");
+    eye1.classList.add("ri-eye-2-line");
+    flag1 = 1;
+  } else {
+    password.setAttribute("type", "password");
+    eye1.classList.remove("ri-eye-2-line");
+    eye1.classList.add("ri-eye-close-line");
+    flag1 = 0;
+  }
 });
+eye2.addEventListener("click", () => {
+  if (flag2 === 0) {
+    conpass.setAttribute("type", "text");
+    eye2.classList.remove("ri-eye-close-line");
+    eye2.classList.add("ri-eye-2-line");
+    flag2 = 1;
+  } else {
+    conpass.setAttribute("type", "password");
+    eye2.classList.remove("ri-eye-2-line");
+    eye2.classList.add("ri-eye-close-line");
+    flag2 = 0;
+  }
+});
+});
+

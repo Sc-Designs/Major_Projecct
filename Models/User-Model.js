@@ -47,10 +47,6 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    socketId: {
-      type: String,
-      default: null,
-    },
     emergencycontact: {
       number: {
         type: String,
@@ -112,18 +108,6 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Hash password before saving
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
-  try {
-    this.password = await bcrypt.hash(this.password, +process.env.SALT_NUMBER);
-    next();
-  } catch (error) {
-    console.error("Error hashing password:", error);
-    next(error);
-  }
-});
-
 // Generate JWT Token with expiration
 userSchema.methods.GenerateToken = function () {
     return jwt.sign(
@@ -143,7 +127,6 @@ userSchema.methods.ComparePassword = async function (password) {
 
 // Static Method to Hash Password
 userSchema.statics.hashPassword = async function (password) {
-    console.log(password);
     return await bcrypt.hash(password, +process.env.SALT_NUMBER);
 };
 

@@ -7,7 +7,6 @@ module.exports.userFinder = async ({ key, query }) => {
       .select("+password")
       
     if (!user) {
-      console.log("User not found");
       return null;
     }
     return user;

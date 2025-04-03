@@ -2,9 +2,15 @@ const { userFinder } = require("../utlis/UserFinder");
 const jwt = require("jsonwebtoken");
 const { createBloodRequest } = require("../Services/blood.service");
 const bloodRequestModel = require("../Models/Recivent-Model");
+const moment = require("moment");
+const userModel = require("../Models/User-Model");
+const EmailSender = require("../utlis/EmailSender");
+const emailTemplate = require("../Email_Template/Emails");
+const dbgr = require("debug")("development:dev");
 
 module.exports.requestForBlood = async( req,res )=>{
     try{
+      const date = moment().format("DD/MM/YYYY");
         const token = req.cookies.userToken || req.headers.authorization?.split(" ")[1];
         if(!token){
             res.status(401).redirect("/users/login");
@@ -21,6 +27,7 @@ module.exports.requestForBlood = async( req,res )=>{
           reciventId: user._id,
           bloodType: req.body.blood_group,
           number,
+          date
         });
         user.bloodRequest.push(newRequest._id);
         await user.save();
@@ -33,21 +40,16 @@ module.exports.requestForBlood = async( req,res )=>{
 
 module.exports.RequestHandlerPage = async ( req,res ) => {
   try {
-    const allRequest = await bloodRequestModel
-      .find()
-      .populate({
-        path: "reciventId",
-        model: "user",
-        select: "-password -__v",
-      })
-      .sort({ date: -1 })
-      .lean();
-      const fillterData = allRequest.filter(
-        (data) => data.status === "pending"
-      );
-    res.status(200).render("Request-Page", { posts: fillterData});
+    const token = req.cookies.userToken || req.headers.authorization?.split(" ")[1];
+    if (!token) return res.redirect("/users/login");
+    const decoded = jwt.verify(token, process.env.JWT_KEY);
+    const user = await userFinder({key: "email", query: decoded.email});
+    delete user._doc.password;
+    const allPost = await bloodRequestModel.find({ reciventId : user._id}).sort({date: -1});
+      if (!user) return res.redirect("/users/login");
+      res.status(200).render("Request-Page", {requests : allPost, user: user});
   } catch (error) {
-    console.error("Error in RequestHandlerPage:", error.message, error.stack);
+    console.error("Error in RequestHandlerPage:", error.message);
     res.status(500).redirect("/anithing");
   }
 };
@@ -56,7 +58,9 @@ module.exports.seeAllRequest = async ( req,res ) =>{
   try{
     const token =
       req.cookies.userToken || req.headers.authorization?.split(" ")[1];
+      const adminToken = req.cookies.userToken || req.headers.authorization?.split(" ")[1];
     if (!token) return res.redirect("/users/login");
+    else if (!adminToken) return res.redirect("/admin/login");
     const decoded = jwt.verify(token, process.env.JWT_KEY);
     const allRequest = await bloodRequestModel
       .find()
@@ -98,15 +102,42 @@ module.exports.donateFrom = async ( req,res ) => {
 };
 
 module.exports.donateAccept = async ( req,res ) =>{
+  try{
   const { number, id, userId } = req.body;
   const bloodRequest = await bloodRequestModel.findOne({_id: id});
-  const Donar = await userFinder({key: "_id", query: userId});
   if(!bloodRequest) res.redirect("/users/profile");
+  const Donar = await userFinder({key: "_id", query: userId});
+  const recivent = await userFinder({
+    key: "_id",
+    query: bloodRequest.reciventId.toString(),
+  });
   bloodRequest.DonarNumber = number;
   bloodRequest.status = "Accepted";
   bloodRequest.donarId = Donar._id;
   await bloodRequest.save();
-  Donar.Donate.push(bloodRequest._id)
+  Donar.Donate.push(bloodRequest._id);
   await Donar.save();
+  await EmailSender.sendEmail({
+    email: recivent.email,
+    sub: "Blood Request Accepted By Donar 🎉",
+    mess: emailTemplate.ReciventEmail({
+      name: Donar.name,
+      number,
+      type: bloodRequest.bloodType,
+    }),
+  });
+  await EmailSender.sendEmail({
+    email: Donar.email,
+    sub: "Blood Request Accepted By You ❤️",
+    mess: emailTemplate.DonarEmail({
+      name: recivent.name,
+      number: bloodRequest.reciverNumber,
+      type: bloodRequest.bloodType,
+    }),
+  });
   res.redirect("/users/profile");
+} catch (e) {
+  console.error("Error in donateAccept:", e.message, e.stack);
+  res.status(500).redirect("/anithing");
+}
 }

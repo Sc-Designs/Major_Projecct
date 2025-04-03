@@ -4,6 +4,7 @@ module.exports.createBloodRequest = async ({
   reciventId,
   bloodType,
   number,
+  date
 }) => {
   try {
     if (!bloodType) throw new Error("The field are required!");
@@ -11,6 +12,7 @@ module.exports.createBloodRequest = async ({
       reciventId,
       bloodType,
       reciverNumber: number,
+      date
     });
     return newBloodRequest;
   } catch (error) {

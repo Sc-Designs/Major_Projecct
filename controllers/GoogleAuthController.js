@@ -17,7 +17,7 @@ module.exports.tokenSender = async (req, res)=>{
         userinfo.otpExpiry = new Date(Date.now() + 60 * 1000);
         await EmailSender.sendEmail({
             email: user.email,
-            sub:"Login OTP",
+            sub:"Login OTP 🛅",
             mess: emailTemplate.loginEmail(otp)
         });
         await userinfo.save();

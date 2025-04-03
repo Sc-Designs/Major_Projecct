@@ -7,6 +7,7 @@ const emailTemplate = require("../Email_Template/Emails");
 const {userFinder} = require("../utlis/UserFinder");
 const bloodRequestModel = require("../Models/Recivent-Model");
 const jwt = require("jsonwebtoken");
+const dbgr = require("debug")("development:dev");
 
 module.exports.registerUser = async (req, res) => {
     const errors = validationResult(req);
@@ -61,7 +62,7 @@ module.exports.loginUser = async (req, res) => {
     if (user.googleId) {
       await EmailSender.sendEmail({ // Corrected EmailSender
         email: user.email,
-        sub: "OTP Verification",
+        sub: "OTP Verification 📫",
         mess: emailTemplate.loginEmail(otp),
       });
       user.otp = otp;
@@ -71,7 +72,7 @@ module.exports.loginUser = async (req, res) => {
     } else {
       await EmailSender.sendEmail({ // Corrected EmailSender
         email: user.email,
-        sub: "OTP Verification",
+        sub: "OTP Verification 📫",
         mess: emailTemplate.loginEmail(otp),
       });
       user.otp = otp;
@@ -143,7 +144,7 @@ module.exports.ResendOtp = async (req, res) => {
     delete user._doc.password;
       await EmailSender.sendEmail({
         email: user.email,
-        sub: "Re-send OTP Verification",
+        sub: "Re-send OTP Verification 🫡",
         mess: emailTemplate.ReSendOtp(Newotp),
         });
       user.otp = Newotp;
@@ -159,12 +160,13 @@ module.exports.ResendOtp = async (req, res) => {
 module.exports.DeletePost = async ( req,res ) => {
   try{
     const token = req.cookies.userToken || req.headers.authorization?.split(" ")[1];
-    if(!token) return res.redirect("/users/profile");
+    if(!token) return res.redirect("/users/login");
     const {id} = req.body;
     await bloodRequestModel.findOneAndDelete({_id: id})
     const decoded = jwt.verify(token, process.env.JWT_KEY);
     const user = await userFinder({key: "email", query: decoded.email})
-    user.bloodRequest.pop(id);
+    if(user.bloodRequest.includes(id)) user.bloodRequest.pop(id);
+    if (user.Donate.includes(id)) user.Donate.pop(id);
     await user.save();
     res.status(201).redirect("/users/profile")
   }catch(error){
@@ -226,7 +228,7 @@ module.exports.IdWithOtpPage = async ( req,res ) => {
 
 module.exports.loginPage = (req, res) => {
   try {
-    res.render("Login");
+    res.render("Login", { error: req.flash("error") });
   } catch (err) {
     res.redirect("/:anithing");
   }
@@ -267,3 +269,106 @@ module.exports.AddBloodGroup = async ( req,res )=>{
     res.status(500).json({message: "Something went wrong"});
   }
 };
+
+module.exports.frogerPassword = (req,res) =>{
+  try{
+    res.status(200).render("AskEmail", { error: req.flash("error") });
+  }catch(error){
+    console.error(error);
+    res.status(500).json({message: "Something went wrong"});
+  }
+};
+
+module.exports.SendOtp = async (req,res) => {
+  try{
+    const { email } = req.body;
+    const user = await userFinder({ key: "email", query: email });
+    if(user === null) {
+      req.flash("error", "Accout Not Found")  
+      res.status(404).redirect("/users/changePassword");
+    }
+    const otp = Otp.OtpGenerator();
+    user.otp = otp;
+    user.otpExpiry = Date.now() + 60 * 1000;
+    await user.save();
+    const name = user.name;
+    await EmailSender.sendEmail({
+      email: user.email,
+      sub: "📧 Password Reset Request - OTP Verification",
+      mess: emailTemplate.ForgetPassword({ name, otp })
+    });
+    res.status(200).redirect(`/users/otpCenter/${user._id}`);
+  }
+  catch(error){
+    console.error(error);
+    res.json({messge: "Something went wrong"});
+  }
+};
+
+module.exports.OtpCenter = async (req, res) => {
+  try{
+    const {id} = req.params;
+    const user = await userFinder({key: "_id", query: id});
+    res.status(200).render("OtpCenter",{user});
+  }catch(error){
+    console.error(error);
+    res.status(500).json({message: "Something went wrong"});
+  }
+}
+
+module.exports.OtpCenterVerification = async (req, res) => {
+  try{
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const { otp } = req.body;
+    const { id } = req.params;
+    const user = await userFinder({key: "_id", query: id});
+    if (!user) return res.status(404).json({ message: "User not found" });
+    delete user._doc?.password;
+    if (!user.otp) return res.status(400).json({ message: "OTP not found" });
+    if (!user.otpExpiry) return res.status(400).json({ message: "OTP expiry not found" });
+    if (user.otp != otp) return res.status(401).json({ message: "Invalid OTP" });
+    if (user.otpExpiry < Date.now()) return res.status(401).json({ message: "OTP Expired" });
+    res.status(200).redirect(`/users/reEnterPassword/${id}`);
+  }catch(error){
+    console.error(error);
+    res.status(500).json({message: "Something went wrong"});
+  }
+}
+
+module.exports.ReEnterPasswordPage = async (req, res)=>{
+  try{
+    const { id } = req.params;
+    res.render("EnterPassword",{error:  req.flash("error"), id});
+  }catch(error){
+    console.error(error);
+    res.status(500).json({message: "Something went wrong"});
+  }
+}
+
+module.exports.rePassword = async (req,res)=>{
+  try{
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const { updatedpassword } = req.body;
+    const { id } = req.params;
+    const user = await userFinder({key: "_id", query: id});
+    if (!user) return res.status(404).json({ message: "User not found" });
+    dbgr("User Details",user);
+    const hashedPassword = await userModel.hashPassword(updatedpassword);
+    dbgr("Hashed Password",hashedPassword);
+    user.password = hashedPassword;
+    await user.save();
+    console.log("password Changed");
+    req.flash("success", "Password Updated Successfully");
+    res.redirect("/users/login");
+  }catch(error){
+    console.error(error);
+    req.flash("error", "Something went wrong");
+    res.redirect("/users/reEnterPassword");
+  }
+}

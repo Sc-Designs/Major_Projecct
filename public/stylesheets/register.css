@@ -63,50 +63,68 @@ main section form {
   gap: 0.5em;
   width: 90%;
 }
-main section form label {
+main section form fieldset {
+  width: 100%;
+  border: 2px solid skyblue;
+  outline: none;
   font-family: "Satoshi";
   font-size: 1.2em;
-  font-weight: 500;
+  background: transparent;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  padding: 0em 0.5em;
 }
-main section form input {
+main section form fieldset i {
+  font-size: 1em;
+  margin-bottom: 0.3em;
+  color: rgb(0, 183, 255);
+  cursor: pointer;
+}
+main section form fieldset legend {
+  margin-left: 0.5em;
+  font-family: "Helvetica";
+  padding: 0em 0.5em;
+}
+main section form fieldset input {
+  font-family: "Satoshi";
+  font-size: 1em;
   width: 100%;
-  text-align: center;
+  height: 100%;
+  padding: 0.5em;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+main section form fieldset input[type=number]::-webkit-inner-spin-button,
+main section form fieldset input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+main section form fieldset select {
+  padding: 0.5em;
+  width: 100%;
   height: 40px;
   background: transparent;
-  border: 2px solid skyblue;
+  border: none;
   border-radius: 5px;
   font-family: "Satoshi";
   font-size: 1em;
   outline: none;
 }
-main section form input[type=number]::-webkit-inner-spin-button,
-main section form input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  margin: 0;
+main section form fieldset select option {
+  font-weight: 500;
+  font-family: "Satoshi";
+  text-transform: uppercase;
+  background: skyblue;
 }
 main section form #alertpss, main section form #alertname, main section form #alertemail, main section form #alertage {
   font-family: "Satoshi";
   font-size: 1.1em;
   color: red;
   font-weight: 500;
-}
-main section form select {
-  width: 100%;
-  height: 40px;
-  background: transparent;
-  border: 2px solid skyblue;
-  border-radius: 5px;
-  font-family: "Satoshi";
-  font-size: 1em;
-  outline: none;
-}
-main section form select option {
-  font-weight: 500;
-  font-family: "Satoshi";
-  text-transform: uppercase;
-  background: skyblue;
 }
 main section form button {
   margin-top: 1.5em;

@@ -29,6 +29,10 @@ const recipientSchema = new mongoose.Schema({
   DonarNumber: {
     type: Number,
     default:null
+  },
+  date: {
+    type: String,
+    default: null,
   }
 });
 

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AskEmail</title>
+    <link rel="shortcut icon" href="/images/favicon.webp" type="image/x-icon">
+    <link rel="stylesheet" href="/stylesheets/AskEmail.css">
+</head>
+<body>
+    <main>
+        <form action="/users/send-otp" method="post">
+            <h1>Email For Sending OTP</h1>
+            <% if(error_msg){ %>
+            <p><%= error_msg %></p>
+            <% } %>
+            <fieldset>
+                <legend>📧 Email</legend>
+                <input type="email" id="email" name="email"  placeholder="Enter Your Email..." required/>
+            </fieldset>
+            <button type="submit">Send</button>
+        </form>
+    </main>
+</body>
+</html>
