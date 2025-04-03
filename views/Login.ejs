@@ -6,6 +6,10 @@
     <title>Login</title>
     <link rel="shortcut icon" href="/images/favicon.webp" type="image/x-icon">
     <link rel="stylesheet" href="/stylesheets/login.css">
+        <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
 </head>
 <body>
     <main>
@@ -15,14 +19,20 @@
             </div>
             <h1>Blood_Hub</h1>
             <form action="/users/login" method="post">
-                <label for="email">📧Email - </label>
-                <input type="email" name="email" id="email" placeholder="Enter your email...." autocomplete="off">
-                <label for="email">😌Password - </label>
-                <input type="password" name="password" id="password" placeholder="Enter your password...." autocomplete="off">
+                <fieldset>
+                    <legend>📧Email - </legend>
+                    <input type="email" name="email" id="email" placeholder="Enter your email...." autocomplete="on">
+                </fieldset>
+                <fieldset>
+                    <legend>😌Password -</legend>
+                    <input type="password" name="password" id="password" placeholder="Enter your password...." autocomplete="on">
+                    <i class="ri-eye-close-line eye1"></i>
+                </fieldset>
                 <input type="submit" value="Login">
             </form>
             <div class="signup">
                 <p>Don't have an account?</p>
+                <a href="/users/changePassword">Forgot Password</a>
                 <a href="/users/register">Sign Up</a>
             </div>
             <p>Or</p>
@@ -36,4 +46,5 @@
         </section>
     </main>
 </body>
+<script src="/javascripts/login.js"></script>
 </html>

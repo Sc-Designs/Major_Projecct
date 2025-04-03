@@ -58,24 +58,39 @@ main section form {
   width: 90%;
   gap: 1em;
 }
-main section form label {
-  font-family: "Satoshi";
-  font-size: 1.2em;
-  font-weight: 500;
-  margin-bottom: -0.5em;
-}
-main section form input[type=email], main section form input[type=password] {
-  font-family: "Satoshi";
-  font-size: 1em;
-  padding: 0.5em;
-  border-radius: 5px;
+main section form fieldset {
+  width: 100%;
   border: 2px solid skyblue;
   outline: none;
-  background: transparent;
-}
-main section form input[type=email]::placeholder, main section form input[type=password]::placeholder {
   font-family: "Satoshi";
-  font-weight: 500;
+  font-size: 1.2em;
+  background: transparent;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  padding: 0em 0.5em;
+}
+main section form fieldset i {
+  font-size: 1em;
+  padding: 0em 0.5em;
+  margin-bottom: 0.3em;
+  color: rgb(0, 183, 255);
+  cursor: pointer;
+}
+main section form fieldset legend {
+  margin-left: 0.5em;
+  font-family: "Helvetica";
+  padding: 0em 0.5em;
+}
+main section form fieldset input {
+  font-family: "Satoshi";
+  font-size: 1em;
+  width: 100%;
+  height: 100%;
+  padding: 0.5em;
+  background: transparent;
+  border: none;
+  outline: none;
 }
 main section form input[type=submit] {
   font-family: "Satoshi";

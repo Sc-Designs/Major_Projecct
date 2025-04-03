@@ -151,7 +151,7 @@ main{
             }
             h2{
                 font-family: "Satoshi";
-                font-size: 1em;
+                font-size: 0.9em;
                 letter-spacing: 0.1em;
                 color: #7c7c7c;
             }
@@ -191,7 +191,6 @@ main{
         color: #FFF;
         font-size: 1.2em;
         text-align: center;
-        background: #00775d;
         border-radius: 5px;
         padding: 4% 0%;
     }
@@ -247,15 +246,14 @@ main{
             }
         }
         .request-section{
-            padding: 7% 2% 2% 5%;
+            padding: 7% 4.5% 2% 4.5%;
             flex-direction: row;
             flex-wrap: wrap;
             justify-content: space-between;
             .card{
-                padding: 2% 5%;
-                width: 50%;
+                padding: 2%;
+                width: fit-content;
                 margin-bottom: 1em;
-                margin-left: -2em;
                 align-items: start;
                 box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5),
                 4px 4px 10px rgba(0, 0, 0, 0.5);

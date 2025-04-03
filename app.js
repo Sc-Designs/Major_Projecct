@@ -11,6 +11,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
 require("dotenv").config();
+const adminModel = require("./Models/Admin-Model");
 
 
 // Middleware Setup
@@ -38,8 +39,8 @@ app.use(passport.session());
 // Flash Messages Setup
 app.use(flash());
 app.use((req, res, next) => {
-  res.locals.error = req.flash("error");
-  res.locals.success = req.flash("success");
+  res.locals.error_msg = req.flash("error");
+  res.locals.success_msg = req.flash("success");
   next();
 });
 
@@ -53,6 +54,7 @@ const donarRouter = require("./routes/donar.router");
 const indexRouter = require("./routes/index.router");
 const usersRouter = require("./routes/users.router");
 const googleAuthenticatorRouter = require("./routes/googleAuthenticator.router");
+const miantanRouter = require("./routes/maintainers.router");
 
 // Import Database Connection
 const connectWithRetry = require("./config/mongoose-connection");
@@ -64,12 +66,28 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 // API Routes
+app.use(process.env.ADMIN || "/admin", adminRouter);
+
+app.use(async (req, res, next) => {
+  const admin = await adminModel.findOne({});
+  if(!admin){
+    req.flash("error", "Admin account not found.");
+    res.redirect("/admin/login");
+    return;
+  }
+  if(admin.serverOnOff === true){
+    res.render("Maintanence");
+  } else {
+    next();
+  }
+})
+
 app.use(process.env.INDEX || "/", indexRouter);
 app.use(process.env.USER || "/users", usersRouter);
 app.use(process.env.RECIVER || "/reciver", bloodRouter);
 app.use(process.env.DONAR || "/donar", donarRouter);
-app.use(process.env.ADMIN || "/admin", adminRouter);
 app.use(process.env.GOOGLE_AUTHENTICATOR || "/google-oth", googleAuthenticatorRouter);
+app.use(process.env.MAINTAINERES || "/maintainers", miantanRouter);
 
 // 404 Handler
 app.use((req, res, next) => {

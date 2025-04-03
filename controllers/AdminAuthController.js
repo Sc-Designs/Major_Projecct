@@ -1,6 +1,9 @@
 const adminModel = require("../Models/Admin-Model");
 const adminService = require("../Services/admin.service");
 const {validationResult} = require("express-validator");
+const bloodbloodRequestModel  = require("../Models/Recivent-Model");
+const userModel = require("../Models/User-Model");
+const jwt = require("jsonwebtoken");
 module.exports.adminRegister = async( req, res ) => {
     try{
         const errors = validationResult(req);
@@ -34,7 +37,6 @@ module.exports.adminLogin = async( req, res ) => {
         if(!isMatch) return res.status(401).send('Invalid email or password');
         const token = admin.GenerateToken();
         delete admin._doc.password;
-        Object.freeze(admin);
         res.cookie('adminToken', token);
         res.status(200).redirect('/admin/admin-profile');
     }
@@ -48,11 +50,47 @@ module.exports.adminProfile = async( req, res ) => {
         const admin = await adminModel.findOne({email : req.admin.email});
         delete admin._doc.password;
         if(!admin) return res.status(401).send('Unauthorized');
-        Object.freeze(admin);
-        res.status(302).render('adminProfile', {admin : admin});
+        let allRequests = await bloodbloodRequestModel.find();
+        let numberofRequests = allRequests.length;
+        let users = await userModel.find();
+        let usersCount = users.length;
+        res.status(302).render('adminProfile', {admin : admin, numberofRequests, usersCount});
     }
     catch(err){
         console.error(err);
         res.status(500).redirect('/admin/login');
     }   
 }
+
+module.exports.serverOnOffSettings = async (req, res) => {
+    try {
+        let token = req.cookies.adminToken || req.headers.authorization?.split(" ")[1];
+        if (!token) {
+        return res.status(401).redirect("/admin/login");
+        }
+        const decoded = jwt.verify(token, process.env.JWT_KEY);
+        const Admin = await adminModel.findOne({ email: decoded.email });
+        console.log(Admin);
+        if (!Admin) {
+        return res.status(404).send("Admin not found.");
+        }
+        console.log("Admin server", Admin.serverOnOff);
+        Admin.serverOnOff = !Admin.serverOnOff;
+        await Admin.save();
+        console.log("Admin saved", Admin.serverOnOff);
+        res.status(200).redirect("/admin/admin-profile");
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).redirect("/anithing"); 
+    }
+};
+
+module.exports.adminLogOut = (req, res) => {
+  try {
+    res.clearCookie("adminToken");
+    res.status(200).redirect("/admin/login");
+  } catch (error) {
+    console.error(error);
+    res.status(500).redirect("/admin/admin-profile");
+  }
+};

@@ -1,0 +1,74 @@
+@font-face {
+  font-family: "Satoshi";
+  src: url("/Fonts/66aa728085dec3390cb7f058_Satoshi-Variable.ttf");
+}
+@font-face {
+  font-family: "Helvetica";
+  src: url("/Fonts/HelveticaNowDisplay-Black_20bf03d0.ttf");
+}
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+html, body {
+  height: 100%;
+  width: 100%;
+}
+main{
+    width: 100%;
+    min-height: 100vh;
+    background: #c9f9f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    form{
+        border: 4px solid skyblue;
+        padding: 5% 3%;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        h1{
+            font-family: "Helvetica";
+            font-size: 2em;
+        }
+        fieldset{
+            border: 2px solid skyblue;
+            display: flex;
+            align-items: center;
+            padding: 0em 0.5em;
+            border-radius: 5px;
+            i{
+                font-size: 1.5em;
+                margin-bottom: 0.3em;
+                color: rgb(0, 183, 255);
+            }
+            legend{
+                margin-left: 1em;
+                font-family: "Satoshi";
+            }
+            input{
+                width: 100%;
+                padding: 0.2em 0.5em;
+                font-size: 1.5em;
+                background: transparent;
+                border: none;
+                outline: none;
+            }
+        }
+        p{
+            color: red;
+            font-family: "Satoshi";
+        }
+        button{
+            background: skyblue;
+            color: white;
+            padding: 0.5em 1em;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5em;
+            font-family: "Helvetica";
+        }
+    }
+}

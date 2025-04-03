@@ -1,0 +1,59 @@
+@font-face {
+  font-family: "Satoshi";
+  src: url("/Fonts/66aa728085dec3390cb7f058_Satoshi-Variable.ttf");
+}
+@font-face {
+  font-family: "Helvetica";
+  src: url("/Fonts/HelveticaNowDisplay-Black_20bf03d0.ttf");
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html,body{
+    height: 100%;
+    width: 100%;
+}
+main{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    gap: 2em;
+    h1{
+        font-family: "Helvetica";
+        font-size: 3rem;
+        text-align: center;
+    }
+    .img{
+        display: flex;
+        justify-content: center;
+        img{
+            width: 60%;
+        }
+    }
+    p{
+        font-family: "Satoshi";
+        font-size: 2rem;
+        text-align: center;
+        line-height: 1.5;
+    }
+}
+@media (min-width: 1022px) {
+    main{
+        gap: 0.5em;
+        h1{
+            font-size: 3em;
+        }
+        .img{
+            img{
+                width: 25vw;
+            }
+        }
+        p{
+            font-size: 2em;
+        }
+    }
+}

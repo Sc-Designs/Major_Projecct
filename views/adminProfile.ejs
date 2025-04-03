@@ -3,10 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Admin Panel</title>
+    <link rel="shortcut icon" href="/images/favicon.webp" type="image/x-icon">
+    <link rel="stylesheet" href="/stylesheets/adminProfile.css">
+        <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
 </head>
 <body>
-    <h1><%= admin.fullname.firstname %></h1>
-    <h1><%= admin.fullname.lastname %></h1>
-</body>
+    <main>
+        <nav>
+        <i class="ri-menu-3-fill menu"></i>
+        <ul class="sidemenus">
+            <i class="ri-close-large-fill close"></i>
+            <li><a href="/">Home</a></li>
+            <li><a href="/donar/request-list">Donate</a></li>
+            <li><a href="/reciver/blood">Blood</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="">Contact</a></li>
+            <a href="/admin/logout">Logout</a>
+        </ul>
+        <ul class="menus">
+          <li><a href="/">Home</a></li>
+          <li><a href="/donar/request-list">Donate</a></li>
+          <li><a href="/reciver/blood">Blood</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="">Contact</a></li>
+          <a href="/admin/logout">Logout</a>
+        </ul>
+      </nav>
+        <h1>Hello,<br> Admin [<span> <%= admin.fullname.firstname %> <%=  admin.fullname.lastname %> </span> ]</h1>
+        <section class="picSide">
+            <div class="img">
+                <img class="profilepic" src=" https://images.unsplash.com/photo-1652018145149-b61a9566b245?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+                <img class="changes" src="/images/photos.webp" alt="">
+            </div>
+            <p><%= admin.email %></p>
+            <form action="/admin/serverSettings"  method="post">
+                <% if(admin.serverOnOff  === true) { %>
+                    <button type="submit" class="serverBtn">Server: ON</button>
+                    <% } else { %>
+                        <button type="submit" class="serverBtn">Server: OFF</button>
+                        <% } %>
+                    </form>
+            </section>
+        <section class="info">
+            <h1>Web-Site Details</h1>
+            <section class="alldets">
+                <section class="dets">
+                    <h3>Users number</h3>
+                    <p><%= usersCount %></p>
+                </section>
+                <section class="dets">
+                    <h3>Donation number</h3>
+                    <p><%= numberofRequests %></p>
+                </section>
+                <section class="dets">
+                    <h3>Ticket Raiser</h3>
+                    <a href="">Ask Here</a>
+                </section>
+            </section>
+        </section>
+        </main>
+    </body>
+    <script src="/javascripts/admin.js"></script>
 </html>

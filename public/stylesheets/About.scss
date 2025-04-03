@@ -1,0 +1,244 @@
+@font-face {
+  font-family: "Satoshi";
+  src: url("/Fonts/66aa728085dec3390cb7f058_Satoshi-Variable.ttf");
+}
+@font-face {
+  font-family: "Helvetica";
+  src: url("/Fonts/HelveticaNowDisplay-Black_20bf03d0.ttf");
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body {
+    height: 100%;
+    width: 100%;
+}
+body::-webkit-scrollbar{
+    width: 6px;
+    background-color:#c9f9f5;
+}
+body::-webkit-scrollbar-thumb{
+    background-color: rgb(101, 194, 230);
+    border-radius: 10px;
+}
+main{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #c9f9f5;
+
+    nav{
+        width: 100%;
+        padding: 5%;
+        position: fixed;
+        top: 0;
+        display: flex;
+        justify-content: end;
+        z-index: 999;
+        backdrop-filter: blur(50px);
+        .menu{
+            font-size: 2em;
+        }
+        .menus{
+            display: none;
+        }
+        .sidemenus{
+            display: flex;
+            flex-direction: column;
+            gap: 2em;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            right: -100%;
+            top: 0;
+            background-color: rgb(101, 194, 230);
+            height: 100vh;
+            width: 100%;
+            transition: all 0.5s ease;
+            .close {
+                font-size: 2em;
+                color: white;
+                cursor: pointer;
+                position: absolute;
+                top: 2%;
+                right: 4%;
+            }
+            li{
+                list-style: none;
+                width: 90%;
+                text-align: center;
+                a{
+                    font-family: "Satoshi";
+                    font-size: 2.5em;
+                    color: white;
+                    text-decoration: none;
+                    width: 100%;
+                    display: block;
+                    padding: 4% 0%;
+                    letter-spacing: 0.08em;
+                    &:hover{
+                        background: skyblue;
+                    }
+                }
+            }
+            a{
+                letter-spacing: 0.08em;
+                font-family: "Satoshi";
+                font-size: 2.5em;
+                color: white;
+                text-decoration: none;
+                display: block;
+                padding: 4% 0%;
+                width: 90%;
+                text-align: center;
+                &:hover{
+                    background: skyblue;
+                }
+                }
+        }
+    }
+    .allSection{
+        display: flex;
+        flex-direction: column;
+        gap: 4em;
+        padding: 25% 3% 3% 3%;
+        section{
+            width: 100%;
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 1em;
+            .left{
+                display: flex;
+                flex-direction: column;
+                gap: 0.5em;
+                h1{
+                    font-family: "Helvetica";
+                    font-size: 2em;
+                    letter-spacing: 0.08rem;
+                }
+                h3{
+                    font-family: "Helvetica";
+                    font-size: 1.5em;
+                    letter-spacing: 0.08rem;
+                }
+                h5{
+                    font-family: "Helvetica";
+                    font-size: 1.3em;
+                    letter-spacing: 0.08rem;
+                }
+                p{
+                    font-family: "Satoshi";
+                    font-size: 1.25em;
+                    letter-spacing: 0.03rem;
+                    font-weight: 500;
+                }
+                .link{
+                    display: flex;
+                    gap: 0.5em;
+                    margin-top: 1em;
+                    a{
+                    text-decoration: none;
+                    i{
+                        font-size: 2em;
+                        margin-right: 0.5em;
+                        color: black;
+                        transition: all 0.3s ease;
+                        &:hover{
+                            color: rgb(2, 62, 193);
+                        }
+                    }
+                    }
+                }
+            }
+            .right{
+                display: flex;
+                justify-content: center;
+                gap: 1em;
+                .img{
+                    width: 70%;
+                    aspect-ratio: 1/1;
+                    border-radius: 10px;
+                    overflow: hidden;
+                    img{
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        object-position: 0 10%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 1022px) {
+    main{
+        nav{
+            width: 100%;
+            padding: 1.5% 5% 1.5% 2%;
+            display: flex;
+            justify-content: end;
+            .menu{
+                display: none;
+            }
+            .menus{
+                display: flex;
+                gap: 2em;
+                justify-content: flex-end;
+                li{
+                    list-style-type: none;
+                    position: relative;
+                    cursor: pointer;
+                    a{
+                        text-decoration: none;
+                        text-transform: capitalize;
+                        color: black;
+                        font-family: "Satoshi";
+                        font-weight: 500;
+                        letter-spacing: 0.1em;
+                        position: relative;
+                        z-index: 2;
+
+                    }
+                    &::after{
+                        content: '';
+                        position: absolute;
+                        height: 2px;
+                        width: 0%;
+                        background-color: black;
+                        top: 100%;
+                        left:0;
+                        border-radius: 10px;
+                        transition: all 0.3s ease;
+                    }
+                    &:hover::after{
+                        width: 100%;
+                    }
+                }
+            }
+        }
+        .allSection{
+            padding: 7% 3% 3% 3%;
+            gap: 3em;
+            section{
+                flex-direction: row;
+                align-items: center;
+                .left{
+                    width: 55%;
+                }
+                .right{
+                    width: 45%;
+                    .img{
+                        img{
+                            transition: all 0.5s ease;
+                            &:hover{
+                                transform: scale(1.05);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

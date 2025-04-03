@@ -6,6 +6,10 @@
     <title>Registation</title>
     <link rel="shortcut icon" href="/images/favicon.webp" type="image/x-icon">
     <link rel="stylesheet" href="/stylesheets/register.css">
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
 </head>
 <body>
     <main>
@@ -13,19 +17,25 @@
             <img src="/images/favicon.webp" alt="Logo">
             <h1>Register</h1>
             <form action="">
-                <label for="name">🫡 Name: *</label>
+                <fieldset>
+                    <legend>🫡 Name: *</legend>
+                    <input type="text" name="name" placeholder="Name" id="name" required>
+                </fieldset>
                 <p id="alertname"></p>
-                <input type="text" name="name" placeholder="Name" id="name" required>
-                
-                <label for="email">📧 Email: *</label>
+                <fieldset>
+                    <legend>📧 Email: *</legend>
+                    <input type="email" name="email" placeholder="Email" id="email" required>
+                </fieldset>
                 <p id="alertemail"></p>
-                <input type="email" name="email" placeholder="Email" id="email" required>
                 
-                <label for="age">🦴 Age:</label>
+                <fieldset>
+                    <legend>🦴 Age:</legend>
+                    <input type="number" name="age" placeholder="Age" id="age">
+                </fieldset>
                 <p id="alertage"></p>
-                <input type="number" name="age" placeholder="Age+" id="age">
-
-                    <label for="blood-group">🩸Blood Group:</label>
+                
+                <fieldset>
+                    <legend>🩸Blood Group:</legend>
                     <select name="blood-group" id="blood-group">
                         <option value="">Select Blood Group</option>
                         <option value="A+">A+</option>
@@ -37,19 +47,29 @@
                         <option value="AB+">AB+</option>
                         <option value="AB-">AB-</option>
                     </select>
+                </fieldset>
 
-                    <label for="emargencycontact">🦺 Emargency Contact:</label>
+                <fieldset>
+                    <legend>🦺 Emargency Contact:</legend>
                     <input type="number" name="emargencycontact" placeholder="Emargency Contact" id="emargencycontact"/>
+                </fieldset>
                     
-                <label for="dob">📅 Date of Birth:</label>
-                <input type="date" name="dob" id="dob" required>
-                
-                <label for="pass">😌 Password: *</label>
-                <input type="password" name="" placeholder="Password" id="pass" required>
-                
-                <label for="pass">😌 Confirm Password: *</label>
-                <p id="alertpss"></p>
+                <fieldset>
+                    <legend>📅 Date of Birth:</legend>
+                    <input type="date" name="dob" id="dob" required>
+                </fieldset>
+
+                <fieldset>
+                    <legend>😌 Password: *</legend>
+                    <input type="password" name="" placeholder="Password" id="pass" required>
+                    <i class="ri-eye-close-line eye1"></i>
+                </fieldset>
+                <fieldset>
+                <legend>😌 Confirm Password: *</legend>
                 <input type="password" name="password" placeholder="Confirm Password" id="conpass" required>
+                <i class="ri-eye-close-line eye2"></i>
+            </fieldset>                
+                <p id="alertpss"></p>
                 
                 <button type="submit">Register</button>
                 <div class="lowar_part">

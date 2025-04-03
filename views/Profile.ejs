@@ -20,7 +20,7 @@
             <li><a href="/">Home</a></li>
             <li><a href="/donar/request-list">Donate</a></li>
             <li><a href="/reciver/blood">Blood</a></li>
-            <li><a href="">FeedBack</a></li>
+            <li><a href="/about">About</a></li>
             <li><a href="">Contact</a></li>
             <a href="/users/logout">Logout</a>
         </ul>
@@ -28,7 +28,7 @@
             <li><a href="/">Home</a></li>
             <li><a href="/donar/request-list">Doante</a></li>
             <li><a href="/reciver/blood">Blood</a></li>
-            <li><a href="">FeedBack</a></li>
+            <li><a href="/about">About</a></li>
             <li><a href="">Contact</a></li>
             <a href="/users/logout">Logout</a>
         </ul>
@@ -115,7 +115,7 @@
         </form>
         </div>
         <section class="requests">
-            <h1>Your Pending Request</h1>
+            <h1>Your Request</h1>
             <div class="allCards">
                 <% pendingPosts.forEach((elem)=>{ %>     
             <div class="card">
@@ -125,17 +125,18 @@
                     <input type="hidden" id="postId" value="<%= elem._id %>">
                     <% if(elem.status === "Accepted"){ %>
                     <a href="/maps/<%= elem._id %>" id="mapBtn">MAP</a>
-                    <% } %>
+                    <% }else{ %>
                     <button type="submit">
                         <i class="ri-delete-bin-line delete"></i>
                     </button>
+                    <% } %>
                 </form>
             </div>
             <% }) %>
             </div>
         </section>
         <section class="requests">
-            <h1>Your Donate Request</h1>
+            <h1>Your Donation</h1>
             <div class="allCards">
                 <% DonatePosts.forEach((elem)=>{ %>     
             <div class="card">
