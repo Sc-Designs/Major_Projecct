@@ -36,7 +36,11 @@
         <h1>Hello,<br> Admin [<span> <%= admin.fullname.firstname %> <%=  admin.fullname.lastname %> </span> ]</h1>
         <section class="picSide">
             <div class="img">
+                <% if(profilepic) { %>
+                    <img class="profilepic" src="data:image/png;base64,<%= profilepic %>" alt="">
+                <% } else { %>
                 <img class="profilepic" src=" https://images.unsplash.com/photo-1652018145149-b61a9566b245?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+                <% } %>
                 <img class="changes" src="/images/photos.webp" alt="">
             </div>
             <p><%= admin.email %></p>
@@ -53,7 +57,7 @@
             <section class="alldets">
                 <section class="dets">
                     <h3>Users number</h3>
-                    <p><%= usersCount %></p>
+                    <p><%= usersCount %> <a class="userViwer" href="/admin/users">View</a></p>
                 </section>
                 <section class="dets">
                     <h3>Donation number</h3>
@@ -61,10 +65,15 @@
                 </section>
                 <section class="dets">
                     <h3>Ticket Raiser</h3>
-                    <a href="">Ask Here</a>
+                    <a  class="ticketReciver" href="">Ask Here</a>
                 </section>
             </section>
         </section>
+        <form id="changePic" action="/admin/adminPic" enctype="multipart/form-data" method="post">
+            <input type="email" name="email" id="" value="<%= admin.email %>">
+            <input type="file" accept="image/*" name="adminPic" id="adminPic" required>
+            <input type="submit" value="click" id="upload">
+        </form>
         </main>
     </body>
     <script src="/javascripts/admin.js"></script>

@@ -13,9 +13,11 @@ const cors = require("cors");
 require("dotenv").config();
 const adminModel = require("./Models/Admin-Model");
 
+logger.token("time", () => {
+  return new Date().toLocaleString(); 
+});
 
-// Middleware Setup
-app.use(logger("dev"));
+app.use(logger(":time :method :url :status"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.json());

@@ -54,7 +54,12 @@ module.exports.adminProfile = async( req, res ) => {
         let numberofRequests = allRequests.length;
         let users = await userModel.find();
         let usersCount = users.length;
-        res.status(302).render('adminProfile', {admin : admin, numberofRequests, usersCount});
+        res.status(302).render("adminProfile", {
+          admin: admin,
+          numberofRequests,
+          usersCount,
+          profilepic: admin.profileImage || null,
+        });
     }
     catch(err){
         console.error(err);
@@ -70,14 +75,12 @@ module.exports.serverOnOffSettings = async (req, res) => {
         }
         const decoded = jwt.verify(token, process.env.JWT_KEY);
         const Admin = await adminModel.findOne({ email: decoded.email });
-        console.log(Admin);
         if (!Admin) {
         return res.status(404).send("Admin not found.");
         }
         console.log("Admin server", Admin.serverOnOff);
         Admin.serverOnOff = !Admin.serverOnOff;
         await Admin.save();
-        console.log("Admin saved", Admin.serverOnOff);
         res.status(200).redirect("/admin/admin-profile");
     } catch (error) {
         console.error("Error:", error);
@@ -92,5 +95,53 @@ module.exports.adminLogOut = (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).redirect("/admin/admin-profile");
+  }
+};
+
+module.exports.uploadProfilePic = async (req,res) => {
+    try{
+         if(!req.file) return res.status(400).json({message: "Please upload a file"});
+              const { email } = req.body;
+              const admin = await adminModel.findOne({ email: email });
+              if(!admin) return res.status(404).json({message: "User not found"});
+                admin.profileImage = req.file.buffer.toString("base64");
+                await admin.save();
+              return res.status(200).redirect("/admin/admin-profile");
+    }catch(error){
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+};
+
+module.exports.adminAllUsers = (req,res) => {
+    try{
+        res.status(302).render("AllUsers");
+    }catch(error){
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+};
+
+module.exports.AllUser = async (req, res) => {
+  try {
+    const users = await userModel.find({}, { password: 0 }); // Exclude passwords
+
+    const filterData = users.map((user) => {
+      let profilepic = null;
+      if (user.profilepic) {
+        profilepic = `data:image/jpeg;base64,${user.profilepic}`;
+      }
+      return {
+        email: user.email,
+        name: user.name,
+        profilepic,
+        id: user._id
+      };
+    });
+
+    res.status(200).json(filterData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
   }
 };
