@@ -10,26 +10,40 @@ const jwt = require("jsonwebtoken");
 const dbgr = require("debug")("development:dev");
 
 module.exports.registerUser = async (req, res) => {
+  try{
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.status(400).json({errors: errors.array()});
     }
     const {email, password, name, dob} = req.body;
     const userExists = await userFinder({key: "email", query: email});
-    delete userExists._doc.password;
     if(userExists){
+        delete userExists._doc?.password;
         return res.status(400).redirect("/users/login");
     }
     const hashedPassword = await userModel.hashPassword(password);
+    const otp = Otp.OtpGenerator();
     const user = await userService.createUser({
-      name,
-      email,
-      dob,
+      name: name,
+      email:email,
+      dob: dob,
       password: hashedPassword,
+      otp: otp,
+      otpExpiry: new Date(Date.now() + 60 * 1000),
     });
     const token = user.GenerateToken();
     res.cookie("UserToken", token);
+    await EmailSender.sendEmail({
+      email: user.email,
+      sub: "OTP Verification 📫",
+      mess: emailTemplate.registerEmail(otp),
+    });
+    await user.save();
     return res.status(201).redirect(`/users/otp-varification/${user._id}`);
+  }catch(err){
+    console.error(err);
+    return res.status(500).json({message: "Something went wrong"});
+  }
 }
 
 module.exports.loginUser = async (req, res) => {
@@ -179,7 +193,7 @@ module.exports.GetProfile = async ( req,res ) => {
   try {
     if (!req.user || !req.user.email)
       return res.status(401).send("Unauthorized access");
-    const user = await userModel.findOne({ email: req.user.email });
+    const user = await userFinder({ key: "email", query: req.user.email });
     const posts = await userModel
       .findOne({ email: req.user.email })
       .populate({

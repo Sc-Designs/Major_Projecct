@@ -168,7 +168,7 @@ main{
                 }
             }
             .donate-button{
-                padding: 2% 0%;
+                padding: 2% 4%;
                 background: #B94A4A;
                 font-family: "Helvetica";
                 font-size: 1.5em;
@@ -177,6 +177,8 @@ main{
                 outline: none;
                 border-radius: 5px;
                 text-decoration: none;
+                cursor: pointer;
+                width: fit-content;
             }
         }
     }

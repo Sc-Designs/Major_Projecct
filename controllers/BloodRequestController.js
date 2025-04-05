@@ -62,8 +62,9 @@ module.exports.seeAllRequest = async ( req,res ) =>{
     if (!token) return res.redirect("/users/login");
     else if (!adminToken) return res.redirect("/admin/login");
     const decoded = jwt.verify(token, process.env.JWT_KEY);
+    const user = await userFinder({ key: "email", query: decoded.email });
     const allRequest = await bloodRequestModel
-      .find()
+      .find({bloodType : user.bloodgroup})
       .populate({
         path: "reciventId",
         model: "user",
@@ -71,7 +72,6 @@ module.exports.seeAllRequest = async ( req,res ) =>{
       })
       .sort({ date: -1 })
       .lean();
-      const user = await userFinder({ key: "email", query: decoded.email });
       const fillterData = allRequest.filter((data) => {
         return data.reciventId._id.toString() !== user._id.toString();
       });
